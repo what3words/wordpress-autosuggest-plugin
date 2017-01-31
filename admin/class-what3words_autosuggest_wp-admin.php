@@ -206,7 +206,7 @@ add_action('admin_init', 'w3w_settings_init');
 function w3w_section_developers_cb($args)
 {
     ?>
-    <p id="<?= esc_attr($args['id']); ?>"><?= esc_html__('Options', 'w3w'); ?></p>
+    <p id="<?= esc_attr($args['id']); ?>"><?= esc_html__('In order to use w3w services you must use your own w3w API key!', 'w3w'); ?></p>
     <?php
 }
 

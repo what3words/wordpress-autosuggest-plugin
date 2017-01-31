@@ -10504,7 +10504,10 @@ var validator = require("jquery-validation");
                         //validate field when result being clicked
                             //$(_self.element).closest('form').validate().element(".w3w_valid");
                             $('#w3w-address-error, #shipping_w3w-error').empty();
-                            console.log('Empty');
+                            if (!$('.typeahead__query').hasClass('valid')) {
+                                $('.typeahead__query').addClass('valid');
+                            }
+
                     }
                 }
             });
@@ -10539,6 +10542,7 @@ var validator = require("jquery-validation");
                 // IF has content
                 else {
                     var isSuccess = false;
+                    $('.typeahead__query').removeClass('valid');
 
                     $.ajax({
                         url: W3W_API_END_POINT + 'forward',
@@ -10556,6 +10560,8 @@ var validator = require("jquery-validation");
                             // If W3A is VALID
                             if (response.hasOwnProperty('geometry')) {
                                 isSuccess=true;
+                                $('.typeahead__query').addClass('valid');
+                                console.log('valid');
 
                                 if (_self.options.auto_lang == true) {
                                     _self.options.lang = response.language;

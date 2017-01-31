@@ -15,8 +15,8 @@
  * @wordpress-plugin
  * Plugin Name:       what3words Autosuggest Wordpress plugin
  * Plugin URI:        http://what3words.com
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.0.0
+ * Description:       A plugin that showing what3word address suggestions as you type in a field.
+ * Version:           1.0.1
  * Author:            Jozsef Francovszky
  * Author URI:        http://codetheory.london
  * License:           GPL-2.0+
