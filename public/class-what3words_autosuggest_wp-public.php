@@ -73,7 +73,7 @@ class What3words_autosuggest_wp_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/w3w-addressify.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/jquery.w3w-autosuggest-plugin.css', array(), $this->version, 'all' );
 
 	}
 

@@ -83,10 +83,18 @@ add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
 function custom_override_checkout_fields( $fields ) {
      $fields['shipping']['shipping_w3w'] = array(
         'label'     => __('w3w Address', 'woocommerce'),
-    'placeholder'   => _x('w3w Address', 'placeholder', 'woocommerce'),
-    'required'  => false,
-    'class'     => array('form-row-wide'),
-    'clear'     => true
+	    'placeholder'   => _x('w3w Address', 'placeholder', 'woocommerce'),
+	    'required'  => false,
+	    'class'     => array('form-row-wide'),
+	    'clear'     => true
+     );
+
+     $fields['billing']['billing_w3w'] = array(
+        'label'     => __('w3w Address', 'woocommerce'),
+	    'placeholder'   => _x('w3w Address', 'placeholder', 'woocommerce'),
+	    'required'  => false,
+	    'class'     => array('form-row-wide'),
+	    'clear'     => true
      );
 
      return $fields;

@@ -10291,9 +10291,9 @@ var validator = require("jquery-validation");
         },
 
         buildWrappers: function() {
+            console.log($(this.element));
             $(this.element).wrapAll('<div class="typeahead__container"><div class="typeahead__field"><span class="typeahead__query"></span></div></div>');
-            $('.typeahead__container').prepend('<img class="w3w-logo" src="https://assets.prod.what3words.com/images/w3w_grid-logo.svg" alt="w3w-logo">').after('<div class="typeahead-validation"></div>');
-
+            $(this.element).closest('.typeahead__container').prepend('<img class="w3w-logo" src="https://assets.prod.what3words.com/images/w3w_grid-logo.svg" alt="w3w-logo">').append('<div class="typeahead-validation"></div>');
             $(this.element).addClass('w3w_valid').attr('placeholder','e.g. lock.spout.radar').attr('autocomplete','off');
         },
 
@@ -10316,7 +10316,6 @@ var validator = require("jquery-validation");
         },
 
         autoSuggest: function() {
-
             var W3W_API_END_POINT = 'https://api.what3words.com/v2/',
                 W3W_MAP_END_POINT = 'https://map.what3words.com/',
                 W3W_API_KEY = this.options.w3w_api_key,
@@ -10502,12 +10501,11 @@ var validator = require("jquery-validation");
                     },
                     onClickAfter: function(node, a, item, event) {
                         //validate field when result being clicked
-                            //$(_self.element).closest('form').validate().element(".w3w_valid");
-                            $('#w3w-address-error, #shipping_w3w-error').empty();
-                            if (!$('.typeahead__query').hasClass('valid')) {
-                                $('.typeahead__query').addClass('valid');
-                            }
-
+                        $(_self.element).closest('form').validate().element(".w3w_valid");
+                        //$('#w3w-address-error, #shipping_w3w-error').empty();
+                        if (!$(_self.element).closest('.typeahead__query').hasClass('valid')) {
+                            $(_self.element).closest('.typeahead__query').addClass('valid');
+                        }
                     }
                 }
             });
@@ -10542,7 +10540,7 @@ var validator = require("jquery-validation");
                 // IF has content
                 else {
                     var isSuccess = false;
-                    $('.typeahead__query').removeClass('valid');
+                    $(_self.element).closest('.typeahead__query').removeClass('valid');
 
                     $.ajax({
                         url: W3W_API_END_POINT + 'forward',
@@ -10560,8 +10558,6 @@ var validator = require("jquery-validation");
                             // If W3A is VALID
                             if (response.hasOwnProperty('geometry')) {
                                 isSuccess=true;
-                                $('.typeahead__query').addClass('valid');
-                                console.log('valid');
 
                                 if (_self.options.auto_lang == true) {
                                     _self.options.lang = response.language;
@@ -10570,7 +10566,7 @@ var validator = require("jquery-validation");
                                     if (!$('.typeahead__container').hasClass('auto-lang')) {
 
                                         //In case Exact Match, switch language to the match language
-                                        $(_self.element).eq(0).val(response.words).trigger("input");
+                                        //$(_self.element).eq(0).val(response.words).trigger("input");
                                         $('.typeahead__container').addClass('auto-lang');
                                     }
                                 }
@@ -10610,7 +10606,7 @@ var validator = require("jquery-validation");
                         clearTimeout(typingTimer);
                         typingTimer = setTimeout(doneTyping, doneTypingInterval);
 
-                        //user is "finished typing," do something
+                        //user is "finished typing," run regex and validate
                         function doneTyping () {
                             if (regex.test($(element).val())) {
                                 $(element).valid();
@@ -10618,14 +10614,15 @@ var validator = require("jquery-validation");
                             else {
                                 if (_self.options.auto_lang == true) {
                                     _self.options.lang = initial_language;
-                                    $('.typeahead__container').removeClass('auto-lang');
+                                    $(_self.element).closest('.typeahead__container').removeClass('auto-lang');
                                 }
                             }
                         }
                     }
                 },
                 errorPlacement: function(error, element) {
-                    error.appendTo( $('.typeahead-validation'));
+                    var valid_container = element.closest('.typeahead__container');
+                    error.appendTo( $('.typeahead-validation', valid_container) );
                 }
             });
         }

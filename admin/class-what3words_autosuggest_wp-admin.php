@@ -206,7 +206,7 @@ add_action('admin_init', 'w3w_settings_init');
 function w3w_section_developers_cb($args)
 {
     ?>
-    <p id="<?= esc_attr($args['id']); ?>"><?= esc_html__('In order to use w3w services you must use your own w3w API key!', 'w3w'); ?></p>
+    <p id="<?= esc_attr($args['id']); ?>">In order to use w3w services you must use your own w3w API key! In case you don&apos;t have one yet, get one <a href="https://what3words.com/register" target="_blank">here</a>.</p>
     <?php
 }
 
@@ -230,7 +230,7 @@ function w3w_field_input_cb($args)
     ?>
     <input id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_input'] ); ?>">
     <p class="description">
-        <?= esc_html('Selector of input object where you like the w3w Autosuggest to initialise on?', 'w3w'); ?>
+        <?= esc_html('Selector of input (comma separated if multiple eg (.field, #another)) object where you like the w3w Autosuggest to initialise on?', 'w3w'); ?>
     </p>
     <?php
 }
