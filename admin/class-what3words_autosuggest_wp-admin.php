@@ -221,6 +221,19 @@ function w3w_settings_init()
         ]
     );
 
+   add_settings_field(
+        'w3w_field_placeholder',
+        __('Input placeholder', 'w3w'),
+        'w3w_field_placeholder_cb',
+        'w3w',
+        'w3w_section_developers',
+        [
+            'label_for'         => 'w3w_field_placeholder',
+            'class'             => 'w3w_row',
+            'w3w_custom_data' => 'custom',
+        ]
+    );
+
 }
 
 /**
@@ -375,6 +388,17 @@ function w3w_field_direction_cb($args)
     </select>
     <p class="description">
         <?= esc_html('Direction of typing. Can be "Left to Right" or "Right to Left" ', 'w3w'); ?>
+    </p>
+    <?php
+}
+
+function w3w_field_placeholder_cb($args)
+{
+    $options = get_option('w3w_options');
+    ?>
+    <input id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_placeholder'] ); ?>">
+    <p class="description">
+        <?= esc_html('Option to define the placeholder text in the desired input fields, for example "e.g. lock.spout.radar"', 'w3w'); ?>
     </p>
     <?php
 }
