@@ -10254,11 +10254,11 @@ var validator = require("jquery-validation");
 
 /*!
  * jQuery w3w-autosuggest
- * Copyright (C) 2017 what2words Limited
+ * Copyright (C) 2017 what3words Limited
  * Licensed under the MIT license
  *
  * @author Jozsef Francovszky
- * @version 1.0.0 (2017-01-20)
+ * @version 1.0.0 (07-02-2017)
  * @link
  */
 
@@ -10292,9 +10292,12 @@ var validator = require("jquery-validation");
 
         buildWrappers: function() {
             console.log($(this.element));
-            $(this.element).wrapAll('<div class="typeahead__container"><div class="typeahead__field"><span class="typeahead__query"></span></div></div>');
-            $(this.element).closest('.typeahead__container').prepend('<img class="w3w-logo" src="https://assets.prod.what3words.com/images/w3w_grid-logo.svg" alt="w3w-logo">').append('<div class="typeahead-validation"></div>');
-            $(this.element).addClass('w3w_valid').attr('placeholder','e.g. lock.spout.radar').attr('autocomplete','off');
+            var direction = this.options.direction;
+
+            console.log(direction);
+            $(this.element).wrapAll('<div class="typeahead__container ' + direction + '"><div class="typeahead__field"><span class="typeahead__query"></span></div></div>');
+            $(this.element).closest('.typeahead__container').prepend('<img class="w3w-logo" src="https://assets.prod.what3words.com/images/w3w_grid-logo.svg" alt="w3w-logo">').after('<div class="typeahead-validation"></div>');
+            $(this.element).addClass('w3w_valid').attr('placeholder',this.options.placeholder).attr('autocomplete','off').attr('dir','auto');
         },
 
         bindEvents: function() {
@@ -10318,26 +10321,21 @@ var validator = require("jquery-validation");
         autoSuggest: function() {
             var W3W_API_END_POINT = 'https://api.what3words.com/v2/',
                 W3W_MAP_END_POINT = 'https://map.what3words.com/',
-                W3W_API_KEY = this.options.w3w_api_key,
+                W3W_API_KEY = this.options.key,
                 twaRegex = /^(\D{3,})\.(\D{3,})\.(\D{1,})$/i;
 
                 // Check if Country Selector defined.
                 if (this.options.country_selector !== '') {
                     // Give it a default value;
                     var selectedCountry = 'gb';
-
-                    //Debug
-                    if(this.options.debug) {
-                        console.log('w3w Country selector defined');
-                    }
                 }
 
             //DEBUG IF has key
             if(W3W_API_KEY === '' && this.options.debug) {
-                console.log('NO w3w API KEY has been added!');
-                alert('Please provide your w3w API key to be able to use our w3w Autosuggest plugin!')
+                console.log('No what3words API key found!');
+                alert('A what3words API key is required to use the AutoSuggest plugin. Information on how to register for a key can be found in the README')
             } else {
-                console.log('w3w API KEY given is: ' + this.options.w3w_api_key);
+                console.log('what3words API key: ' + this.options.key);
             }
 
             //SET Arabic input direction
@@ -10367,7 +10365,7 @@ var validator = require("jquery-validation");
 
                                 // Debug info
                                 if(_self.options.debug) {
-                                    console.log('Country selector is: ');
+                                    console.log('w3wAddress country_selector: ');
                                     console.log($(_self.options.country_selector));
                                     console.log('Selected Country is: ' + selectedCountry);
                                 }
@@ -10376,10 +10374,10 @@ var validator = require("jquery-validation");
 
                                     // Debug info
                                     if(_self.options.debug) {
-                                        console.log('limit: ' + _self.options.items_to_show);
+                                        console.log('limit: ' + _self.options.results);
                                     }
 
-                                    if (counter < _self.options.items_to_show ) {
+                                    if (counter < _self.options.results ) {
                                         counter++;
 
                                         if(_self.options.debug) {
@@ -10393,7 +10391,7 @@ var validator = require("jquery-validation");
                                     return false;
                                 }
                             } else {
-                                if (counter < _self.options.items_to_show ) {
+                                if (counter < _self.options.results ) {
                                      counter++;
                                      return true; // Will add the item to the result list
                                 }
@@ -10424,7 +10422,7 @@ var validator = require("jquery-validation");
                                         addr: '{{query}}',
                                         format: 'json',
                                         lang: _self.options.lang,
-                                        key: _self.options.w3w_api_key,
+                                        key: _self.options.key,
                                         count: _self.options.count,
                                         display: 'full'
                                     };
@@ -10470,7 +10468,7 @@ var validator = require("jquery-validation");
                     onInit: function(node) {
                         //Debug
                         if(_self.options.debug) {
-                            console.log('w3w Typeahead Initiated on ' + node.selector);
+                            console.log('w3wAddress typeahead initiated on field: ' + node.selector);
                         }
                     },
                     onResult: function(node, query, result, resultCount) {
@@ -10521,12 +10519,12 @@ var validator = require("jquery-validation");
 
             // Debug
             if(this.options.debug) {
-                console.log('Validation initiated');
+                console.log('Validating the w3wAddress field');
             }
 
             var W3W_API_END_POINT = 'https://api.what3words.com/v2/',
                 W3W_MAP_END_POINT = 'https://map.what3words.com/',
-                W3W_API_KEY = this.options.w3w_api_key,
+                W3W_API_KEY = this.options.key,
                 noMatch = false;
 
                 var _self = this;
@@ -10559,7 +10557,7 @@ var validator = require("jquery-validation");
                             if (response.hasOwnProperty('geometry')) {
                                 isSuccess=true;
 
-                                if (_self.options.auto_lang == true) {
+                                if (_self.options.auto_detect_lang == true) {
                                     _self.options.lang = response.language;
 
                                     // console.log('-----------EXACT MATCH / VALID ------------');
@@ -10590,7 +10588,7 @@ var validator = require("jquery-validation");
 
             //Add Custom W3W validation to $validator
             $.validator.addClassRules("w3w_valid", {
-                w3w_valid: true,
+                w3w_valid: true
             });
 
             var typingTimer,            //timer identifier
@@ -10612,7 +10610,7 @@ var validator = require("jquery-validation");
                                 $(element).valid();
                             }
                             else {
-                                if (_self.options.auto_lang == true) {
+                                if (_self.options.auto_detect_lang == true) {
                                     _self.options.lang = initial_language;
                                     $(_self.element).closest('.typeahead__container').removeClass('auto-lang');
                                 }
@@ -10622,7 +10620,7 @@ var validator = require("jquery-validation");
                 },
                 errorPlacement: function(error, element) {
                     var valid_container = element.closest('.typeahead__container');
-                    error.appendTo( $('.typeahead-validation', valid_container) );
+                    error.appendTo( valid_container.siblings('.typeahead-validation'));
                 }
             });
         }
@@ -10639,13 +10637,15 @@ var validator = require("jquery-validation");
 
     $.fn.w3wAddress.defaults = {
         country_selector: '',
-        w3w_api_key: '',
+        key: '',
         debug: false,
         validate: true,
         count: 20,
-        items_to_show: 3,
+        results: 3,
         lang: 'en',
-        auto_lang: true,
+        auto_detect_lang: true,
+        direction: 'ltr',
+        placeholder: 'e.g. lock.spout.radar',
         validation: true,
         valid_error: 'Please enter a valid 3 word address.'
     };

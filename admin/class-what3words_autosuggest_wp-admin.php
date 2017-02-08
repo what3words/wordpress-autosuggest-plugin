@@ -130,9 +130,21 @@ function w3w_settings_init()
     );
 
     add_settings_field(
-        'w3w_field_input', // as of WP 4.6 this value is used only internally
-        // use $args' label_for to populate the id inside the callback
-        __('Input field', 'w3w'),
+        'w3w_field_woocommerce_fields',
+        __('Woocommerce Checkout', 'w3w'),
+        'w3w_field_woocommerce_fields_cb',
+        'w3w',
+        'w3w_section_developers',
+        [
+            'label_for'         => 'w3w_field_woocommerce_fields',
+            'class'             => 'w3w_row',
+            'w3w_custom_data' => 'custom',
+        ]
+    );
+
+    add_settings_field(
+        'w3w_field_input',
+        __('Input field(s)', 'w3w'),
         'w3w_field_input_cb',
         'w3w',
         'w3w_section_developers',
@@ -144,8 +156,7 @@ function w3w_settings_init()
     );
 
     add_settings_field(
-        'w3w_field_country', // as of WP 4.6 this value is used only internally
-        // use $args' label_for to populate the id inside the callback
+        'w3w_field_country',
         __('Country Selector', 'w3w'),
         'w3w_field_country_cb',
         'w3w',
@@ -158,8 +169,7 @@ function w3w_settings_init()
     );
 
     add_settings_field(
-        'w3w_field_api_key', // as of WP 4.6 this value is used only internally
-        // use $args' label_for to populate the id inside the callback
+        'w3w_field_api_key',
         __('w3w API KEY', 'w3w'),
         'w3w_field_api_key_cb',
         'w3w',
@@ -173,8 +183,7 @@ function w3w_settings_init()
 
     // register a new field in the "w3w_section_developers" section, inside the "w3w" page
     add_settings_field(
-        'w3w_field_items_to_show', // as of WP 4.6 this value is used only internally
-        // use $args' label_for to populate the id inside the callback
+        'w3w_field_items_to_show',
         __('Number of results', 'w3w'),
         'w3w_field_items_to_show_cb',
         'w3w',
@@ -230,7 +239,7 @@ function w3w_field_input_cb($args)
     ?>
     <input id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_input'] ); ?>">
     <p class="description">
-        <?= esc_html('Selector of input (comma separated if multiple eg (.field, #another)) object where you like the w3w Autosuggest to initialise on?', 'w3w'); ?>
+        <?= esc_html('jQuery element selector of input field(s) (comma separated if multiple needed, eg (.field, #another)) where the w3w Autosuggest should be initialise on.', 'w3w'); ?>
     </p>
     <?php
 }
@@ -245,7 +254,7 @@ function w3w_field_country_cb($args)
     ?>
     <input id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_country'] ); ?>">
     <p class="description">
-        <?= esc_html('OPTIONAL - Selector of Country Selector field', 'w3w'); ?>
+        <?= esc_html('OPTIONAL - jQuery element selector of Country Selector field, should be <select> element.', 'w3w'); ?>
     </p>
     <?php
 }
@@ -260,7 +269,21 @@ function w3w_field_api_key_cb($args)
     ?>
     <input id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_api_key'] ); ?>">
     <p class="description">
-        <?= esc_html('Please proved your what3words API KEY.', 'w3w'); ?>
+        <?= esc_html('Please provide your what3words API KEY.', 'w3w'); ?>
+    </p>
+    <?php
+}
+
+function w3w_field_woocommerce_fields_cb($args)
+{
+    // get the value of the setting we've registered with register_setting()
+    $options = get_option('w3w_options');
+    // output the field
+    ?>
+    <input type="checkbox" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" value="1"<?php checked( 1 == $options['w3w_field_woocommerce_fields'] ); ?> />
+
+    <p class="description">
+        <?= esc_html('Would you like to include w3w address fields on WooCommerce Checkout pages? (If checked add element selectors below #shipping_w3w, #billing_w3w )', 'w3w'); ?>
     </p>
     <?php
 }
@@ -319,7 +342,9 @@ function w3w_options_page()
         'w3w Options',
         'manage_options',
         'w3w',
-        'w3w_options_page_html'
+        'w3w_options_page_html',
+        'dashicons-location',
+        99
     );
 }
 

@@ -76,39 +76,47 @@ run_what3words_autosuggest_wp();
 
 
 
-// Hook in
-add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
+$options = get_option('w3w_options');
 
-// Our hooked in function - $fields is passed via the filter!
-function custom_override_checkout_fields( $fields ) {
-     $fields['shipping']['shipping_w3w'] = array(
-        'label'     => __('w3w Address', 'woocommerce'),
-	    'placeholder'   => _x('w3w Address', 'placeholder', 'woocommerce'),
-	    'required'  => false,
-	    'class'     => array('form-row-wide'),
-	    'clear'     => true
-     );
+if ($options['w3w_field_woocommerce_fields'] == 1) {
 
-     $fields['billing']['billing_w3w'] = array(
-        'label'     => __('w3w Address', 'woocommerce'),
-	    'placeholder'   => _x('w3w Address', 'placeholder', 'woocommerce'),
-	    'required'  => false,
-	    'class'     => array('form-row-wide'),
-	    'clear'     => true
-     );
+	// Hook in
+	add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
 
-     return $fields;
+	// Our hooked in function - $fields is passed via the filter!
+	function custom_override_checkout_fields( $fields ) {
+	     $fields['shipping']['shipping_w3w'] = array(
+	        'label'     => __('w3w Address', 'woocommerce'),
+		    'placeholder'   => _x('w3w Address', 'placeholder', 'woocommerce'),
+		    'required'  => false,
+		    'class'     => array('form-row-wide'),
+		    'clear'     => true
+	     );
+
+	     $fields['billing']['billing_w3w'] = array(
+	        'label'     => __('w3w Address', 'woocommerce'),
+		    'placeholder'   => _x('w3w Address', 'placeholder', 'woocommerce'),
+		    'required'  => false,
+		    'class'     => array('form-row-wide'),
+		    'clear'     => true
+	     );
+
+	     return $fields;
+	}
+
+	/**
+	 * Display field value on the order edit page
+	 */
+
+	add_action( 'woocommerce_admin_order_data_after_shipping_address', 'my_custom_checkout_field_display_admin_order_meta', 10, 1 );
+
+	function my_custom_checkout_field_display_admin_order_meta($order){
+	    echo '<p><strong>'.__('w3w Address').':</strong> ' . get_post_meta( $order->id, '_shipping_w3w', true ) . '</p>';
+	}
+
 }
 
-/**
- * Display field value on the order edit page
- */
-
-add_action( 'woocommerce_admin_order_data_after_shipping_address', 'my_custom_checkout_field_display_admin_order_meta', 10, 1 );
-
-function my_custom_checkout_field_display_admin_order_meta($order){
-    echo '<p><strong>'.__('w3w Address').':</strong> ' . get_post_meta( $order->id, '_shipping_w3w', true ) . '</p>';
-}
+add_filter( 'woocommerce_ship_to_different_address_checked', '__return_false' );
 
 
 // Add scripts to wp_footer()
@@ -123,7 +131,7 @@ function w3w_autosuggest_footer_scripts() {
 
 			$('<?php echo esc_attr( $options['w3w_field_input'] ); ?>').w3wAddress({
 				debug: false,
-				w3w_api_key: '<?php echo esc_attr( $options['w3w_field_api_key'] ); ?>',
+				key: '<?php echo esc_attr( $options['w3w_field_api_key'] ); ?>',
 				items_to_show: <?php echo esc_attr( $options['w3w_field_items_to_show'] ); ?>,
 				country_selector: '<?php echo esc_attr( $options['w3w_field_country'] ); ?>',
 				auto_lang: true
