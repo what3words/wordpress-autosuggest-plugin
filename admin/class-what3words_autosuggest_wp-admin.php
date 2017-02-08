@@ -195,6 +195,32 @@ function w3w_settings_init()
         ]
     );
 
+    add_settings_field(
+        'w3w_field_lang',
+        __('Language', 'w3w'),
+        'w3w_field_lang_cb',
+        'w3w',
+        'w3w_section_developers',
+        [
+            'label_for'         => 'w3w_field_lang',
+            'class'             => 'w3w_row',
+            'w3w_custom_data' => 'custom',
+        ]
+    );
+
+    add_settings_field(
+        'w3w_field_direction',
+        __('Direction of typing', 'w3w'),
+        'w3w_field_direction_cb',
+        'w3w',
+        'w3w_section_developers',
+        [
+            'label_for'         => 'w3w_field_direction',
+            'class'             => 'w3w_row',
+            'w3w_custom_data' => 'custom',
+        ]
+    );
+
 }
 
 /**
@@ -233,9 +259,7 @@ function w3w_section_developers_cb($args)
 
 function w3w_field_input_cb($args)
 {
-    // get the value of the setting we've registered with register_setting()
     $options = get_option('w3w_options');
-    // output the field
     ?>
     <input id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_input'] ); ?>">
     <p class="description">
@@ -248,9 +272,7 @@ function w3w_field_input_cb($args)
 
 function w3w_field_country_cb($args)
 {
-    // get the value of the setting we've registered with register_setting()
     $options = get_option('w3w_options');
-    // output the field
     ?>
     <input id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_country'] ); ?>">
     <p class="description">
@@ -263,9 +285,7 @@ function w3w_field_country_cb($args)
 
 function w3w_field_api_key_cb($args)
 {
-    // get the value of the setting we've registered with register_setting()
     $options = get_option('w3w_options');
-    // output the field
     ?>
     <input id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_api_key'] ); ?>">
     <p class="description">
@@ -276,9 +296,7 @@ function w3w_field_api_key_cb($args)
 
 function w3w_field_woocommerce_fields_cb($args)
 {
-    // get the value of the setting we've registered with register_setting()
     $options = get_option('w3w_options');
-    // output the field
     ?>
     <input type="checkbox" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" value="1"<?php checked( 1 == $options['w3w_field_woocommerce_fields'] ); ?> />
 
@@ -290,11 +308,8 @@ function w3w_field_woocommerce_fields_cb($args)
 
 function w3w_field_items_to_show_cb($args)
 {
-    // get the value of the setting we've registered with register_setting()
     $options = get_option('w3w_options');
 
-    //var_dump($options);
-    // output the field
     ?>
     <select id="<?= esc_attr($args['label_for']); ?>"
             data-custom="<?= esc_attr($args['w3w_custom_data']); ?>"
@@ -327,6 +342,39 @@ function w3w_field_items_to_show_cb($args)
     </select>
     <p class="description">
         <?= esc_html('Select number of results wanted in the w3w Autosuggest field', 'w3w'); ?>
+    </p>
+    <?php
+}
+
+function w3w_field_lang_cb($args)
+{
+    $options = get_option('w3w_options');
+    ?>
+    <input id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_lang'] ); ?>" maxlength="2">
+    <p class="description">
+        <?= esc_html('Option to define autosuggest language with a 2 character language code (default is "en")', 'w3w'); ?>
+    </p>
+    <?php
+}
+
+function w3w_field_direction_cb($args)
+{
+    $options = get_option('w3w_options');
+
+    ?>
+    <select id="<?= esc_attr($args['label_for']); ?>"
+            data-custom="<?= esc_attr($args['w3w_custom_data']); ?>"
+            name="w3w_options[<?= esc_attr($args['label_for']); ?>]"
+    >
+        <option value="ltr" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'LTR', false)) : (''); ?>>
+            <?= esc_html('LTR', 'w3w'); ?>
+        </option>
+        <option value="rtl" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'RTL', false)) : (''); ?>>
+            <?= esc_html('RTL', 'w3w'); ?>
+        </option>
+    </select>
+    <p class="description">
+        <?= esc_html('Direction of typing. Can be "Left to Right" or "Right to Left" ', 'w3w'); ?>
     </p>
     <?php
 }
