@@ -209,6 +209,19 @@ function w3w_settings_init()
     );
 
     add_settings_field(
+        'w3w_field_lang_auto',
+        __('Language detection', 'w3w'),
+        'w3w_field_lang_auto_cb',
+        'w3w',
+        'w3w_section_developers',
+        [
+            'label_for'         => 'w3w_field_lang_auto',
+            'class'             => 'w3w_row',
+            'w3w_custom_data' => 'custom',
+        ]
+    );
+
+    add_settings_field(
         'w3w_field_direction',
         __('Direction of typing', 'w3w'),
         'w3w_field_direction_cb',
@@ -370,6 +383,28 @@ function w3w_field_lang_cb($args)
     <?php
 }
 
+function w3w_field_lang_auto_cb($args)
+{
+    $options = get_option('w3w_options');
+
+    ?>
+    <select id="<?= esc_attr($args['label_for']); ?>"
+            data-custom="<?= esc_attr($args['w3w_custom_data']); ?>"
+            name="w3w_options[<?= esc_attr($args['label_for']); ?>]"
+    >
+        <option value="true" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'true', false)) : (''); ?>>
+            <?= esc_html('Enable', 'w3w'); ?>
+        </option>
+        <option value="false" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'false', false)) : (''); ?>>
+            <?= esc_html('Disable', 'w3w'); ?>
+        </option>
+    </select>
+    <p class="description">
+        <?= esc_html('Enable or Disable language detection of entered / pasted what3words address. In case enabled it will automatically changes language of the returned results.', 'w3w'); ?>
+    </p>
+    <?php
+}
+
 function w3w_field_direction_cb($args)
 {
     $options = get_option('w3w_options');
@@ -379,11 +414,11 @@ function w3w_field_direction_cb($args)
             data-custom="<?= esc_attr($args['w3w_custom_data']); ?>"
             name="w3w_options[<?= esc_attr($args['label_for']); ?>]"
     >
-        <option value="ltr" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'LTR', false)) : (''); ?>>
-            <?= esc_html('LTR', 'w3w'); ?>
+        <option value="ltr" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'ltr', false)) : (''); ?>>
+            <?= esc_html('Left to Right', 'w3w'); ?>
         </option>
-        <option value="rtl" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'RTL', false)) : (''); ?>>
-            <?= esc_html('RTL', 'w3w'); ?>
+        <option value="rtl" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'rtl', false)) : (''); ?>>
+            <?= esc_html('Right to Left', 'w3w'); ?>
         </option>
     </select>
     <p class="description">

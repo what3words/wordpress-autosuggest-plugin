@@ -134,7 +134,7 @@ function w3w_autosuggest_footer_scripts() {
 				key: '<?php echo esc_attr( $options['w3w_field_api_key'] ); ?>',
 				items_to_show: <?php echo esc_attr( $options['w3w_field_items_to_show'] ); ?>,
 				country_selector: '<?php echo esc_attr( $options['w3w_field_country'] ); ?>',
-				auto_lang: true,
+				auto_lang: <?php echo esc_attr( $options['w3w_field_lang_auto'] ); ?>,
 				lang: '<?php echo esc_attr( $options['w3w_field_lang'] ); ?>',
 				direction: '<?php echo esc_attr( $options['w3w_field_direction'] ); ?>',
 				placeholder : '<?php echo esc_attr( $options['w3w_field_placeholder'] ); ?>'
