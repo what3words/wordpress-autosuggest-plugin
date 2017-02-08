@@ -376,9 +376,55 @@ function w3w_field_lang_cb($args)
 {
     $options = get_option('w3w_options');
     ?>
-    <input id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_lang'] ); ?>" maxlength="2">
+    <select id="<?= esc_attr($args['label_for']); ?>"
+            data-custom="<?= esc_attr($args['w3w_custom_data']); ?>"
+            name="w3w_options[<?= esc_attr($args['label_for']); ?>]"
+    >
+        <option value="en" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'en', false)) : (''); ?>>
+            <?= esc_html('English', 'w3w'); ?>
+        </option>
+        <option value="it" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'it', false)) : (''); ?>>
+            <?= esc_html('Italian', 'w3w'); ?>
+        </option>
+        <option value="fr" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'fr', false)) : (''); ?>>
+            <?= esc_html('French', 'w3w'); ?>
+        </option>
+        <option value="es" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'es', false)) : (''); ?>>
+            <?= esc_html('Spanish; Castilian', 'w3w'); ?>
+        </option>
+        <option value="ar" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'ar', false)) : (''); ?>>
+            <?= esc_html('Arabic', 'w3w'); ?>
+        </option>
+        <option value="pl" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'pl', false)) : (''); ?>>
+            <?= esc_html('Polish', 'w3w'); ?>
+        </option>
+        <option value="tr" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'tr', false)) : (''); ?>>
+            <?= esc_html('Turkish', 'w3w'); ?>
+        <option value="de" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'de', false)) : (''); ?>>
+            <?= esc_html('German', 'w3w'); ?>
+        </option>
+        <option value="mn" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'mn', false)) : (''); ?>>
+            <?= esc_html('Mongolian', 'w3w'); ?>
+        </option>
+        <option value="fi" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'fi', false)) : (''); ?>>
+            <?= esc_html('Finnish', 'w3w'); ?>
+        </option>
+        <option value="ru" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'ru', false)) : (''); ?>>
+            <?= esc_html('Russian', 'w3w'); ?>
+        </option>
+        <option value="sv" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'sv', false)) : (''); ?>>
+            <?= esc_html('Swedish', 'w3w'); ?>
+        </option>
+        <option value="pt" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'pt', false)) : (''); ?>>
+            <?= esc_html('Portuguese', 'w3w'); ?>
+        </option>
+        <option value="sw" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'sw', false)) : (''); ?>>
+            <?= esc_html('Swahili', 'w3w'); ?>
+        </option>
+        </option>
+    </select>
     <p class="description">
-        <?= esc_html('Option to define autosuggest language with a 2 character language code (default is "en")', 'w3w'); ?>
+        <?= esc_html('Enable or Disable language detection of entered / pasted what3words address. In case enabled it will automatically changes language of the returned results.', 'w3w'); ?>
     </p>
     <?php
 }
