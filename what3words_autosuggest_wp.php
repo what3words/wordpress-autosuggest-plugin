@@ -122,14 +122,24 @@ add_filter( 'woocommerce_ship_to_different_address_checked', '__return_false' );
 // Add scripts to wp_footer()
 function w3w_autosuggest_footer_scripts() {
 	$options = get_option('w3w_options');
+
+		$elements = $options['w3w_field_input'];
+
+		if ($elements != '') {
+			if ($options['w3w_field_woocommerce_fields'] == 1) {
+				$elements = $elements . ', ' . '#shipping_w3w, #billing_w3w';
+			}
+		} else {
+			if ($options['w3w_field_woocommerce_fields'] == 1) {
+				$elements = '#shipping_w3w, #billing_w3w';
+			}
+		}
 	?>
 
 	<script>
 		;(function($) {
 
-			console.log('w3w Init');
-
-			$('<?php echo esc_attr( $options['w3w_field_input'] ); ?>').w3wAddress({
+			$('<?php echo $elements; ?>').w3wAddress({
 				debug: false,
 				key: '<?php echo esc_attr( $options['w3w_field_api_key'] ); ?>',
 				items_to_show: <?php echo esc_attr( $options['w3w_field_items_to_show'] ); ?>,

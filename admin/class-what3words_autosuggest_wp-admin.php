@@ -122,21 +122,38 @@ function w3w_settings_init()
     register_setting('w3w', 'w3w_options');
 
     // register a new section in the "w3w" page
+
+    add_settings_section(
+        'w3w_api_settings_section',
+        __('<img src="https://assets.what3words.com/images/what3words_e-mail-logo.png" width="250"/><br><h1>what3words API Settings</h1>', 'w3w'),
+        'w3w_api_settings_section_cb',
+        'w3w'
+    );
+
     add_settings_section(
         'w3w_section_developers',
-        __('<img src="https://assets.what3words.com/images/what3words_e-mail-logo.png" width="250"/>', 'w3w'),
+        __('<h1>AutoSuggest Settings</h1>', 'w3w'),
         'w3w_section_developers_cb',
         'w3w'
     );
 
+    add_settings_section(
+        'w3w_section_woocommerce',
+        __('<h1>WooCommerce</h1><p>To use the plugin on a WooCommerce checkout page, simply tick the box below:</p>', 'w3w'),
+        'w3w_section_woocommerce_cb',
+        'w3w'
+    );
+
+
+
     add_settings_field(
-        'w3w_field_woocommerce_fields',
-        __('Woocommerce Checkout', 'w3w'),
-        'w3w_field_woocommerce_fields_cb',
+        'w3w_field_api_key',
+        __('w3w API KEY <abbr class="required" title="required" aria-required="true">*</abbr>', 'w3w'),
+        'w3w_field_api_key_cb',
         'w3w',
-        'w3w_section_developers',
+        'w3w_api_settings_section',
         [
-            'label_for'         => 'w3w_field_woocommerce_fields',
+            'label_for'         => 'w3w_field_api_key',
             'class'             => 'w3w_row',
             'w3w_custom_data' => 'custom',
         ]
@@ -150,46 +167,6 @@ function w3w_settings_init()
         'w3w_section_developers',
         [
             'label_for'         => 'w3w_field_input',
-            'class'             => 'w3w_row',
-            'w3w_custom_data' => 'custom',
-        ]
-    );
-
-    add_settings_field(
-        'w3w_field_country',
-        __('Country Selector', 'w3w'),
-        'w3w_field_country_cb',
-        'w3w',
-        'w3w_section_developers',
-        [
-            'label_for'         => 'w3w_field_country',
-            'class'             => 'w3w_row',
-            'w3w_custom_data' => 'custom',
-        ]
-    );
-
-    add_settings_field(
-        'w3w_field_api_key',
-        __('w3w API KEY', 'w3w'),
-        'w3w_field_api_key_cb',
-        'w3w',
-        'w3w_section_developers',
-        [
-            'label_for'         => 'w3w_field_api_key',
-            'class'             => 'w3w_row',
-            'w3w_custom_data' => 'custom',
-        ]
-    );
-
-    // register a new field in the "w3w_section_developers" section, inside the "w3w" page
-    add_settings_field(
-        'w3w_field_items_to_show',
-        __('Number of results', 'w3w'),
-        'w3w_field_items_to_show_cb',
-        'w3w',
-        'w3w_section_developers',
-        [
-            'label_for'         => 'w3w_field_items_to_show',
             'class'             => 'w3w_row',
             'w3w_custom_data' => 'custom',
         ]
@@ -221,14 +198,15 @@ function w3w_settings_init()
         ]
     );
 
+    // register a new field in the "w3w_section_developers" section, inside the "w3w" page
     add_settings_field(
-        'w3w_field_direction',
-        __('Direction of typing', 'w3w'),
-        'w3w_field_direction_cb',
+        'w3w_field_items_to_show',
+        __('Number of results', 'w3w'),
+        'w3w_field_items_to_show_cb',
         'w3w',
         'w3w_section_developers',
         [
-            'label_for'         => 'w3w_field_direction',
+            'label_for'         => 'w3w_field_items_to_show',
             'class'             => 'w3w_row',
             'w3w_custom_data' => 'custom',
         ]
@@ -236,7 +214,7 @@ function w3w_settings_init()
 
    add_settings_field(
         'w3w_field_placeholder',
-        __('Input placeholder', 'w3w'),
+        __('Input placeholder text', 'w3w'),
         'w3w_field_placeholder_cb',
         'w3w',
         'w3w_section_developers',
@@ -247,6 +225,44 @@ function w3w_settings_init()
         ]
     );
 
+    add_settings_field(
+        'w3w_field_direction',
+        __('UI Direction', 'w3w'),
+        'w3w_field_direction_cb',
+        'w3w',
+        'w3w_section_developers',
+        [
+            'label_for'         => 'w3w_field_direction',
+            'class'             => 'w3w_row',
+            'w3w_custom_data' => 'custom',
+        ]
+    );
+
+    add_settings_field(
+        'w3w_field_country',
+        __('Country Selector', 'w3w'),
+        'w3w_field_country_cb',
+        'w3w',
+        'w3w_section_developers',
+        [
+            'label_for'         => 'w3w_field_country',
+            'class'             => 'w3w_row',
+            'w3w_custom_data' => 'custom',
+        ]
+    );
+
+    add_settings_field(
+        'w3w_field_woocommerce_fields',
+        __('Woocommerce Checkout', 'w3w'),
+        'w3w_field_woocommerce_fields_cb',
+        'w3w',
+        'w3w_section_woocommerce',
+        [
+            'label_for'         => 'w3w_field_woocommerce_fields',
+            'class'             => 'w3w_row',
+            'w3w_custom_data' => 'custom',
+        ]
+    );
 }
 
 /**
@@ -264,12 +280,7 @@ add_action('admin_init', 'w3w_settings_init');
 // section callbacks can accept an $args parameter, which is an array.
 // $args have the following keys defined: title, id, callback.
 // the values are defined at the add_settings_section() function.
-function w3w_section_developers_cb($args)
-{
-    ?>
-    <p id="<?= esc_attr($args['id']); ?>">In order to use w3w services you must use your own w3w API key! In case you don&apos;t have one yet, get one <a href="https://what3words.com/register" target="_blank">here</a>.</p>
-    <?php
-}
+
 
 // pill field cb
 
@@ -280,6 +291,21 @@ function w3w_section_developers_cb($args)
 // the "class" key value is used for the "class" attribute of the <tr> containing the field.
 // you can add custom key value pairs to be used inside your callbacks.
 
+    //Create / Add API key field
+
+function w3w_field_api_key_cb($args)
+{
+    $options = get_option('w3w_options');
+    ?>
+    <input required id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_api_key'] ); ?>">
+    <p class="description">
+        <?= esc_html('A what3words API key is required to connect the plugin with the what3words autosuggest API method. ', 'w3w'); ?>
+    </p>
+    <p class="description">
+        If you don’t have an API key yet, you can register for one <a href="https://what3words.com/register" target="_blank">here</a>.
+    </p>
+    <?php
+}
 
     // Create / Add the object field where we initialising the plugin on
 
@@ -289,7 +315,7 @@ function w3w_field_input_cb($args)
     ?>
     <input id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_input'] ); ?>">
     <p class="description">
-        <?= esc_html('jQuery element selector of input field(s) (comma separated if multiple needed, eg (.field, #another)) where the w3w Autosuggest should be initialise on.', 'w3w'); ?>
+        <?= esc_html('The input field(s) what3words autosuggest is initialised on defined as a jQuery element selector. Multiple fields can be specified using commas e.g. “.class,  #id”.', 'w3w'); ?>
     </p>
     <?php
 }
@@ -302,35 +328,25 @@ function w3w_field_country_cb($args)
     ?>
     <input id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_country'] ); ?>">
     <p class="description">
-        <?= esc_html('OPTIONAL - jQuery element selector of Country Selector field, should be <select> element.', 'w3w'); ?>
+        <?= esc_html('The country selector DOM element defined as a jQuery element selector e.g. “#shipping_country”. Filters 3 word address suggestions to the selected country.', 'w3w'); ?>
     </p>
     <?php
 }
 
-    //Create / Add API key field
-
-function w3w_field_api_key_cb($args)
-{
-    $options = get_option('w3w_options');
-    ?>
-    <input id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_api_key'] ); ?>">
-    <p class="description">
-        <?= esc_html('Please provide your what3words API KEY.', 'w3w'); ?>
-    </p>
-    <?php
-}
 
 function w3w_field_woocommerce_fields_cb($args)
 {
     $options = get_option('w3w_options');
     ?>
+
     <input type="checkbox" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" value="1"<?php checked( 1 == $options['w3w_field_woocommerce_fields'] ); ?> />
 
     <p class="description">
-        <?= esc_html('Would you like to include w3w address fields on WooCommerce Checkout pages? (If checked add element selectors below #shipping_w3w, #billing_w3w )', 'w3w'); ?>
+        <?= esc_html('NB. The element selectors #shipping_w3w and #billing_w3w will automatically be applied to the AutoSuggest settings.', 'w3w'); ?>
     </p>
     <?php
 }
+
 
 function w3w_field_items_to_show_cb($args)
 {
@@ -424,7 +440,7 @@ function w3w_field_lang_cb($args)
         </option>
     </select>
     <p class="description">
-        <?= esc_html('Enable or Disable language detection of entered / pasted what3words address. In case enabled it will automatically changes language of the returned results.', 'w3w'); ?>
+        <?= esc_html('The autosuggest 3 word address language. We recommend that you set this to the language of your user interface.', 'w3w'); ?>
     </p>
     <?php
 }
@@ -446,7 +462,7 @@ function w3w_field_lang_auto_cb($args)
         </option>
     </select>
     <p class="description">
-        <?= esc_html('Enable or Disable language detection of entered / pasted what3words address. In case enabled it will automatically changes language of the returned results.', 'w3w'); ?>
+        <?= esc_html('Automatically updates the autosuggest language if a valid 3 word address is detected in another language.', 'w3w'); ?>
     </p>
     <?php
 }
@@ -468,7 +484,7 @@ function w3w_field_direction_cb($args)
         </option>
     </select>
     <p class="description">
-        <?= esc_html('Direction of typing. Can be "Left to Right" or "Right to Left" ', 'w3w'); ?>
+        <?= esc_html('Layout direction of the user interface. Can be set to “right-to-left” for e.g. Arabic websites. ', 'w3w'); ?>
     </p>
     <?php
 }
@@ -491,7 +507,7 @@ function w3w_options_page()
 {
     // add top level menu page
     add_menu_page(
-        'what3words Autosuggest Wordpress plugin',
+        'what3words AutoSuggest',
         'w3w Options',
         'manage_options',
         'w3w',
