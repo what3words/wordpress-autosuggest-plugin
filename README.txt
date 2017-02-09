@@ -75,20 +75,16 @@ For all frequently asked questions, and their answers, please visit our [support
 
 == Screenshots ==
 
-![A 3 word address field with custom placeholder text.]
-(https://assets.what3words.com/images/w3w-autosuggest-wp-plugin/screenshot-1.jpg)
+![A 3 word address field with custom placeholder text.](https://assets.what3words.com/images/w3w-autosuggest-wp-plugin/screenshot-1.jpg)
 A 3 word address field with custom placeholder text.
 
-![An example of autosuggest results optionally filtered by country.]
-(https://assets.what3words.com/images/w3w-autosuggest-wp-plugin/screenshot-2.jpg)
+![An example of autosuggest results optionally filtered by country.](https://assets.what3words.com/images/w3w-autosuggest-wp-plugin/screenshot-2.jpg)
 An example of autosuggest results optionally filtered by country.
 
-![A validated 3 word address.]
-(https://assets.what3words.com/images/w3w-autosuggest-wp-plugin/screenshot-3.jpg)
+![A validated 3 word address.](https://assets.what3words.com/images/w3w-autosuggest-wp-plugin/screenshot-3.jpg)
 A validated 3 word address.
 
-![Dashboard to configure 3 word address plugin settings.]
-(https://assets.what3words.com/images/w3w-autosuggest-wp-plugin/screenshot-4.jpg)
+![Dashboard to configure 3 word address plugin settings.](https://assets.what3words.com/images/w3w-autosuggest-wp-plugin/screenshot-4.jpg)
 Dashboard to configure 3 word address plugin settings.
 
 

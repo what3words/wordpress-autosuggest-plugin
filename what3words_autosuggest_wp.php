@@ -76,6 +76,7 @@ run_what3words_autosuggest_wp();
 
 
 
+// Hook in Woocommerce fields only when option is checked
 $options = get_option('w3w_options');
 
 if ($options['w3w_field_woocommerce_fields'] == 1) {
@@ -105,13 +106,47 @@ if ($options['w3w_field_woocommerce_fields'] == 1) {
 	}
 
 	/**
-	 * Display field value on the order edit page
+	 * Display field values on the order edit page
 	 */
 
 	add_action( 'woocommerce_admin_order_data_after_shipping_address', 'my_custom_checkout_field_display_admin_order_meta', 10, 1 );
 
+	add_action( 'woocommerce_admin_order_data_after_billing_address', 'my_custom_checkout_field_display_admin_billing_order_meta', 10, 1 );
+
 	function my_custom_checkout_field_display_admin_order_meta($order){
 	    echo '<p><strong>'.__('w3w Address').':</strong> ' . get_post_meta( $order->id, '_shipping_w3w', true ) . '</p>';
+	}
+
+	function my_custom_checkout_field_display_admin_billing_order_meta($order){
+	    echo '<p><strong>'.__('w3w Address').':</strong> ' . get_post_meta( $order->id, '_billing_w3w', true ) . '</p>';
+	}
+
+
+	//Add a 4th scanning place for Woocommerce template overrides within the plugin directory
+	add_filter( 'woocommerce_locate_template', 'woo_adon_plugin_template', 1, 3 );
+	   function woo_adon_plugin_template( $template, $template_name, $template_path ) {
+	     global $woocommerce;
+	     $_template = $template;
+	     if ( ! $template_path )
+	        $template_path = $woocommerce->template_url;
+
+	     $plugin_path  = untrailingslashit( plugin_dir_path( __FILE__ ) )  . '/template/woocommerce/';
+
+	    // Look within passed path within the theme - this is priority
+	    $template = locate_template(
+	    array(
+	      $template_path . $template_name,
+	      $template_name
+	    )
+	   );
+
+	   if( ! $template && file_exists( $plugin_path . $template_name ) )
+	    $template = $plugin_path . $template_name;
+
+	   if ( ! $template )
+	    $template = $_template;
+
+	   return $template;
 	}
 
 }
