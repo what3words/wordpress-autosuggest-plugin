@@ -1,114 +1,102 @@
-=== Plugin Name ===
-Contributors: franszo
-Donate link: http://codetheory.london
-Tags: what3words, w3w, autosuggest, list
+=== 3 word address validation field ===
+Contributors: what3words
+Tags: what3words, w3w, what 3 words, autosuggest, address, 3 word address, postcode, coordinates, location, delivery, e-commerce, ecommerce, checkout, form, woocommerce
 Requires at least: 4.0.1
 Tested up to: 4.7.2
 Stable tag: 4.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Autosuggest plugin that showing what3word addresses as you type.
+Easily capture 3 word addresses on your website by using the 3 word address validation field plugin by what3words.
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+what3words gives every 3mx3m square in the world a unique 3 word address. It is a great tool to use when a street address is not accurate enough or doesn’t exist.
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+The 3 word address validation field plugin created by what3words allows you to easily integrate 3 word addresses into a form on your site.
 
-A few notes about the sections above:
+Returning suggestions based on full or partial 3 word addresses, it helps users with the following types of input error:
 
-*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
+* typing errors
+* spelling errors
+* misremembered words (e.g. singular vs. plural) words in the wrong order
 
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
+We recommend using the plugin when you want to capture a precise location from a user. This could be the exact delivery point for your customer’s order e.g. their front door.
 
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
+= Build more with what3words =
+
+what3words is available in most of the official UN languages, as well as several others. 3 word addresses are pre-assigned and are much easier to remember than lat/long coordinates.
+
+Visit our [developer site](http://developer.what3words.com/) for more information on how to integrate your products with what3words.
+
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
+You can install the 3 word address validation field plugin directly via the plugin directory, or by uploading the files manually to your server.
 
-e.g.
+Once the plugin has been installed, you must configure it via the plugin settings. See ‘Configuration’ for more details.
 
-1. Upload `what3words_autosuggest_wp.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
+== Configuration ==
+
+= what3words API Settings =
+
+A what3words API key is required to use the plugin as it authenticates and interacts with the what3words RESTful API [autosuggest method](https://docs.what3words.com/api/v2/#autosuggest).
+
+If you don’t have a what3words API key yet, you'll need to [register](https://map.what3words.com/register?dev=true) for one.
+
+= AutoSuggest Settings =
+
+The 3 word address validation field uses the what3words autosuggest method to help users with input errors. It can be configured with the following settings:
+
+* Input field(s). You must specify the jQuery object selector(s) where you would like the 3 word address validation field to appear as an input field (.class or #id). Multiple instances can be separated using commas e.g. “#shipping_w3w, #billing_w3w”.
+
+* Number of results. Defines the number of 3 word address suggestions shown in the autosuggest results. The maximum number of results that can be shown is 20.
+
+* Language. The list of languages currently supported by what3words, defined as a 2 letter [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) code (default is "en").
+
+* Language detection. When enabled, the autosuggest language automatically updates if a valid 3 word address is detected in a different language.
+
+* UI Direction. Direction of the 3 word address validation field. Options are "Left to Right" or "Right to Left" (used for e.g. Arabic).
+
+* Input placeholder. Placeholder text for the 3 word address validation field, for example "e.g. lock.spout.radar". We recommend using a placeholder of a 3 word address in the same language as the autosuggest language.
+
+* Country Selector. An optional jQuery object selector, for example “#shipping_country”, can be provided to filter the 3 word address results to a specific country.
+Please note, a form element must be a `<select>` and the option values must be a [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)  country code.
+
+= WooCommerce Checkout =
+
+The plugin also allows you to automatically add a 3 word address validation field to a WooCommerce checkout form and save the 3 word address to the order.
+
+By enabling WooCommerce checkout integration, #shipping_w3w and #billing_w3w will be added by default to the AutoSuggest Input Field settings.
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
-
-An answer to that question.
-
-= What about foo bar? =
-
-Answer to foo bar dilemma.
+For all frequently asked questions, and their answers, please visit our [support site](https://support.what3words.com/hc/en-us).
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+![A 3 word address field with custom placeholder text.]
+(https://assets.what3words.com/images/w3w-autosuggest-wp-plugin/screenshot-1.jpg)
+A 3 word address field with custom placeholder text.
+
+![An example of autosuggest results optionally filtered by country.]
+(https://assets.what3words.com/images/w3w-autosuggest-wp-plugin/screenshot-2.jpg)
+An example of autosuggest results optionally filtered by country.
+
+![A validated 3 word address.]
+(https://assets.what3words.com/images/w3w-autosuggest-wp-plugin/screenshot-3.jpg)
+A validated 3 word address.
+
+![Dashboard to configure 3 word address plugin settings.]
+(https://assets.what3words.com/images/w3w-autosuggest-wp-plugin/screenshot-4.jpg)
+Dashboard to configure 3 word address plugin settings.
+
 
 == Changelog ==
 
 = 1.0 =
-* A change since the previous version.
-* Another change.
+* Initial release
 
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
 
-== Upgrade Notice ==
 
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
 
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
-
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
-
-== A brief Markdown Example ==
-
-Ordered list:
-
-1. Some feature
-1. Another feature
-1. Something else about the plugin
-
-Unordered list:
-
-* something
-* something else
-* third thing
-
-Here's a link to [WordPress](http://wordpress.org/ "Your favorite software") and one to [Markdown's Syntax Documentation][markdown syntax].
-Titles are optional, naturally.
-
-[markdown syntax]: http://daringfireball.net/projects/markdown/syntax
-            "Markdown is what the parser uses to process much of the readme file"
-
-Markdown uses email style notation for blockquotes and I've been told:
-> Asterisks for *emphasis*. Double it up  for **strong**.
-
-`<?php code(); // goes in backticks ?>`
