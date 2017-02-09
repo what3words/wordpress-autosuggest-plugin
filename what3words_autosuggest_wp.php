@@ -122,7 +122,10 @@ if ($options['w3w_field_woocommerce_fields'] == 1) {
 	}
 
 
-	//Add a 4th scanning place for Woocommerce template overrides within the plugin directory
+	/**
+	 * Add a 4th scanning place for Woocommerce template overrides within the plugin directory
+	 */
+
 	add_filter( 'woocommerce_locate_template', 'woo_adon_plugin_template', 1, 3 );
 	   function woo_adon_plugin_template( $template, $template_name, $template_path ) {
 	     global $woocommerce;
@@ -148,7 +151,6 @@ if ($options['w3w_field_woocommerce_fields'] == 1) {
 
 	   return $template;
 	}
-
 }
 
 add_filter( 'woocommerce_ship_to_different_address_checked', '__return_false' );
@@ -159,7 +161,6 @@ function w3w_autosuggest_footer_scripts() {
 	$options = get_option('w3w_options');
 
 		$elements = $options['w3w_field_input'];
-
 		if ($elements != '') {
 			if ($options['w3w_field_woocommerce_fields'] == 1) {
 				$elements = $elements . ', ' . '#shipping_w3w, #billing_w3w';
