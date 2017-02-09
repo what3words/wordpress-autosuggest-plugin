@@ -1,3 +1,9 @@
+Different parts of this plugin are released under different licenses. The code
+itself is released under the MIT license reproduced below, and the graphical
+assets (flags) in folder ./images/flags/* are included in this license.
+Please see below.
+
+
                     GNU GENERAL PUBLIC LICENSE
                        Version 2, June 1991
 
@@ -337,3 +343,13 @@ proprietary programs.  If your program is a subroutine library, you may
 consider it more useful to permit linking proprietary applications with the
 library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.
+
+
+
+IconDrawer flags
+
+what3words has a license for the IconDraw flags which allows us to provide them
+to you as part of this software product. You are not licensed to extract the
+flags from this software product and use them in another context. To do that
+please check the IconDrawer licensing terms which are available at :
+http://www.icondrawer.com/buy.php#license

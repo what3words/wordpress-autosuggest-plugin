@@ -170,10 +170,14 @@ function w3w_autosuggest_footer_scripts() {
 				$elements = '#shipping_w3w, #billing_w3w';
 			}
 		}
+
+
 	?>
 
 	<script>
 		;(function($) {
+
+			var plugin_path = '<?php echo plugin_dir_path( __FILE__ ); ?>'
 
 			$('<?php echo $elements; ?>').w3wAddress({
 				debug: false,
@@ -183,7 +187,8 @@ function w3w_autosuggest_footer_scripts() {
 				auto_lang: <?php echo esc_attr( $options['w3w_field_lang_auto'] ); ?>,
 				lang: '<?php echo esc_attr( $options['w3w_field_lang'] ); ?>',
 				direction: '<?php echo esc_attr( $options['w3w_field_direction'] ); ?>',
-				placeholder : '<?php echo esc_attr( $options['w3w_field_placeholder'] ); ?>'
+				placeholder : '<?php echo esc_attr( $options['w3w_field_placeholder'] ); ?>',
+				path_to_flags: '<?php echo plugin_dir_url( __FILE__ ) . 'public/images/flags/' ?>'
 			});
 
 		})(jQuery);
