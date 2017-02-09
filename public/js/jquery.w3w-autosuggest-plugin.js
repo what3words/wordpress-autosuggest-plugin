@@ -9261,7 +9261,6 @@ var validator = require("jquery-validation");
         },
 
         buildWrappers: function() {
-            console.log($(this.element));
             var direction = this.options.direction;
 
             $(this.element).wrapAll('<div class="typeahead__container ' + direction + '"><div class="typeahead__field"><span class="typeahead__query"></span></div></div>');
@@ -9304,7 +9303,9 @@ var validator = require("jquery-validation");
                 console.log('No what3words API key found!');
                 alert('A what3words API key is required to use the AutoSuggest plugin. Information on how to register for a key can be found in the README')
             } else {
-                console.log('what3words API key: ' + this.options.key);
+                if (this.options.debug) {
+                    console.log('what3words API key: ' + this.options.key);
+                }
             }
 
             //SET Arabic input direction
@@ -9462,7 +9463,7 @@ var validator = require("jquery-validation");
                     onClickAfter: function(node, a, item, event) {
                         //validate field when result being clicked
                         $(_self.element).closest('form').validate().element(".w3w_valid");
-                        //$('#w3w-address-error, #shipping_w3w-error').empty();
+                        $(_self.element).closest('.typeahead__container').nextAll('.typeahead-validation').empty();
                         if (!$(_self.element).closest('.typeahead__query').hasClass('valid')) {
                             $(_self.element).closest('.typeahead__query').addClass('valid');
                         }
@@ -9500,7 +9501,6 @@ var validator = require("jquery-validation");
                 // IF has content
                 else {
                     var isSuccess = false;
-                    $(_self.element).closest('.typeahead__query').removeClass('valid');
 
                     $.ajax({
                         url: W3W_API_END_POINT + 'forward',
@@ -9568,6 +9568,10 @@ var validator = require("jquery-validation");
 
                         //user is "finished typing," run regex and validate
                         function doneTyping () {
+                            //remove valid mark every time
+                            $(element).closest('.typeahead__query').removeClass('valid');
+
+                            //Only check for validation when regex match
                             if (regex.test($(element).val())) {
                                 $(element).valid();
                             }

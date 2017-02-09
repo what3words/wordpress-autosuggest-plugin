@@ -148,7 +148,7 @@ function w3w_settings_init()
 
     add_settings_field(
         'w3w_field_api_key',
-        __('w3w API KEY <abbr class="required" title="required" aria-required="true">*</abbr>', 'w3w'),
+        __('API KEY <abbr class="required" title="required" aria-required="true">*</abbr>', 'w3w'),
         'w3w_field_api_key_cb',
         'w3w',
         'w3w_api_settings_section',
@@ -302,7 +302,7 @@ function w3w_field_api_key_cb($args)
         <?= esc_html('A what3words API key is required to connect the plugin with the what3words autosuggest API method. ', 'w3w'); ?>
     </p>
     <p class="description">
-        If you don’t have an API key yet, you can register for one <a href="https://what3words.com/register" target="_blank">here</a>.
+        If you don’t have an API key yet, you can register for one <a href="https://what3words.com/register?dev=true" target="_blank">here</a>.
     </p>
     <?php
 }
@@ -315,7 +315,7 @@ function w3w_field_input_cb($args)
     ?>
     <input id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_input'] ); ?>">
     <p class="description">
-        <?= esc_html('The input field(s) what3words autosuggest is initialised on defined as a jQuery element selector. Multiple fields can be specified using commas e.g. “.class,  #id”.', 'w3w'); ?>
+        <?= esc_html('The input field(s) the 3 word address validation field is initialised on defined as a jQuery object selector. Multiple fields can be specified using commas e.g. “.class,  #id”.', 'w3w'); ?>
     </p>
     <?php
 }
@@ -328,7 +328,7 @@ function w3w_field_country_cb($args)
     ?>
     <input id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_country'] ); ?>">
     <p class="description">
-        <?= esc_html('The country selector DOM element defined as a jQuery element selector e.g. “#shipping_country”. Filters 3 word address suggestions to the selected country.', 'w3w'); ?>
+        <?= esc_html('The country selector DOM element defined as a jQuery object selector e.g. “#shipping_country”. Filters 3 word address suggestions to the selected country.', 'w3w'); ?>
     </p>
     <?php
 }
@@ -342,7 +342,7 @@ function w3w_field_woocommerce_fields_cb($args)
     <input type="checkbox" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" value="1"<?php checked( 1 == $options['w3w_field_woocommerce_fields'] ); ?> />
 
     <p class="description">
-        <?= esc_html('NB. The element selectors #shipping_w3w and #billing_w3w will automatically be applied to the AutoSuggest settings.', 'w3w'); ?>
+        <?= esc_html('NB. The object selectors #shipping_w3w and #billing_w3w will automatically be applied to the AutoSuggest settings.', 'w3w'); ?>
     </p>
     <?php
 }
@@ -383,7 +383,7 @@ function w3w_field_items_to_show_cb($args)
         </option>
     </select>
     <p class="description">
-        <?= esc_html('Select number of results wanted in the w3w Autosuggest field', 'w3w'); ?>
+        <?= esc_html('Maximum number of 3 word address suggestions to be displayed in the results.', 'w3w'); ?>
     </p>
     <?php
 }
@@ -484,7 +484,7 @@ function w3w_field_direction_cb($args)
         </option>
     </select>
     <p class="description">
-        <?= esc_html('Layout direction of the user interface. Can be set to “right-to-left” for e.g. Arabic websites. ', 'w3w'); ?>
+        <?= esc_html('Layout direction of the user interface. Can be set to “Right to Left” for e.g. Arabic websites. ', 'w3w'); ?>
     </p>
     <?php
 }
@@ -503,18 +503,12 @@ function w3w_field_placeholder_cb($args)
 /**
  * top level menu
  */
+
 function w3w_options_page()
 {
     // add top level menu page
-    add_menu_page(
-        'what3words AutoSuggest',
-        'w3w Options',
-        'manage_options',
-        'w3w',
-        'w3w_options_page_html',
-        'dashicons-location',
-        99
-    );
+   add_menu_page('what3words', 'what3words', 'manage_options', 'what3words', 'w3w_options_page_html', 'dashicons-location', 99 );
+   add_submenu_page('what3words', '3 word address', '3 word address', 'manage_options', 'what3words', 'w3w_options_page_html');
 }
 
 /**

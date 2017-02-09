@@ -86,16 +86,16 @@ if ($options['w3w_field_woocommerce_fields'] == 1) {
 	// Our hooked in function - $fields is passed via the filter!
 	function custom_override_checkout_fields( $fields ) {
 	     $fields['shipping']['shipping_w3w'] = array(
-	        'label'     => __('w3w Address', 'woocommerce'),
-		    'placeholder'   => _x('w3w Address', 'placeholder', 'woocommerce'),
+	        'label'     => __('3 word address', 'woocommerce'),
+		    'placeholder'   => _x('3 word address', 'placeholder', 'woocommerce'),
 		    'required'  => false,
 		    'class'     => array('form-row-wide'),
 		    'clear'     => true
 	     );
 
 	     $fields['billing']['billing_w3w'] = array(
-	        'label'     => __('w3w Address', 'woocommerce'),
-		    'placeholder'   => _x('w3w Address', 'placeholder', 'woocommerce'),
+	        'label'     => __('3 word address', 'woocommerce'),
+		    'placeholder'   => _x('3 word address', 'placeholder', 'woocommerce'),
 		    'required'  => false,
 		    'class'     => array('form-row-wide'),
 		    'clear'     => true
