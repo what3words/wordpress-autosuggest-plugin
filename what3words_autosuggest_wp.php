@@ -13,7 +13,7 @@
  * @package           What3words_autosuggest_wp
  *
  * @wordpress-plugin
- * Plugin Name:       what3words Autosuggest Wordpress plugin
+ * Plugin Name:       what3words - 3 word address validation field
  * Plugin URI:        http://what3words.com
  * Description:       A plugin that showing what3word address suggestions as you type in a field.
  * Version:           1.0.1
