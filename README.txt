@@ -34,9 +34,9 @@ Visit our [developer site](http://developer.what3words.com/) for more informatio
 
 You can install the 3 word address validation field plugin directly via the plugin directory, or by uploading the files manually to your server.
 
-Once the plugin has been installed, you must configure it via the plugin settings. See ‘Configuration’ for more details.
+Once the plugin has been installed, you must configure it via the plugin settings. See ‘Configuration’ below for more details.
 
-== Configuration ==
+= Configuration =
 
 = what3words API Settings =
 
@@ -75,24 +75,19 @@ For all frequently asked questions, and their answers, please visit our [support
 
 == Screenshots ==
 
-![A 3 word address field with custom placeholder text.](https://assets.what3words.com/images/w3w-autosuggest-wp-plugin/screenshot-1.jpg)
-A 3 word address field with custom placeholder text.
+1. A 3 word address field with custom placeholder text.
 
-![An example of autosuggest results optionally filtered by country.](https://assets.what3words.com/images/w3w-autosuggest-wp-plugin/screenshot-2.jpg)
-An example of autosuggest results optionally filtered by country.
+2. An example of autosuggest results optionally filtered by country.
 
-![A validated 3 word address.](https://assets.what3words.com/images/w3w-autosuggest-wp-plugin/screenshot-3.jpg)
-A validated 3 word address.
+3. A validated 3 word address.
 
-![Dashboard to configure 3 word address plugin settings.](https://assets.what3words.com/images/w3w-autosuggest-wp-plugin/screenshot-4.jpg)
-Dashboard to configure 3 word address plugin settings.
+4. Dashboard to configure 3 word address plugin settings.
 
 
 == Changelog ==
 
-= 1.0 =
+= 1.0.1 =
+* General fixes
+
+= 1.0.0 =
 * Initial release
-
-
-
-
