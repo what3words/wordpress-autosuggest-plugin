@@ -194,6 +194,3 @@ function w3w_autosuggest_footer_scripts() {
 
 <?php }
 add_action( 'wp_footer', 'w3w_autosuggest_footer_scripts', 80 );
-
-
-

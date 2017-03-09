@@ -69,7 +69,7 @@ class What3words_autosuggest_wp {
 	public function __construct() {
 
 		$this->plugin_name = 'what3words_autosuggest_wp';
-		$this->version = '1.0.0';
+		$this->version = '1.0.1';
 
 		$this->load_dependencies();
 		$this->set_locale();
