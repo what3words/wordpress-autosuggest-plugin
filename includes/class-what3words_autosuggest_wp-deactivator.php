@@ -3,7 +3,7 @@
 /**
  * Fired during plugin deactivation
  *
- * @link       http://codetheory.london
+ * @link       https://what3words.com
  * @since      1.0.0
  *
  * @package    What3words_autosuggest_wp
@@ -18,7 +18,7 @@
  * @since      1.0.0
  * @package    What3words_autosuggest_wp
  * @subpackage What3words_autosuggest_wp/includes
- * @author     Jozsef Francovszky <franszo@codetheory.london>
+ * @author     what3words <development@what3words.com>
  */
 class What3words_autosuggest_wp_Deactivator {
 

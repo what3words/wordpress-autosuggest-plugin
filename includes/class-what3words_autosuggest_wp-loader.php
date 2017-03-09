@@ -3,7 +3,7 @@
 /**
  * Register all actions and filters for the plugin
  *
- * @link       http://codetheory.london
+ * @link       https://what3words.com
  * @since      1.0.0
  *
  * @package    What3words_autosuggest_wp
@@ -19,7 +19,7 @@
  *
  * @package    What3words_autosuggest_wp
  * @subpackage What3words_autosuggest_wp/includes
- * @author     Jozsef Francovszky <franszo@codetheory.london>
+ * @author     what3words <development@what3words.com>
  */
 class What3words_autosuggest_wp_Loader {
 

@@ -8,7 +8,7 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              http://codetheory.london
+ * @link              https://what3words.com
  * @since             1.0.0
  * @package           What3words_autosuggest_wp
  *
@@ -16,9 +16,9 @@
  * Plugin Name:       what3words - 3 word address validation field
  * Plugin URI:        http://what3words.com
  * Description:       A plugin that showing what3word address suggestions as you type in a field.
- * Version:           1.0.1
- * Author:            Jozsef Francovszky
- * Author URI:        http://codetheory.london
+ * Version:           1.1.0
+ * Author:            what3words
+ * Author URI:        https://what3words.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       what3words_autosuggest_wp
@@ -181,12 +181,10 @@ function w3w_autosuggest_footer_scripts() {
 				debug: false,
 				key: '<?php echo esc_attr( $options['w3w_field_api_key'] ); ?>',
 				items_to_show: <?php echo esc_attr( $options['w3w_field_items_to_show'] ); ?>,
-				country_selector: '<?php echo esc_attr( $options['w3w_field_country'] ); ?>',
-				auto_detect_lang: <?php echo esc_attr( $options['w3w_field_lang_auto'] ); ?>,
+				multilingual: <?php echo esc_attr( $options['w3w_field_lang_auto'] ); ?>,
 				lang: '<?php echo esc_attr( $options['w3w_field_lang'] ); ?>',
 				direction: '<?php echo esc_attr( $options['w3w_field_direction'] ); ?>',
-				placeholder : '<?php echo esc_attr( $options['w3w_field_placeholder'] ); ?>',
-				path_to_flags: '<?php echo plugin_dir_url( __FILE__ ) . 'public/images/flags/' ?>'
+				placeholder : '<?php echo esc_attr( $options['w3w_field_placeholder'] ); ?>'
 			});
 
 		})(jQuery);

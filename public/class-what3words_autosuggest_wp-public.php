@@ -3,7 +3,7 @@
 /**
  * The public-facing functionality of the plugin.
  *
- * @link       http://codetheory.london
+ * @link       https://what3words.com
  * @since      1.0.0
  *
  * @package    What3words_autosuggest_wp
@@ -18,7 +18,7 @@
  *
  * @package    What3words_autosuggest_wp
  * @subpackage What3words_autosuggest_wp/public
- * @author     Jozsef Francovszky <franszo@codetheory.london>
+ * @author     what3words <development@what3words.com>
  */
 class What3words_autosuggest_wp_Public {
 
@@ -73,7 +73,7 @@ class What3words_autosuggest_wp_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/jquery.w3w-autosuggest-plugin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/jquery.w3w-autosuggest-plugin.min.css', array(), $this->version, 'all' );
 
 	}
 
@@ -96,7 +96,7 @@ class What3words_autosuggest_wp_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/jquery.w3w-autosuggest-plugin-min.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/jquery.w3w-autosuggest-plugin.bundle.min.js', array( 'jquery' ), $this->version, false );
 
 	}
 

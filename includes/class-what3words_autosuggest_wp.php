@@ -6,7 +6,7 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       http://codetheory.london
+ * @link       https://what3words.com
  * @since      1.0.0
  *
  * @package    What3words_autosuggest_wp
@@ -25,7 +25,7 @@
  * @since      1.0.0
  * @package    What3words_autosuggest_wp
  * @subpackage What3words_autosuggest_wp/includes
- * @author     Jozsef Francovszky <franszo@codetheory.london>
+ * @author     what3words <development@what3words.com>
  */
 class What3words_autosuggest_wp {
 
@@ -69,7 +69,7 @@ class What3words_autosuggest_wp {
 	public function __construct() {
 
 		$this->plugin_name = 'what3words_autosuggest_wp';
-		$this->version = '1.0.1';
+		$this->version = '1.1.0';
 
 		$this->load_dependencies();
 		$this->set_locale();

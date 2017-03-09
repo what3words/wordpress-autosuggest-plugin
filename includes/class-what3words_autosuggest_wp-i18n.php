@@ -6,7 +6,7 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       http://codetheory.london
+ * @link       https://what3words.com
  * @since      1.0.0
  *
  * @package    What3words_autosuggest_wp
@@ -22,7 +22,7 @@
  * @since      1.0.0
  * @package    What3words_autosuggest_wp
  * @subpackage What3words_autosuggest_wp/includes
- * @author     Jozsef Francovszky <franszo@codetheory.london>
+ * @author     what3words <development@what3words.com>
  */
 class What3words_autosuggest_wp_i18n {
 

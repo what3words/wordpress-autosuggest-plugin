@@ -3,7 +3,7 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       http://codetheory.london
+ * @link       https://what3words.com
  * @since      1.0.0
  *
  * @package    What3words_autosuggest_wp
@@ -18,7 +18,7 @@
  *
  * @package    What3words_autosuggest_wp
  * @subpackage What3words_autosuggest_wp/admin
- * @author     Jozsef Francovszky <franszo@codetheory.london>
+ * @author     what3words <development@what3words.com>
  */
 class What3words_autosuggest_wp_Admin {
 
@@ -173,6 +173,19 @@ function w3w_settings_init()
     );
 
     add_settings_field(
+        'w3w_field_lang_auto',
+        __('Multilingual', 'w3w'),
+        'w3w_field_lang_auto_cb',
+        'w3w',
+        'w3w_section_developers',
+        [
+            'label_for'         => 'w3w_field_lang_auto',
+            'class'             => 'w3w_row',
+            'w3w_custom_data' => 'custom',
+        ]
+    );
+
+		add_settings_field(
         'w3w_field_lang',
         __('Language', 'w3w'),
         'w3w_field_lang_cb',
@@ -180,19 +193,6 @@ function w3w_settings_init()
         'w3w_section_developers',
         [
             'label_for'         => 'w3w_field_lang',
-            'class'             => 'w3w_row',
-            'w3w_custom_data' => 'custom',
-        ]
-    );
-
-    add_settings_field(
-        'w3w_field_lang_auto',
-        __('Language detection', 'w3w'),
-        'w3w_field_lang_auto_cb',
-        'w3w',
-        'w3w_section_developers',
-        [
-            'label_for'         => 'w3w_field_lang_auto',
             'class'             => 'w3w_row',
             'w3w_custom_data' => 'custom',
         ]
@@ -238,18 +238,18 @@ function w3w_settings_init()
         ]
     );
 
-    add_settings_field(
-        'w3w_field_country',
-        __('Country Selector', 'w3w'),
-        'w3w_field_country_cb',
-        'w3w',
-        'w3w_section_developers',
-        [
-            'label_for'         => 'w3w_field_country',
-            'class'             => 'w3w_row',
-            'w3w_custom_data' => 'custom',
-        ]
-    );
+    // add_settings_field(
+    //     'w3w_field_country',
+    //     __('Country Selector', 'w3w'),
+    //     'w3w_field_country_cb',
+    //     'w3w',
+    //     'w3w_section_developers',
+    //     [
+    //         'label_for'         => 'w3w_field_country',
+    //         'class'             => 'w3w_row',
+    //         'w3w_custom_data' => 'custom',
+    //     ]
+    // );
 
     add_settings_field(
         'w3w_field_woocommerce_fields',
@@ -274,6 +274,19 @@ add_action('admin_init', 'w3w_settings_init');
  * custom option and settings:
  * callback functions
  */
+
+// sections cb
+function w3w_api_settings_section_cb() {
+
+}
+
+function w3w_section_developers_cb() {
+
+}
+
+function w3w_section_woocommerce_cb() {
+
+}
 
 // developers section cb
 
@@ -316,19 +329,6 @@ function w3w_field_input_cb($args)
     <input id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_input'] ); ?>">
     <p class="description">
         <?= esc_html('The input field(s) the 3 word address validation field is initialised on defined as a jQuery object selector. Multiple fields can be specified using commas e.g. “.class,  #id”.', 'w3w'); ?>
-    </p>
-    <?php
-}
-
-    // Create / Add Country selector field
-
-function w3w_field_country_cb($args)
-{
-    $options = get_option('w3w_options');
-    ?>
-    <input id="<?= esc_attr($args['label_for']); ?>" data-custom="<?= esc_attr($args['w3w_custom_data']); ?>" name="w3w_options[<?= esc_attr($args['label_for']); ?>]" type="text" value="<?php echo esc_attr( $options['w3w_field_country'] ); ?>">
-    <p class="description">
-        <?= esc_html('The country selector DOM element defined as a jQuery object selector e.g. “#shipping_country”. Filters 3 word address suggestions to the selected country.', 'w3w'); ?>
     </p>
     <?php
 }
@@ -406,7 +406,7 @@ function w3w_field_lang_cb($args)
             <?= esc_html('French', 'w3w'); ?>
         </option>
         <option value="es" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'es', false)) : (''); ?>>
-            <?= esc_html('Spanish; Castilian', 'w3w'); ?>
+            <?= esc_html('Spanish', 'w3w'); ?>
         </option>
         <option value="ar" <?= isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'ar', false)) : (''); ?>>
             <?= esc_html('Arabic', 'w3w'); ?>
@@ -462,7 +462,7 @@ function w3w_field_lang_auto_cb($args)
         </option>
     </select>
     <p class="description">
-        <?= esc_html('Automatically updates the autosuggest language if a valid 3 word address is detected in another language.', 'w3w'); ?>
+        <?= esc_html('Enables the multilingual variant of autosuggest.', 'w3w'); ?>
     </p>
     <?php
 }
