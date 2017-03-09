@@ -60,8 +60,6 @@ The 3 word address validation field uses the what3words autosuggest method to he
 
 * Input placeholder. Placeholder text for the 3 word address validation field, for example "e.g. lock.spout.radar". We recommend using a placeholder of a 3 word address in the same language as the autosuggest language.
 
-* Country Selector. An optional jQuery object selector, for example “#shipping_country”, can be provided to filter the 3 word address results to a specific country.
-Please note, a form element must be a `<select>` and the option values must be a [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)  country code.
 
 = WooCommerce Checkout =
 
