@@ -7,21 +7,21 @@ Stable tag: 4.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily capture 3 word addresses on your website by using the 3 word address validation field plugin by what3words.
+Easily capture 3 word addresses on your website with the 3 word address validation field plugin by what3words.
 
 == Description ==
 
-what3words gives every 3mx3m square in the world a unique 3 word address. It is a great tool to use when a street address is not accurate enough or doesn’t exist.
+what3words is a global addressing system. It has divided the world into a grid of 3m x 3m squares and assigned each one a unique 3 word address. what3words is more accurate than traditional street addressing, and even allows location information to be captured for places without addresses, such as parks or beaches.
 
 The 3 word address validation field plugin created by what3words allows you to easily integrate 3 word addresses into a form on your site.
 
-Returning suggestions based on full or partial 3 word addresses, it helps users with the following types of input error:
+Returning suggestions based on full or partial 3 word addresses, its AutoSuggest feature helps users with the following types of input error:
 
 * typing errors
 * spelling errors
-* misremembered words (e.g. singular vs. plural) words in the wrong order
+* misremembered words (e.g. singular vs. plural) or words in the wrong order
 
-We recommend using the plugin when you want to capture a precise location from a user. This could be the exact delivery point for your customer’s order e.g. their front door.
+We recommend using the plugin when you want to capture a precise location from a user. This could be the exact location of your customer’s front door, for example, for delivering their purchase.
 
 = Build more with what3words =
 
@@ -42,7 +42,7 @@ Once the plugin has been installed, you must configure it via the plugin setting
 
 A what3words API key is required to use the plugin as it authenticates and interacts with the what3words RESTful API [autosuggest method](https://docs.what3words.com/api/v2/#autosuggest).
 
-If you don’t have a what3words API key yet, you'll need to [register](https://map.what3words.com/register?dev=true) for one.
+If you don’t have a what3words API key yet, you'll need to [register](https://what3words.com/register?dev=true) for one.
 
 = AutoSuggest Settings =
 
@@ -54,16 +54,16 @@ The 3 word address validation field uses the what3words autosuggest method to he
 
 * Language. The list of languages currently supported by what3words, defined as a 2 letter [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) code (default is "en").
 
-* Language detection. When enabled, the autosuggest language automatically updates if a valid 3 word address is detected in a different language.
+* Multilingual. When enabled, uses the multilingual variant of autosuggest API method (check [documentation](https://docs.what3words.com/api/v2/#autosuggest)).
 
-* UI Direction. Direction of the 3 word address validation field. Options are "Left to Right" or "Right to Left" (used for e.g. Arabic).
+* UI Direction. Direction of the 3 word address validation field. Options are "Left to Right" or "Right to Left" (e.g. for Arabic).
 
 * Input placeholder. Placeholder text for the 3 word address validation field, for example "e.g. lock.spout.radar". We recommend using a placeholder of a 3 word address in the same language as the autosuggest language.
 
 
 = WooCommerce Checkout =
 
-The plugin also allows you to automatically add a 3 word address validation field to a WooCommerce checkout form and save the 3 word address to the order.
+The plugin also allows you to automatically add a 3 word address validation field to a WooCommerce checkout form and save the 3 word address against the customer’s order details.
 
 By enabling WooCommerce checkout integration, #shipping_w3w and #billing_w3w will be added by default to the AutoSuggest Input Field settings.
 
@@ -84,6 +84,10 @@ For all frequently asked questions, and their answers, please visit our [support
 
 == Changelog ==
 
+= 1.1.0 =
+* uses what3words autosuggest jQuery plugin 1.2.0
+
+* General fixes
 = 1.0.1 =
 * General fixes
 
