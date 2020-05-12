@@ -1,0 +1,192 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the what3words-searchbox package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: what3words-searchbox 2.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-06-14 16:02+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/php/What3wordsSearchbox.php:171 src/php/What3wordsSearchbox.php:179
+msgid "3 word address"
+msgstr ""
+
+#: src/php/What3wordsSearchbox.php:194 src/php/What3wordsSearchbox.php:202
+msgid "w3w Address"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:50
+msgid "Settings"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:89
+msgid "What3words Searchbox - Settings"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:90
+msgid "What3words Searchbox"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:105
+msgid ""
+"You need to enter your what3words API key to use the What3words Searchbox "
+"plugin"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:109
+msgid ""
+"You need to enter at least one jQuery input selector to use the What3words "
+"Searchbox plugin"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:126
+#, php-format
+msgid ""
+"Cannot activate What3words Searchbox; your server is running PHP version %d "
+"but this plugin requires at least PHP %s"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:209
+msgid "You need to enter your what3words API key to use this plugin"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:213
+msgid "You need to enter at least one jQuery selector to use this plugin"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:220
+msgid "what3words API Settings"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:223
+msgid "API Key"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:224
+msgid ""
+"An API key is required to allow the plugin to connect to the what3words API "
+"key; if you don't have an API key yet, you can quickly and easily <a href="
+"\"https://what3words.com/register?dev=true\" target=\"_blank\">sign up</a> "
+"for one."
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:228
+msgid "General Settings"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:231
+msgid "Input Selector(s)"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:232
+msgid ""
+"The input field(s) that should be validated as a 3 word address, specified "
+"as a list of jQuery object selectors. Multiple fields can be supplied using "
+"commas e.g. \".class, #id\"."
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:238
+msgid "WooCommerce Input Selector"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:239
+msgid ""
+"WooCommerce checkout support is currently enabled; this plugin has "
+"automatically added these selectors."
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:245
+msgid "Input Placeholder Text"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:246
+msgid ""
+"Optional placeholder to be initially displayed in the input field(s), e.g. "
+"\"index.home.raft\" or \"Start typing a 3 word address\"."
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:249
+msgid "Suggestion Count"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:258
+msgid "The maximum number of 3 word address suggestions to display"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:262
+msgid "Localisation Settings"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:265
+msgid "Input Language"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:275
+msgid "The language that should be used to search for 3 word addresses"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:278
+msgid "Multilingual Search"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:279
+msgid ""
+"Specifies whether to search for <em>only</em> the specified language or to "
+"search across multiple languages <em>including</em> the specified language."
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:282
+msgid "Enable Country Filtering"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:283
+msgid "Specifies whether to filter 3 word address suggestions by country."
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:287
+msgid "Country"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:297
+msgid "Limit 3 word address suggestions to a single country."
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:301
+msgid "Text Direction"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:305
+msgid "Text layout direction for your locale's input language"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:309
+msgid "WooCommerce Support"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:312
+msgid "Enable WooCommerce Checkout Support"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:313
+msgid "Enable support for using the plugin in a WooCommerce checkout page"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:322
+#, php-format
+msgid "Save %s Settings"
+msgstr ""
+
+#: src/php/What3wordsSearchboxAdmin.php:353
+#, php-format
+msgid "%s Settings Updated"
+msgstr ""
