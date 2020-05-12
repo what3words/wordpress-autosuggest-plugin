@@ -114,24 +114,24 @@ if (!class_exists('What3wordsSearchbox')) {
          * scripts and styles.
          */
         public function enqueue_scripts() {
-            $handle = 'what3words-searchbox-autosuggest-css';
-            $src = WHAT3WORDS_SEARCHBOX_URL . 'assets/css/jquery.w3w-autosuggest-plugin.min.css';
-            $deps = [];
-            $ver = NULL;
-            $in_footer = false;
+            // $handle = 'what3words-searchbox-autosuggest-css';
+            // $src = WHAT3WORDS_SEARCHBOX_URL . 'assets/css/jquery.w3w-autosuggest-plugin.min.css';
+            // $deps = [];
+            // $ver = NULL;
+            // $in_footer = false;
 
-            wp_enqueue_style($handle, $src, $deps, $ver, $in_footer);
+            // wp_enqueue_style($handle, $src, $deps, $ver, $in_footer);
 
             $handle = 'what3words-searchbox-autosuggest-js';
-            $src = WHAT3WORDS_SEARCHBOX_URL . 'assets/js/jquery.w3w-autosuggest-plugin.bundle.js';
-            $deps = ['jquery'];
-            $in_footer = true;
+            $src = WHAT3WORDS_SEARCHBOX_URL . 'assets/js/w3w-autosuggest-plugin.bundle.js?key='.'RFC6KJHS'; // . $settings['api_key'];
+            $deps = [];
+            $in_footer = false;
 
             wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
 
             $handle = 'what3words-searchbox-js';
             $src = WHAT3WORDS_SEARCHBOX_URL . 'assets/js/what3words-searchbox.js';
-            $deps = ['jquery', 'what3words-searchbox-autosuggest-js'];
+            $deps = [];
             $in_footer = true;
 
             wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
