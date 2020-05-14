@@ -85,13 +85,13 @@ if (!class_exists('What3wordsSearchbox')) {
                         'api_key' => '',
                         'input_selectors' => '',
                         'input_placeholder' => 'Search for a 3 word address',
-                        'suggestions' => 3,
+                        // 'suggestions' => 3,
                         'lang' => $this->get_default_language(),
-                        'multilingual' => true,
-                        'country_filter' => false,
-                        'country_filter_selector' => '',
-                        'country_code' => 'GB',
-                        'text_direction' => 'ltr',
+                        // 'multilingual' => true,
+                        // 'country_filter' => false,
+                        // 'country_filter_selector' => '',
+                        // 'country_code' => 'GB',
+                        // 'text_direction' => 'ltr',
                         'woocommerce_enabled' => false
                     ]
                 );
@@ -148,16 +148,16 @@ if (!class_exists('What3wordsSearchbox')) {
                 if (!empty($selectors)) {
                     $data['input_selectors'] = implode(',', $selectors);
                     $data['api_key'] = $settings['api_key'];
-                    $data['multilingual'] = $settings['multilingual'];
                     $data['lang'] = $settings['lang'];
-                    $data['suggestions'] = $settings['suggestions'];
+                    // $data['multilingual'] = $settings['multilingual'];
+                    // $data['suggestions'] = $settings['suggestions'];
                     $data['input_placeholder'] = $settings['input_placeholder'];
-                    $data['text_direction'] = $settings['text_direction'];
-                    $data['country_filter'] = $settings['country_filter'];
-                    $data['country_code'] = $settings['country_code'];
-                    $data['country_filter_selector'] = $settings['country_filter_selector'];
-                    $data['disabled_selector_bool'] = $settings['disabled_selector_bool'];
-                    $data['disabled_selector'] = $settings['disabled_selector'];
+                    // $data['text_direction'] = $settings['text_direction'];
+                    // $data['country_filter'] = $settings['country_filter'];
+                    // $data['country_code'] = $settings['country_code'];
+                    // $data['country_filter_selector'] = $settings['country_filter_selector'];
+                    // $data['disabled_selector_bool'] = $settings['disabled_selector_bool'];
+                    // $data['disabled_selector'] = $settings['disabled_selector'];
                     wp_localize_script($handle, 'What3wordsSearchbox', $data);
                 }
             }
