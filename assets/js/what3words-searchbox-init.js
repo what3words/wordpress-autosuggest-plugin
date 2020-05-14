@@ -1,7 +1,7 @@
 
 if (typeof What3wordsSearchbox != "undefined") {
     var country = What3wordsSearchbox.country_filter_selector !== '' ? What3wordsSearchbox.country_filter_selector : What3wordsSearchbox.country_code;
-    // $(What3wordsSearchbox.input_selectors).w3wAddress({
+    // $(What3wordsSearchbox.inputSelectors).w3wAddress({
     //     debug: true,
     //     key: What3wordsSearchbox.api_key,
     //     items_to_show: What3wordsSearchbox.suggestions,
@@ -14,14 +14,21 @@ if (typeof What3wordsSearchbox != "undefined") {
     //     validation: true
     // });
 
-    console.log(What3wordsSearchbox);
+    console.log('settings:\n',What3wordsSearchbox);
 
 
     const w3wComponent = document.createElement('what3words-autosuggest', { is: 'what3words-autosuggest' })
-    const input_selectors = document.querySelectorAll(`${What3wordsSearchbox.input_selectors}`)
+    const inputSelectors = document.querySelectorAll(`${What3wordsSearchbox.input_selectors}`)
 
-    input_selectors.forEach((target_input) => {
-      target_input.parentNode.replaceChild(w3wComponent, target_input);
+    inputSelectors.forEach((targetInput) => {
+      const originalName = targetInput.name,
+            originalId   = targetInput.id
+      console.log(originalId, originalName)
+
+      targetInput.parentNode.replaceChild(w3wComponent, targetInput)
+      const customInput = document.querySelector('[is="what3words-autosuggest"]').querySelector('input')
+      customInput.name = originalName
+      customInput.id = originalId
     })
 
 }

@@ -114,23 +114,20 @@ if (!class_exists('What3wordsSearchbox')) {
          * scripts and styles.
          */
         public function enqueue_scripts() {
-            // $handle = 'what3words-searchbox-autosuggest-css';
-            // $src = WHAT3WORDS_SEARCHBOX_URL . 'assets/css/jquery.w3w-autosuggest-plugin.min.css';
-            // $deps = [];
-            // $ver = NULL;
-            // $in_footer = false;
+            //  Get settings so we can append api key to script src
+            $settings = $this->get_option();
 
-            // wp_enqueue_style($handle, $src, $deps, $ver, $in_footer);
-
+            //  This is the plugin script that loads web component
             $handle = 'what3words-searchbox-autosuggest-js';
-            $src = WHAT3WORDS_SEARCHBOX_URL . 'assets/js/w3w-autosuggest-plugin.bundle.js?key='.'RFC6KJHS'; // . $settings['api_key'];
+            $src = 'https://assets.what3words.com/sdk/v3.1/what3words.js?key=' . $settings['api_key'];
             $deps = [];
             $in_footer = false;
 
             wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
 
+            //  Replace specified inputs with What3Words' AutoSuggest component
             $handle = 'what3words-searchbox-js';
-            $src = WHAT3WORDS_SEARCHBOX_URL . 'assets/js/what3words-searchbox.js';
+            $src = WHAT3WORDS_SEARCHBOX_URL . 'assets/js/what3words-searchbox-init.js';
             $deps = [];
             $in_footer = true;
 
