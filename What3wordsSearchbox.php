@@ -168,7 +168,7 @@ if (!class_exists('What3wordsSearchbox')) {
          */
         public function woocommerce_checkout_fields($fields) {
             $fields['shipping']['shipping_w3w'] = [
-                'label' => __('Delivery 3 word address', 'what3words-searchbox'),
+                'label' => __('Delivery what3words address', 'what3words-searchbox'),
                 'placeholder' => _x('Delivery 3 word address', 'placeholder', 'what3words-searchbox'),
                 'required' => false,
                 'class' => ['form-row-wide'],
@@ -176,7 +176,7 @@ if (!class_exists('What3wordsSearchbox')) {
             ];
 
             $fields['billing']['billing_w3w'] = [
-                'label' => __('Billing 3 word address', 'what3words-searchbox'),
+                'label' => __('What3words address', 'what3words-searchbox'),
                 'placeholder' => _x('Billing 3 word address', 'placeholder', 'what3words-searchbox'),
                 'required' => false,
                 'class' => ['form-row-wide'],

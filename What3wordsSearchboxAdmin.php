@@ -106,7 +106,7 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                     }
 
                     if (empty($settings['input_selectors']) && !$settings['woocommerce_enabled']) {
-                        $notice[] = __('You need to enter at least one jQuery input selector to use the What3words Searchbox plugin', 'what3words-searchbox');
+                        $notice[] = __('You need to enter at least one input selector to use the What3words Searchbox plugin', 'what3words-searchbox');
                     }
 
                     if (!empty($notice)) {
@@ -172,21 +172,21 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                     $settings['lang'] = $legacy_settings['w3w_field_lang'];
                 }
 
-                if (isset($legacy_settings['w3w_field_lang']) && !empty($legacy_settings['w3w_field_lang'])) {
-                    $settings['lang'] = $legacy_settings['w3w_field_lang'];
-                }
+                // if (isset($legacy_settings['w3w_field_lang']) && !empty($legacy_settings['w3w_field_lang'])) {
+                //     $settings['lang'] = $legacy_settings['w3w_field_lang'];
+                // }
 
-                if (isset($legacy_settings['w3w_field_items_to_show']) && !empty($legacy_settings['w3w_field_items_to_show'])) {
-                    $settings['suggestions'] = intval($legacy_settings['w3w_field_items_to_show']);
-                }
+                // if (isset($legacy_settings['w3w_field_items_to_show']) && !empty($legacy_settings['w3w_field_items_to_show'])) {
+                //     $settings['suggestions'] = intval($legacy_settings['w3w_field_items_to_show']);
+                // }
 
                 if (isset($legacy_settings['w3w_field_placeholder']) && !empty($legacy_settings['w3w_field_placeholder'])) {
                     $settings['input_placeholder'] = $legacy_settings['w3w_field_placeholder'];
                 }
 
-                if (isset($legacy_settings['w3w_field_direction']) && !empty($legacy_settings['w3w_field_direction'])) {
-                    $settings['text_direction'] = $legacy_settings['w3w_field_direction'];
-                }
+                // if (isset($legacy_settings['w3w_field_direction']) && !empty($legacy_settings['w3w_field_direction'])) {
+                //     $settings['text_direction'] = $legacy_settings['w3w_field_direction'];
+                // }
 
                 if (isset($legacy_settings['w3w_field_woocommerce_fields']) && !empty($legacy_settings['w3w_field_woocommerce_fields'])) {
                     $settings['woocommerce_enabled'] = $this->to_boolean($legacy_settings['w3w_field_woocommerce_fields']);
@@ -202,24 +202,24 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
             $display = '';
             $disabled = '';
 
-            if (!$settings['country_filter'] && !$settings['country_filter_selector']) {
-                $display = 'style="display: none;"';
-            }
+            // if (!$settings['country_filter'] && !$settings['country_filter_selector']) {
+            //     $display = 'style="display: none;"';
+            // }
 
-            if($settings['country_filter_selector'] !== '') {
-                $disabled = 'disabled=true';
-            }
+            // if($settings['country_filter_selector'] !== '') {
+            //     $disabled = 'disabled=true';
+            // }
 
-            if($settings['disabled_selector_bool'] != true) {
-                $disabled_selector_bool = 'style="display: none;"';
-            }
+            // if($settings['disabled_selector_bool'] != true) {
+            //     $disabled_selector_bool = 'style="display: none;"';
+            // }
 
             if (empty($settings['api_key'])) {
                 echo '<div class="error notice is-dismissible"><p>' . __('You need to enter your what3words API key to use this plugin', 'what3words-searchbox') . '</p></div>';
             }
 
             if (empty($settings['input_selectors']) && !$settings['woocommerce_enabled']) {
-                echo '<div class="error notice is-dismissible"><p>' . __('You need to enter at least one jQuery selector to use this plugin', 'what3words-searchbox') . '</p></div>';
+                echo '<div class="error notice is-dismissible"><p>' . __('You need to enter at least one input selector to use this plugin', 'what3words-searchbox') . '</p></div>';
             }
             ?>
             <div class="wrap">
@@ -238,7 +238,7 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                         <div id="what3words-searchbox-general-wrap">
                             <p>
                                 <strong><?php _e('Input Selector(s)', 'what3words-searchbox'); ?></strong><br />
-                                <input type="text" name="what3words-searchbox-input-selector" id="what3words-searchbox-input-selector" class="what3words-searchbox-input regular-text" value="<?php echo $settings['input_selectors']; ?>" /><br /><small><?php _e('The input field(s) that should be validated as a 3 word address, specified as a list of jQuery object selectors. Multiple fields can be supplied using commas e.g. ".class, #id".', 'what3words-searchbox'); ?></small>
+                                <input type="text" name="what3words-searchbox-input-selector" id="what3words-searchbox-input-selector" class="what3words-searchbox-input regular-text" value="<?php echo $settings['input_selectors']; ?>" /><br /><small><?php _e('The input field(s) that should be validated as a 3 word address, specified as a list of css selectors. Multiple fields can be supplied using commas e.g. ".class, #id".', 'what3words-searchbox'); ?></small>
                             </p>
                             <?php
                             if ($settings['woocommerce_enabled']) {
@@ -254,17 +254,17 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                                 <strong><?php _e('Input Placeholder Text', 'what3words-searchbox'); ?></strong><br />
                                 <input type="text" name="what3words-searchbox-input-placeholder" id="what3words-searchbox-input-placeholder" class="what3words-searchbox-input regular-text" value="<?php echo $settings['input_placeholder']; ?>" /><br /><small><?php _e('Optional placeholder to be initially displayed in the input field(s), e.g. "index.home.raft" or "Start typing a 3 word address".', 'what3words-searchbox'); ?></small>
                             </p>
-                            <p>
+                            <!-- <p>
                                 <strong><?php _e('Disable field until validated', 'what3words-searchbox'); ?></strong><br />
                                 <input type="checkbox" name="what3words-disable-field-boolean" id="what3words-disable-field-boolean" <?php checked(($settings['disabled_selector_bool'] ? 1 : 0), 1, true); ?> />&nbsp;<small><?php _e('Sets whether to activate a button or field only when it has been validated.', 'what3words-searchbox'); ?></small>
-                            </p>
-                            <div id="what3words-disable-field" <?php echo $disabled_selector_bool; ?>>
+                            </p> -->
+                            <!-- <div id="what3words-disable-field" <?php echo $disabled_selector_bool; ?>>
                                 <p>
                                     <strong><?php _e('Enter field selectors to disable until 3 word address validation', 'what3words-searchbox'); ?></strong><br />
                                     <input type="text" name="what3words-disable-element-selector" id="what3words-disable-element-selector" class="what3words-disable-element-selector regular-text" value="<?php echo $settings['disabled_selector']; ?>" /><br /><small><?php _e('Set a selector to be disabled until your 3 word address is validated. Multiple elements can be supplied using commas e.g. ".button, #select".', 'what3words-searchbox'); ?></small>
                                 </p>
-                            </div>
-                            <p>
+                            </div> -->
+                            <!-- <p>
                                 <strong><?php _e('Suggestion Count', 'what3words-searchbox'); ?></strong><br />
                                 <select id="what3words-searchbox-suggestion-count" name="what3words-searchbox-suggestion-count">
                                 <?php
@@ -275,7 +275,7 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                                 }
                                 ?>
                             </select><br /><small><?php _e('The maximum number of 3 word address suggestions to display', 'what3words-searchbox'); ?></small>
-                            </p>
+                            </p> -->
                         </div>  <!-- what3words-searchbox-general-wrap -->
 
                         <h2><?php _e('Localisation Settings', 'what3words-searchbox'); ?></h2>
@@ -293,15 +293,15 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                                 ?>
                                 </select><br /><small><?php _e('The language that should be used to search for 3 word addresses', 'what3words-searchbox'); ?></small>
                             </p>
-                            <p>
+                            <!-- <p>
                                 <strong><?php _e('Multilingual Search', 'what3words-searchbox'); ?></strong><br />
                                 <input type="checkbox" name="what3words-searchbox-multilingual" id="what3words-searchbox-multilingual" <?php checked(($settings['multilingual'] ? 1 : 0), 1, true); ?> />&nbsp;<small><?php _e('Specifies whether to search for <em>only</em> the specified language or to search across multiple languages <em>including</em> the specified language.', 'what3words-searchbox'); ?></small>
-                            </p>
-                            <p>
+                            </p> -->
+                            <!-- <p>
                                 <strong><?php _e('Enable Country Filtering', 'what3words-searchbox'); ?></strong><br />
                                 <input type="checkbox" name="what3words-searchbox-country-filter" id="what3words-searchbox-country-filter" <?php checked(($settings['country_filter'] ? 1 : 0), 1, true); ?> />&nbsp;<small><?php _e('Specifies whether to filter 3 word address suggestions by country.', 'what3words-searchbox'); ?></small>
-                            </p>
-                            <div id="what3words-searchbox-country-wrap" <?php echo $display; ?>>
+                            </p> -->
+                            <!-- <div id="what3words-searchbox-country-wrap" <?php echo $display; ?>>
                                 <p>
                                     <strong><?php _e('Set Country Filtering Selector(s)', 'what3words-searchbox'); ?></strong><br />
                                     <input type="text" name="what3words-searchbox-country-filter-selector" id="what3words-searchbox-country-filter-selector" value="<?php echo $settings['country_filter_selector']; ?>" />&nbsp;<small><?php _e('If you want to enable country filtering, users can specify their own country. Any value input here disallows a country selection, below.', 'what3words-searchbox'); ?></small>
@@ -319,14 +319,14 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                                     ?>
                                 </select><br /><small><?php _e('Limit 3 word address suggestions to a single country.', 'what3words-searchbox'); ?></small>
                                 </p>
-                            </div>
-                            <p>
+                            </div> -->
+                            <!-- <p>
                                 <strong><?php _e('Text Direction', 'what3words-searchbox'); ?></strong><br />
                                 <select id="what3words-searchbox-text-direction" name="what3words-searchbox-text-direction">
                                     <option value="ltr" <?php selected($settings['text_direction'], 'ltr', true); ?> >Left to right</option>
                                     <option value="rtl" <?php selected($settings['text_direction'], 'rtl', true); ?> >Right to left</option>
                                 </select><br /><small><?php _e('Text layout direction for your locale\'s input language', 'what3words-searchbox'); ?></small>
-                            </p>
+                            </p> -->
                         </div>  <!-- what3words-searchbox-locale-wrap -->
 
                         <h2><?php _e('WooCommerce Support', 'what3words-searchbox'); ?></h2>
@@ -360,15 +360,15 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                     $settings['api_key'] = $this->option('what3words-searchbox-api-key');
                     $settings['input_selectors'] = $this->option('what3words-searchbox-input-selector');
                     $settings['input_placeholder'] = $this->option('what3words-searchbox-input-placeholder');
-                    $settings['disabled_selector_bool'] = $this->boolean_option('what3words-disable-field-boolean');
-                    $settings['disabled_selector'] = $this->option('what3words-disable-element-selector');
-                    $settings['suggestions'] = $this->option('what3words-searchbox-suggestion-count');
-                    $settings['text_direction'] = $this->option('what3words-searchbox-text-direction');
+                    // $settings['disabled_selector_bool'] = $this->boolean_option('what3words-disable-field-boolean');
+                    // $settings['disabled_selector'] = $this->option('what3words-disable-element-selector');
+                    // $settings['suggestions'] = $this->option('what3words-searchbox-suggestion-count');
+                    // $settings['text_direction'] = $this->option('what3words-searchbox-text-direction');
                     $settings['lang'] = $this->option('what3words-searchbox-language');
-                    $settings['multilingual'] = $this->boolean_option('what3words-searchbox-multilingual');
-                    $settings['country_filter'] = $this->boolean_option('what3words-searchbox-country-filter');
-                    $settings['country_filter_selector'] = $this->option('what3words-searchbox-country-filter-selector');
-                    $settings['country_code'] = $this->option('what3words-searchbox-country');
+                    // $settings['multilingual'] = $this->boolean_option('what3words-searchbox-multilingual');
+                    // $settings['country_filter'] = $this->boolean_option('what3words-searchbox-country-filter');
+                    // $settings['country_filter_selector'] = $this->option('what3words-searchbox-country-filter-selector');
+                    // $settings['country_code'] = $this->option('what3words-searchbox-country');
                     $settings['woocommerce_enabled'] = $this->boolean_option('what3words-searchbox-woocommerce');
                     $this->update_option($settings);
 
