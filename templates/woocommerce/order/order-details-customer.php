@@ -59,7 +59,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 </header>
 <address>
 	<?php echo ( $address = $order->get_formatted_billing_address() ) ? $address : __( 'N/A', 'woocommerce' ); ?>
-	<br><?php echo '/// ' . get_post_meta( $order->id, '_billing_w3w', true ); ?>
+	<br><?php echo get_post_meta( $order->id, '_billing_w3w', true ); ?>
 </address>
 
 <?php if ( ! wc_ship_to_billing_address_only() && $order->needs_shipping_address() ) : ?>

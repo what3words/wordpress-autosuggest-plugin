@@ -3,7 +3,7 @@ if (typeof What3wordsSearchbox != "undefined") {
 
   console.log('settings:\n',What3wordsSearchbox)
 
-  const targetInputs = document.querySelectorAll(`${What3wordsSearchbox.input_selectors}`)
+  const targetInputs = document.querySelectorAll(What3wordsSearchbox.input_selectors)
 
   targetInputs.forEach(function(targetInput) {
 
@@ -23,7 +23,7 @@ if (typeof What3wordsSearchbox != "undefined") {
     w3wComponent.addEventListener('valid', function(event) {
       // if valid
       if (event.detail) {
-        targetInput.value = event.target.value
+        targetInput.value = '///' + event.target.value
       } else {
         targetInput.value = ''
       }
