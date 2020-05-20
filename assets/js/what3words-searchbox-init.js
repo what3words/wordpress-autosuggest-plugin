@@ -5,6 +5,10 @@ if (typeof What3wordsSearchbox != "undefined") {
 
   const targetInputs = document.querySelectorAll(What3wordsSearchbox.input_selectors)
 
+  if (targetInputs) {
+    document.head.insertAdjacentHTML("beforeend", '<style>.woocommerce-checkout .what3words-autosuggest .what3words-input{border-width:0;}</style>')
+  }
+
   targetInputs.forEach(function(targetInput) {
 
     const w3wComponent = document.createElement('what3words-autosuggest')
