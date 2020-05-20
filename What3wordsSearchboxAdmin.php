@@ -230,7 +230,7 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                         <div id="what3words-searchbox-api-wrap">
                             <p>
                                 <strong><?php _e('API Key', 'what3words-searchbox'); ?></strong><br />
-                                <input type="text" name="what3words-searchbox-api-key" id="what3words-searchbox-api-key" class="what3words-searchbox-input regular-text" value="<?php echo $settings['api_key']; ?>" /><br /><small><?php _e('An API key is required to allow the plugin to connect to the what3words API key; if you don\'t have an API key yet, you can quickly and easily <a href="https://what3words.com/register?dev=true" target="_blank">sign up</a> for one.', 'what3words-searchbox'); ?></small>
+                                <input type="text" name="what3words-searchbox-api-key" id="what3words-searchbox-api-key" class="what3words-searchbox-input regular-text" value="<?php echo $settings['api_key']; ?>" /><br /><small><?php _e('An API key is required to allow the plugin to connect to the what3words API key; if you don\'t have an API key yet, you can quickly and easily <a href="https://accounts.what3words.com/create-api-key" target="_blank">sign up</a> for one.', 'what3words-searchbox'); ?></small>
                             </p>
                         </div>  <!-- what3words-searchbox-api-wrap -->
 
