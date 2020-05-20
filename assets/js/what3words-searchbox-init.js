@@ -1,42 +1,35 @@
 
 if (typeof What3wordsSearchbox != "undefined") {
 
-    //  console.log('settings:\n',What3wordsSearchbox);
-    const w3wComponent = document.createElement('what3words-autosuggest',
-      { is: 'what3words-autosuggest' }
-    )
-
-    if (What3wordsSearchbox.lang) {
-      w3wComponent.setAttribute('language', What3wordsSearchbox.lang)
-    }
-    if (What3wordsSearchbox.input_placeholder) {
-      w3wComponent.setAttribute('placeholder', What3wordsSearchbox.input_placeholder)
-    }
+    console.log('settings:\n',What3wordsSearchbox)
 
     const targetInputs = document.querySelectorAll(`${What3wordsSearchbox.input_selectors}`)
 
-    targetInputs.forEach((targetInput) => {
-      const originalName = targetInput.name || '',
-            originalId   = targetInput.id || ''
-            targetParent = targetInput.parentNode
+    targetInputs.forEach(function(targetInput) {
 
-      const w3wComponentInstance = w3wComponent
-      w3wComponentInstance.setAttribute('data-input-orig-id', originalId)
-      w3wComponentInstance.setAttribute('data-input-orig-name', originalName)
+      const w3wComponent = document.createElement('what3words-autosuggest')
 
+      if (What3wordsSearchbox.lang) {
+        w3wComponent.setAttribute('language', What3wordsSearchbox.lang)
+      }
+      if (What3wordsSearchbox.input_placeholder) {
+        w3wComponent.setAttribute('placeholder', What3wordsSearchbox.input_placeholder)
+      }
 
-      targetParent.replaceChild(w3wComponent, targetInput)
+      const targetParent = targetInput.parentNode
 
-      setTimeout(() => {
-        //  FIX: this won't work if multiple sibling 
-        //  `What3wordsSearchbox.input_selectors`
-        // const componentInstance = targetParent.getElementsByTagName('what3words-autosuggest')[0]
-        // const customInput =  componentInstance.querySelector('input')
-        // if (originalName) { customInput.name = originalName }
-        // if (originalId)   { customInput.id   = originalId   }
+      targetParent.insertBefore(w3wComponent, targetInput)
+      targetInput.style.display = 'none'
+      w3wComponent.addEventListener('valid', function(event) {
+        // if valid
+        if (event.detail) {
+          targetInput.value = event.target.value
+        } else {
+          targetInput.value = ''
+        }
+      })
 
-      //  console.log('componentInstance', componentInstance, componentInstance.language, componentInstance.placeholder)
-      },1)
     })
+
 
 }
