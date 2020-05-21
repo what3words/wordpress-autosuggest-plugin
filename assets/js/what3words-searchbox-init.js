@@ -22,8 +22,8 @@ if (typeof What3wordsSearchbox != "undefined") {
     if (What3wordsSearchbox.input_placeholder) {
       w3wComponent.setAttribute('placeholder', What3wordsSearchbox.input_placeholder)
     }
-    if (What3wordsSearchbox.icon_color) {
-      w3wComponent.setAttribute('icon-color', What3wordsSearchbox.icon_color)
+    if (What3wordsSearchbox.color) {
+      w3wComponent.setAttribute('icon-color', What3wordsSearchbox.color)
     }
 
     targetParent.insertBefore(w3wComponent, targetInput)

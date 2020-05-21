@@ -254,6 +254,10 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                                 <strong><?php _e('Input Placeholder Text', 'what3words-searchbox'); ?></strong><br />
                                 <input type="text" name="what3words-searchbox-input-placeholder" id="what3words-searchbox-input-placeholder" class="what3words-searchbox-input regular-text" value="<?php echo $settings['input_placeholder']; ?>" /><br /><small><?php _e('Optional placeholder to be initially displayed in the input field(s), e.g. "index.home.raft" or "Start typing a 3 word address".', 'what3words-searchbox'); ?></small>
                             </p>
+                            <p>
+                                <strong><?php _e('What3words logo colour', 'what3words-searchbox'); ?></strong><br />
+                                <input type="color" name="what3words-searchbox-color" id="what3words-searchbox-color" class="what3words-searchbox-input " value="<?php echo $settings['color']; ?>" /><br /><small><?php _e('Optionally set the colour of the "///" logo, eg "#e11f26"', 'what3words-searchbox'); ?></small>
+                            </p>
                             <!-- <p>
                                 <strong><?php _e('Disable field until validated', 'what3words-searchbox'); ?></strong><br />
                                 <input type="checkbox" name="what3words-disable-field-boolean" id="what3words-disable-field-boolean" <?php checked(($settings['disabled_selector_bool'] ? 1 : 0), 1, true); ?> />&nbsp;<small><?php _e('Sets whether to activate a button or field only when it has been validated.', 'what3words-searchbox'); ?></small>
@@ -360,6 +364,7 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                     $settings['api_key'] = $this->option('what3words-searchbox-api-key');
                     $settings['input_selectors'] = $this->option('what3words-searchbox-input-selector');
                     $settings['input_placeholder'] = $this->option('what3words-searchbox-input-placeholder');
+                    $settings['color'] = $this->option('what3words-searchbox-color');
                     // $settings['disabled_selector_bool'] = $this->boolean_option('what3words-disable-field-boolean');
                     // $settings['disabled_selector'] = $this->option('what3words-disable-element-selector');
                     // $settings['suggestions'] = $this->option('what3words-searchbox-suggestion-count');

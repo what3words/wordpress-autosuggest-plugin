@@ -84,7 +84,8 @@ if (!class_exists('What3wordsSearchbox')) {
                         'version' => self::VERSION,
                         'api_key' => '',
                         'input_selectors' => '',
-                        'input_placeholder' => 'Search for a 3 word address',
+                        'input_placeholder' => 'e.g. `index.home.raft`',
+                        'color' => '#e11f26',
                         // 'suggestions' => 3,
                         // 'lang' => $this->get_default_language(),
                         // 'multilingual' => true,
@@ -152,6 +153,7 @@ if (!class_exists('What3wordsSearchbox')) {
                     // $data['multilingual'] = $settings['multilingual'];
                     // $data['suggestions'] = $settings['suggestions'];
                     $data['input_placeholder'] = $settings['input_placeholder'];
+                    $data['color'] = $settings['color'];
                     // $data['text_direction'] = $settings['text_direction'];
                     // $data['country_filter'] = $settings['country_filter'];
                     // $data['country_code'] = $settings['country_code'];
@@ -168,7 +170,7 @@ if (!class_exists('What3wordsSearchbox')) {
          */
         public function woocommerce_checkout_fields($fields) {
             $fields['shipping']['shipping_w3w'] = [
-                'label' => __('Delivery what3words address', 'what3words-searchbox'),
+                'label' => __('What3words address', 'what3words-searchbox'),
                 'placeholder' => _x('Delivery 3 word address', 'placeholder', 'what3words-searchbox'),
                 'required' => false,
                 'class' => ['form-row-wide'],
