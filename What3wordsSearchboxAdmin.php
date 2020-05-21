@@ -164,9 +164,9 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                     $settings['input_selectors'] = $legacy_settings['w3w_field_input'];
                 }
 
-                if (isset($legacy_settings['w3w_field_lang_auto']) && !empty($legacy_settings['w3w_field_lang_auto'])) {
-                    $settings['multilingual'] = $this->to_boolean($legacy_settings['w3w_field_lang_auto']);
-                }
+                // if (isset($legacy_settings['w3w_field_lang_auto']) && !empty($legacy_settings['w3w_field_lang_auto'])) {
+                //     $settings['multilingual'] = $this->to_boolean($legacy_settings['w3w_field_lang_auto']);
+                // }
 
                 if (isset($legacy_settings['w3w_field_lang']) && !empty($legacy_settings['w3w_field_lang'])) {
                     $settings['lang'] = $legacy_settings['w3w_field_lang'];
