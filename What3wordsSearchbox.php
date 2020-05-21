@@ -85,7 +85,7 @@ if (!class_exists('What3wordsSearchbox')) {
                         'api_key' => '',
                         'input_selectors' => '',
                         'input_placeholder' => 'e.g. `index.home.raft`',
-                        'color' => '#e11f26',
+                    //    'color' => '#e11f26',
                         'woocommerce_enabled' => false
                     ]
                 );
@@ -143,7 +143,7 @@ if (!class_exists('What3wordsSearchbox')) {
                     $data['input_selectors'] = implode(',', $selectors);
                     $data['api_key'] = $settings['api_key'];
                     $data['input_placeholder'] = $settings['input_placeholder'];
-                    $data['color'] = $settings['color'];
+                //    $data['color'] = $settings['color'];
                     wp_localize_script($handle, 'What3wordsSearchbox', $data);
                 }
             }
