@@ -86,7 +86,7 @@ if (!class_exists('What3wordsSearchbox')) {
                         'input_selectors' => '',
                         'input_placeholder' => 'Search for a 3 word address',
                         // 'suggestions' => 3,
-                        'lang' => $this->get_default_language(),
+                        // 'lang' => $this->get_default_language(),
                         // 'multilingual' => true,
                         // 'country_filter' => false,
                         // 'country_filter_selector' => '',
@@ -148,7 +148,7 @@ if (!class_exists('What3wordsSearchbox')) {
                 if (!empty($selectors)) {
                     $data['input_selectors'] = implode(',', $selectors);
                     $data['api_key'] = $settings['api_key'];
-                    $data['lang'] = $settings['lang'];
+                    // $data['lang'] = $settings['lang'];
                     // $data['multilingual'] = $settings['multilingual'];
                     // $data['suggestions'] = $settings['suggestions'];
                     $data['input_placeholder'] = $settings['input_placeholder'];

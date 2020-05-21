@@ -168,9 +168,9 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                 //     $settings['multilingual'] = $this->to_boolean($legacy_settings['w3w_field_lang_auto']);
                 // }
 
-                if (isset($legacy_settings['w3w_field_lang']) && !empty($legacy_settings['w3w_field_lang'])) {
-                    $settings['lang'] = $legacy_settings['w3w_field_lang'];
-                }
+                // if (isset($legacy_settings['w3w_field_lang']) && !empty($legacy_settings['w3w_field_lang'])) {
+                //     $settings['lang'] = $legacy_settings['w3w_field_lang'];
+                // }
 
                 // if (isset($legacy_settings['w3w_field_lang']) && !empty($legacy_settings['w3w_field_lang'])) {
                 //     $settings['lang'] = $legacy_settings['w3w_field_lang'];
@@ -278,9 +278,9 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                             </p> -->
                         </div>  <!-- what3words-searchbox-general-wrap -->
 
-                        <h2><?php _e('Localisation Settings', 'what3words-searchbox'); ?></h2>
-                        <div id="what3words-searchbox-locale-wrap">
-                            <p>
+                        <!-- <h2><?php _e('Localisation Settings', 'what3words-searchbox'); ?></h2> -->
+                        <!-- <div id="what3words-searchbox-locale-wrap"> -->
+                            <!-- <p>
                                 <strong><?php _e('Input Language', 'what3words-searchbox'); ?></strong><br />
                                 <select id="what3words-searchbox-language" name="what3words-searchbox-language">
                                 <?php
@@ -292,7 +292,7 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                                 }   // end-foreach (....)
                                 ?>
                                 </select><br /><small><?php _e('The language that should be used to search for 3 word addresses', 'what3words-searchbox'); ?></small>
-                            </p>
+                            </p> -->
                             <!-- <p>
                                 <strong><?php _e('Multilingual Search', 'what3words-searchbox'); ?></strong><br />
                                 <input type="checkbox" name="what3words-searchbox-multilingual" id="what3words-searchbox-multilingual" <?php checked(($settings['multilingual'] ? 1 : 0), 1, true); ?> />&nbsp;<small><?php _e('Specifies whether to search for <em>only</em> the specified language or to search across multiple languages <em>including</em> the specified language.', 'what3words-searchbox'); ?></small>
@@ -327,7 +327,7 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                                     <option value="rtl" <?php selected($settings['text_direction'], 'rtl', true); ?> >Right to left</option>
                                 </select><br /><small><?php _e('Text layout direction for your locale\'s input language', 'what3words-searchbox'); ?></small>
                             </p> -->
-                        </div>  <!-- what3words-searchbox-locale-wrap -->
+                        <!-- </div>  what3words-searchbox-locale-wrap -->
 
                         <h2><?php _e('WooCommerce Support', 'what3words-searchbox'); ?></h2>
                         <div id="what3words-searchbox-woocommerce-wrap">
@@ -364,7 +364,7 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                     // $settings['disabled_selector'] = $this->option('what3words-disable-element-selector');
                     // $settings['suggestions'] = $this->option('what3words-searchbox-suggestion-count');
                     // $settings['text_direction'] = $this->option('what3words-searchbox-text-direction');
-                    $settings['lang'] = $this->option('what3words-searchbox-language');
+                    // $settings['lang'] = $this->option('what3words-searchbox-language');
                     // $settings['multilingual'] = $this->boolean_option('what3words-searchbox-multilingual');
                     // $settings['country_filter'] = $this->boolean_option('what3words-searchbox-country-filter');
                     // $settings['country_filter_selector'] = $this->option('what3words-searchbox-country-filter-selector');

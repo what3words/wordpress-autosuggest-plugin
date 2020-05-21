@@ -14,9 +14,6 @@ if (typeof What3wordsSearchbox != "undefined") {
     const w3wComponent = document.createElement('what3words-autosuggest')
     const targetParent = targetInput.parentNode
 
-    if (What3wordsSearchbox.lang) {
-      w3wComponent.setAttribute('language', What3wordsSearchbox.lang)
-    }
     if (What3wordsSearchbox.input_placeholder) {
       w3wComponent.setAttribute('placeholder', What3wordsSearchbox.input_placeholder)
     }
@@ -27,6 +24,7 @@ if (typeof What3wordsSearchbox != "undefined") {
     targetParent.insertBefore(w3wComponent, targetInput)
     targetInput.style.display = 'none'
     targetInput.setAttribute('readonly', true)
+
     w3wComponent.addEventListener('valid', function(event) {
       // if valid
       if (event.detail) {
@@ -41,7 +39,6 @@ if (typeof What3wordsSearchbox != "undefined") {
   if ($) {
     const $billingCountry = $('[name="billing_country"]')
     if ($billingCountry) {
-
       $billingCountry.on('change',function(event) {
         console.log(event.target.value)
         $('#billing_w3w').prev('what3words-autosuggest')
@@ -51,7 +48,6 @@ if (typeof What3wordsSearchbox != "undefined") {
     }
     const $shippingCountry = $('[name="shipping_country"]')
     if ($shippingCountry) {
-
       $shippingCountry.on('change',function(event) {
         $('#billing_w3w').prev('what3words-autosuggest')
           .attr('clip-to-country', event.target.value)
