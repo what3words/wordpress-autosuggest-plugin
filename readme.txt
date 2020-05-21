@@ -15,7 +15,7 @@ This plugin allows you to add searching for, capturing and validating a 3 word a
 
 == Installation ==
 
-1. You can install what3words AutoSuggest plugin automatically from the WordPress admin panel. From the Dashboard, navigate to *Plugins / Add New* and search for *"what3words AutoSuggest plugin"* and click on the *"Install Now"* button.
+1. You can install what3words AutoSuggest plugin automatically from the WordPress admin panel. From the Dashboard, navigate to *Plugins / Add New* and search for *"what3words"* and click on the *"Install Now"* button.
 1. Or you can install what3words AutoSuggest plugin manually. Download the plugin Zip archive and uncompress it. Copy or upload the `what3words-searchbox` folder to the `wp-content/plugins` folder on your web server.
 1. Activate the plugin. From the Dashboard, navigate to Plugins and click on the *"Activate"* link under the entry for What3words Searchbox.
 1. Customise and configure the plugin; from the Dashboard, navigate to the *Settings / what3words AutoSuggest plugin* page or click on the *"Settings"* link from the Plugins page on the Dashboard.
@@ -25,36 +25,24 @@ This plugin allows you to add searching for, capturing and validating a 3 word a
 
 = Enabling the plugin in a post or page =
 
-To enable the plugin on a post or page, simply add a text input field, contained inside a form, and add the field's *id* to the plugin's *Input Selector(s)* configuration option as described below.
+To enable the plugin on a post or page, simply add a text input field, contained inside a form, and add the field's *css selector (.class, #id)* to the plugin's *Input Selector(s)* configuration option as described below.
 
 = what3words API settings =
 
-A what3words API key is required to use this plugin as it authenticates and interacts with the what3words [RESTful API](https://docs.what3words.com/api/v2/)
+A what3words API key is required to use this plugin as it authenticates and interacts with the what3words [RESTful API](https://developer.what3words.com/public-api/docs#overview)
 
-If you don’t have a what3words API key yet, you can quickly and easily sign-up and [register](https://what3words.com/register?dev=true) for one.
+If you don’t have a what3words API key yet, you can quickly and easily sign-up and [register](https://accounts.what3words.com/create-api-key) for one.
 
 = General Settings =
 
 * Input Selector(s) - the `input` fields that the plugin is configured to search for 3 word addresses. These should be specified as a comma
-separated list of jQuery object selectors.
+separated list of css selectors.
 
 * Input Placeholder Text - an optional placeholder to be displayed in the `input` fields that are configured in the *Input Selector(s)* option.
 
-* Suggestion Count - by default, the plugin will return 3 suggestions; you can choose to display between 8 and 8 suggestions.
-
 = Localisation Settings =
 
-* Input Language - specifies the default language that should be used for searching for 3 word addresses. If *Multilingual Search*
-is disabled; then only 3 word addresses in the *Input Language* will be used.
-
-* Multilingual Search - by default, the plugin searches for 3 word addresses in *all* languages; you can restrict searches to a single language by
-disabling this option.
-
-* Enable Country Filtering / Country - by default, 3 word address suggestions will be returned for all countries. You can configure the plugin
-to restrict suggestions to a single country by checking the *Enable Country Filtering* checkbox and selecting the desired country in the
-*Country* dropdown.
-
-* Text Direction - specifies the text scanning direction of the 3 word address search box. Options are *Left to right* or *Right to left* (e.g. for Arabic).
+* Input Language - specifies the default language that should be used for searching for 3 word addresses.
 
 = WooCommerce Support =
 
@@ -91,7 +79,18 @@ Have a read of the [what3words Knowledge Base](https://support.what3words.com), 
 
 == Changelog ==
 
-The current version is 2.0.4 (2019.01.16)
+The current version is 2.1.0 (2020.xx.xx)
+
+= 2.1.0 =
+* Released 2020.xx.xx
+* Updated the plugin to use new web component and V3 of the what3words API. Note that this release simplifies the plugin setup and removes some settings.
+* Updated links to what3words documentation and developer site
+* Settings available are now: 
+- API key
+- CSS selector to specify which inputs should be upgraded to the auto suggest component
+- Placeholder text show on inputs
+- Input language
+- Turn on/off the WooCommerce integration, to automatically add what3words address fields to your checkout forms
 
 = 2.0.4 =
 * Released 2019.01.16
