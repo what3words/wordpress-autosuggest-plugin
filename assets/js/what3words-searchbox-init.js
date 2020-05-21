@@ -38,25 +38,25 @@ if (typeof What3wordsSearchbox != "undefined") {
     })
   }) //  end forEach
 
-  if (jQuery) { $ = jQuery }
-  if ($) {
-    const $billingCountry = $('[name="billing_country"]')
+  if (document.querySelectorAll('#billing_country,#shipping_country').length && jQuery) {
+
+    const $billingCountry = jQuery('[name="billing_country"]')
     if ($billingCountry) {
       $billingCountry.on('change',function(event) {
         console.log(event.target.value)
-        $('#billing_w3w').prev('what3words-autosuggest')
+        jQuery('#billing_w3w').prev('what3words-autosuggest')
           .attr('clip-to-country', event.target.value)
       })
       $billingCountry.trigger('change')
     }
-    const $shippingCountry = $('[name="shipping_country"]')
+    const $shippingCountry = jQuery('[name="shipping_country"]')
     if ($shippingCountry) {
       $shippingCountry.on('change',function(event) {
-        $('#billing_w3w').prev('what3words-autosuggest')
+        jQuery('#billing_w3w').prev('what3words-autosuggest')
           .attr('clip-to-country', event.target.value)
       })
       $shippingCountry.trigger('change')
     }
-  } //  end if($)
+  } //  end if(document.querySelectorAll && jQuery)
 
 }
