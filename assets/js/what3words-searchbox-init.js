@@ -6,7 +6,12 @@ if (typeof What3wordsSearchbox != "undefined") {
   const targetInputs = document.querySelectorAll(What3wordsSearchbox.input_selectors)
 
   if (targetInputs) {
-    document.head.insertAdjacentHTML("beforeend", '<style>.woocommerce-checkout .what3words-autosuggest .what3words-input{border-width:0;}</style>')
+    document.head.insertAdjacentHTML("beforeend", '<style>\
+    .woocommerce-checkout .what3words-autosuggest .what3words-input{\
+      border-width:0;}\
+    what3words-autosuggest .what3words-logo{\
+      line-height:1; vertical-align:middle;}\
+    </style>')
   }
 
   targetInputs.forEach(function(targetInput) {
