@@ -1,8 +1,6 @@
 
 if (typeof What3wordsSearchbox != "undefined") {
 
-  console.log('settings:\n',What3wordsSearchbox)
-
   const targetInputs = document.querySelectorAll(What3wordsSearchbox.input_selectors)
 
   if (targetInputs) {
@@ -38,7 +36,7 @@ if (typeof What3wordsSearchbox != "undefined") {
         targetInput.value = ''
       }
     })
-  })  //  forEach
+  }) //  end forEach
 
   if (jQuery) { $ = jQuery }
   if ($) {
@@ -59,7 +57,6 @@ if (typeof What3wordsSearchbox != "undefined") {
       })
       $shippingCountry.trigger('change')
     }
-  }
-
+  } //  end if($)
 
 }

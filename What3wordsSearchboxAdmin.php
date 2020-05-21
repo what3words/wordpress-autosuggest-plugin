@@ -224,7 +224,7 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                             </p>
                             <p>
                                 <strong><?php _e('What3words logo colour', 'what3words-searchbox'); ?></strong><br />
-                                <input type="color" name="what3words-searchbox-color" id="what3words-searchbox-color" class="what3words-searchbox-input " value="<?php echo $settings['color']; ?>" /><br /><small><?php _e('Optionally set the colour of the "///" logo, eg "#e11f26"', 'what3words-searchbox'); ?></small>
+                                <input type="color" name="what3words-searchbox-color" id="what3words-searchbox-color" class="what3words-searchbox-input " value="<?php echo $settings['color']; ?>" /><br /><small><?php _e('Optionally set the colour of the "///" logo, eg "#e11f26".', 'what3words-searchbox'); ?></small>
                             </p>
                         </div>  <!-- what3words-searchbox-general-wrap -->
 
