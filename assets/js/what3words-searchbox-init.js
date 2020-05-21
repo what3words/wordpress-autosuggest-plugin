@@ -20,6 +20,9 @@ if (typeof What3wordsSearchbox != "undefined") {
     if (What3wordsSearchbox.input_placeholder) {
       w3wComponent.setAttribute('placeholder', What3wordsSearchbox.input_placeholder)
     }
+    if (What3wordsSearchbox.icon_color) {
+      w3wComponent.setAttribute('icon-color', What3wordsSearchbox.icon_color)
+    }
 
     targetParent.insertBefore(w3wComponent, targetInput)
     targetInput.style.display = 'none'
@@ -33,4 +36,29 @@ if (typeof What3wordsSearchbox != "undefined") {
       }
     })
   })  //  forEach
+
+  if (jQuery) { $ = jQuery }
+  if ($) {
+    const $billingCountry = $('[name="billing_country"]')
+    if ($billingCountry) {
+
+      $billingCountry.on('change',function(event) {
+        console.log(event.target.value)
+        $('#billing_w3w').prev('what3words-autosuggest')
+          .attr('clip-to-country', event.target.value)
+      })
+      $billingCountry.trigger('change')
+    }
+    const $shippingCountry = $('[name="shipping_country"]')
+    if ($shippingCountry) {
+
+      $shippingCountry.on('change',function(event) {
+        $('#billing_w3w').prev('what3words-autosuggest')
+          .attr('clip-to-country', event.target.value)
+      })
+      $shippingCountry.trigger('change')
+    }
+  }
+
+
 }
