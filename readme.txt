@@ -2,7 +2,7 @@
 Contributors: what3words
 Tags: what3words, 3 word address, three word address, searchbox, search, address, validation
 Requires at least: 4.7
-Tested up to: 5.0.3
+Tested up to: 5.4.0
 Stable tag: 2.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -40,10 +40,6 @@ separated list of css selectors.
 
 * Input Placeholder Text - an optional placeholder to be displayed in the `input` fields that are configured in the *Input Selector(s)* option.
 
-= Localisation Settings =
-
-* Input Language - specifies the default language that should be used for searching for 3 word addresses.
-
 = WooCommerce Support =
 
 The plugin also allows you to automatically add a 3 word address validation field to a WooCommerce checkout form and save the 3 word address against the customer’s order details.
@@ -79,10 +75,10 @@ Have a read of the [what3words Knowledge Base](https://support.what3words.com), 
 
 == Changelog ==
 
-The current version is 2.1.0 (2020.xx.xx)
+The current version is 3.0.0 (2020.05.26)
 
-= 2.1.0 =
-* Released 2020.xx.xx
+= 3.0.0 =
+* Released 2020.05.26
 * Updated the plugin to use new web component and V3 of the what3words API. Note that this release simplifies the plugin setup and removes some settings.
 * Updated links to what3words documentation and developer site
 * Settings available are now: 
