@@ -1,5 +1,5 @@
 
-const targetInputs = document.querySelectorAll(What3wordsSearchbox.input_selectors)
+var targetInputs = document.querySelectorAll(What3wordsSearchbox.input_selectors)
 
 if (targetInputs) {
   document.head.insertAdjacentHTML("beforeend", '<style>\
@@ -12,8 +12,8 @@ if (targetInputs) {
 
 targetInputs.forEach(function(targetInput) {
 
-  const w3wComponent = document.createElement('what3words-autosuggest')
-  const targetParent = targetInput.parentNode
+  var w3wComponent = document.createElement('what3words-autosuggest')
+  var targetParent = targetInput.parentNode
 
   if (What3wordsSearchbox.input_placeholder) {
     w3wComponent.setAttribute('placeholder', What3wordsSearchbox.input_placeholder)
@@ -38,7 +38,7 @@ targetInputs.forEach(function(targetInput) {
 
 if (document.querySelectorAll('#billing_country,#shipping_country').length && jQuery) {
 
-  const $billingCountry = jQuery('[name="billing_country"]')
+  var $billingCountry = jQuery('[name="billing_country"]')
   if ($billingCountry) {
     $billingCountry.on('change',function(event) {
       jQuery('#billing_w3w').prev('what3words-autosuggest')
@@ -46,7 +46,7 @@ if (document.querySelectorAll('#billing_country,#shipping_country').length && jQ
     })
     $billingCountry.trigger('change')
   }
-  const $shippingCountry = jQuery('[name="shipping_country"]')
+  var $shippingCountry = jQuery('[name="shipping_country"]')
   if ($shippingCountry) {
     $shippingCountry.on('change',function(event) {
       jQuery('#shipping_w3w').prev('what3words-autosuggest')

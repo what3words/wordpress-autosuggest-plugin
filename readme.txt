@@ -2,8 +2,8 @@
 Contributors: what3words
 Tags: what3words, 3 word address, three word address, searchbox, search, address, validation
 Requires at least: 4.7
-Tested up to: 5.4.0
-Stable tag: 2.0.4
+Tested up to: 5.4.1
+Stable tag: 3.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,12 +70,19 @@ Have a read of the [what3words Knowledge Base](https://support.what3words.com), 
 
 == Screenshots ==
 
-1. Plugin settings
-1. The plugin at work, showing a searchbox
+1. The plugin showing an empty searchbox with placeholder text
+1. The plugin showing autocompletions for a partially entered address
+1. The plugin showing a valid what3words address
+1. The admin screen showing available settings
 
 == Changelog ==
 
-The current version is 3.0.0 (2020.05.26)
+The current version is 3.0.1 (2020.05.27)
+
+= 3.0.1 =
+* Released 2020.05.27
+* Fixes an issue where country clipping would not work when shipping and billing addresses were in different countries.
+* Updated screenshots
 
 = 3.0.0 =
 * Released 2020.05.26
@@ -84,8 +91,7 @@ The current version is 3.0.0 (2020.05.26)
 * Settings available are now: 
 - API key
 - CSS selector to specify which inputs should be upgraded to the auto suggest component
-- Placeholder text show on inputs
-- Input language
+- Placeholder text shown on inputs
 - Turn on/off the WooCommerce integration, to automatically add what3words address fields to your checkout forms
 
 = 2.0.4 =
