@@ -9,14 +9,18 @@ if (targetInputs.length) {
 /* temporary hack to fake style inheritance */
 if (targetInputs) {
   document.head.insertAdjacentHTML("beforeend", '<style>\
-  what3words-autosuggest{box-sizing:border-box; width:100%;} ' + '\
+  what3words-autosuggest{\
+  background-color:' + inputStyles.backgroundColor + ';\
+  box-sizing:border-box; width:100%;} \
   .what3words-autosuggest_input{box-sizing:border-box; \
-  border:' + inputStyles.borderTopWidth + ' ' + inputStyles.borderTopStyle + ' ' + inputStyles.borderTopColor + ';\
-  border-radius:' + inputStyles.borderTopLeftRadius + ' ' + inputStyles.borderTopRightRadius + ' ' + inputStyles.borderBottomRightRadius + ' ' + inputStyles.borderBottomLeftRadius + '; \
+  border-width:' + inputStyles.borderTopWidth + ' ' + inputStyles.borderRightWidth + ' ' + inputStyles.borderBottomWidth + ' ' + inputStyles.borderLeftWidth + '; \
+  border-style:' + inputStyles.borderTopStyle + ' ' + inputStyles.borderRightStyle + ' ' + inputStyles.borderBottomStyle + ' ' + inputStyles.borderLeftStyle + '; \
+  border-color:' + inputStyles.borderTopColor + ' ' + inputStyles.borderRightColor + ' ' + inputStyles.borderBottomColor + ' ' + inputStyles.borderLeftColor + '; \
   font-family:' + inputStyles.fontFamily + '; \
   font-style:' + inputStyles.fontStyle + '; \
   font-family:' + inputStyles.fontFamily + '; \
   height:' + targetInputs[0].clientHeight + 'px; background-color:' + inputStyles.backgroundColor + ';} \
+  .what3words-input{background-color:inherit;}\
   .what3words-input:not(.what3words-input-invalid){color:' + inputStyles.color + ';}\
   .what3words-input::-ms-placeholder{color:' + placeholderColor + ';}\
   .what3words-input::-moz-placeholder{color:' + placeholderColor + ';}\
