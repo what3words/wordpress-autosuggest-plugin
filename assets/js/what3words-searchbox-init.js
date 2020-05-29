@@ -4,7 +4,6 @@ var targetInputs = document.querySelectorAll(What3wordsSearchbox.input_selectors
 if (targetInputs.length) {
   var inputStyles = getComputedStyle(targetInputs[0]),
       placeholderColor = getComputedStyle(targetInputs[0], ':placeholder').color
-  console.log('inputStyles', inputStyles, 'placeholderColor', placeholderColor)
 }
 
 /* temporary hack to fake style inheritance */
@@ -14,6 +13,9 @@ if (targetInputs) {
   .what3words-autosuggest_input{box-sizing:border-box; \
   border:' + inputStyles.borderTopWidth + ' ' + inputStyles.borderTopStyle + ' ' + inputStyles.borderTopColor + ';\
   border-radius:' + inputStyles.borderTopLeftRadius + ' ' + inputStyles.borderTopRightRadius + ' ' + inputStyles.borderBottomRightRadius + ' ' + inputStyles.borderBottomLeftRadius + '; \
+  font-family:' + inputStyles.fontFamily + '; \
+  font-style:' + inputStyles.fontStyle + '; \
+  font-family:' + inputStyles.fontFamily + '; \
   height:' + targetInputs[0].clientHeight + 'px; background-color:' + inputStyles.backgroundColor + ';} \
   .what3words-input:not(.what3words-input-invalid){color:' + inputStyles.color + ';}\
   .what3words-input::-ms-placeholder{color:' + placeholderColor + ';}\
