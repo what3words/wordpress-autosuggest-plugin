@@ -1,11 +1,28 @@
 
 var targetInputs = document.querySelectorAll(What3wordsSearchbox.input_selectors)
 
+if (targetInputs.length) {
+  var inputStyles = getComputedStyle(targetInputs[0]),
+      placeholderColor = getComputedStyle(targetInputs[0], ':placeholder').color
+  console.log('inputStyles', inputStyles, 'placeholderColor', placeholderColor)
+}
+
+/* temporary hack to fake style inheritance */
 if (targetInputs) {
   document.head.insertAdjacentHTML("beforeend", '<style>\
+  what3words-autosuggest{box-sizing:border-box; width:100%;} ' + '\
+  .what3words-autosuggest_input{box-sizing:border-box; \
+  border:' + inputStyles.borderTopWidth + ' ' + inputStyles.borderTopStyle + ' ' + inputStyles.borderTopColor + ';\
+  border-radius:' + inputStyles.borderTopLeftRadius + ' ' + inputStyles.borderTopRightRadius + ' ' + inputStyles.borderBottomRightRadius + ' ' + inputStyles.borderBottomLeftRadius + '; \
+  height:' + targetInputs[0].clientHeight + 'px; background-color:' + inputStyles.backgroundColor + ';} \
+  .what3words-input:not(.what3words-input-invalid){color:' + inputStyles.color + ';}\
+  .what3words-input::-ms-placeholder{color:' + placeholderColor + ';}\
+  .what3words-input::-moz-placeholder{color:' + placeholderColor + ';}\
+  .what3words-input::-webkit-placeholder{color:' + placeholderColor + ';}\
+  .what3words-input::placeholder{color:' + placeholderColor + ';}\
   .woocommerce-checkout .what3words-autosuggest .what3words-input{\
-    border-width:0;}\
-  what3words-autosuggest .what3words-logo{\
+    border-width:0;} \
+  .what3words-autosuggest_input > .what3words-logo{\
     line-height:1; vertical-align:middle;}\
   </style>')
 }
@@ -21,6 +38,22 @@ targetInputs.forEach(function(targetInput) {
   if (What3wordsSearchbox.color) {
     w3wComponent.setAttribute('icon-color', What3wordsSearchbox.color)
   }
+
+  //  fake label association with new input
+  if (targetInput.id) {
+    var targetLabel = document.querySelector('[for="' + targetInput.id + '"]')
+    targetLabel.addEventListener('click', function(event) {
+      event.preventDefault()
+      w3wComponent.querySelector('input').focus()
+    })
+  }
+
+  //  forward clicks on bordered div to the actual input
+  w3wComponent.addEventListener('click', function(event) {
+    if (event.target.classList.contains('what3words-autosuggest_input')) {
+      w3wComponent.querySelector('input').focus()
+    }
+  })
 
   targetParent.insertBefore(w3wComponent, targetInput)
   targetInput.style.display = 'none'
