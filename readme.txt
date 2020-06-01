@@ -3,7 +3,7 @@ Contributors: what3words
 Tags: what3words, 3 word address, three word address, searchbox, search, address, validation
 Requires at least: 4.7
 Tested up to: 5.4.1
-Stable tag: 3.0.1
+Stable tag: 3.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,7 +77,16 @@ Have a read of the [what3words Knowledge Base](https://support.what3words.com), 
 
 == Changelog ==
 
-The current version is 3.0.1 (2020.05.27)
+The current version is 3.0.3 (2020.06.01)
+
+= 3.0.3 =
+* Released 2020.06.01
+* Plugin tweaked to take up less vertical height on themes with slimmer text inputs.
+
+= 3.0.2 =
+* Released 2020.06.01
+* The plugin now inherits styles from the current wordpress theme for more seamless integration.
+* The following css properties are automatically applied to the upgraded input: `background-color`, `border`, `border-radius`, `color`, `font`, `height`.
 
 = 3.0.1 =
 * Released 2020.05.27
