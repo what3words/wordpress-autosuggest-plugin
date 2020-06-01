@@ -206,7 +206,7 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                         <div id="what3words-searchbox-general-wrap">
                             <p>
                                 <strong><?php _e('Input Selector(s)', 'what3words-searchbox'); ?></strong><br />
-                                <input type="text" name="what3words-searchbox-input-selector" id="what3words-searchbox-input-selector" class="what3words-searchbox-input regular-text" value="<?php echo $settings['input_selectors']; ?>" /><br /><small><?php _e('The input field(s) that should be validated as a 3 word address, specified as a list of css selectors. Multiple fields can be supplied using commas e.g. ".class, #id".', 'what3words-searchbox'); ?></small>
+                                <input type="text" name="what3words-searchbox-input-selector" id="what3words-searchbox-input-selector" class="what3words-searchbox-input regular-text" value="<?php echo $settings['input_selectors']; ?>" /><br /><small><?php _e('Only required if you are not using using WooCommerce. If using WordPress without WooCommerce then enter the CSS selectors to identify input element(s). Multiple fields can be supplied using commas e.g. ".class, #id".'); ?></small>
                             </p>
                             <?php
                             if ($settings['woocommerce_enabled']) {

@@ -31,7 +31,7 @@ if (targetInputs) {
   .what3words-input::-webkit-placeholder{color:' + placeholderColor + ';}\
   .what3words-input::placeholder{color:' + placeholderColor + ';}\
   .woocommerce-checkout .what3words-autosuggest .what3words-input{\
-    border-width:0; font-size:1em; } \
+    border-width:0; } \
   .what3words-autosuggest_input > .what3words-logo{\
     line-height:1; vertical-align:middle; }\
   .what3words-autosuggest-state { height:16px; } \
