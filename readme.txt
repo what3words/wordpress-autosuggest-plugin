@@ -3,7 +3,7 @@ Contributors: what3words
 Tags: what3words, 3 word address, three word address, searchbox, search, address, validation
 Requires at least: 4.7
 Tested up to: 5.4.1
-Stable tag: 3.0.4
+Stable tag: 3.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,7 +77,11 @@ Have a read of the [what3words Knowledge Base](https://support.what3words.com), 
 
 == Changelog ==
 
-The current version is 3.0.4 (2020.06.01)
+The current version is 3.0.5 (2020.06.01)
+
+= 3.0.5 =
+* Released 2020.06.01
+* Apply missing `font-size` property.
 
 = 3.0.4 =
 * Released 2020.06.01
