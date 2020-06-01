@@ -11,7 +11,7 @@ if (targetInputs) {
   document.head.insertAdjacentHTML("beforeend", '<style>\
   what3words-autosuggest{\
     background-color:' + inputStyles.backgroundColor + ';\
-    box-sizing:border-box; font-size:1em; width:100%;} \
+    box-sizing:border-box; width:100%;} \
     .what3words-autosuggest_input{\
     box-sizing:border-box; \
     background-color:' + inputStyles.backgroundColor + '; \
@@ -19,13 +19,12 @@ if (targetInputs) {
     border-style:' + inputStyles.borderTopStyle + ' ' + inputStyles.borderRightStyle + ' ' + inputStyles.borderBottomStyle + ' ' + inputStyles.borderLeftStyle + '; \
     border-color:' + inputStyles.borderTopColor + ' ' + inputStyles.borderRightColor + ' ' + inputStyles.borderBottomColor + ' ' + inputStyles.borderLeftColor + '; \
     font-family:' + inputStyles.fontFamily + '; \
-    font-size:' + inputStyles.fontSize + '; \
     font-style:' + inputStyles.fontStyle + '; \
     font-family:' + inputStyles.fontFamily + '; \
     padding-bottom:' + inputStyles.paddingBottom + '; \
     padding-top:' + inputStyles.paddingTop + '; \
   } \
-  .what3words-input{background-color:inherit; padding:0;}\
+  .what3words-input{background-color:inherit; font-size:' + inputStyles.fontSize + '; padding:0;}\
   .what3words-input:not(.what3words-input-invalid){color:'+inputStyles.color+';}\
   .what3words-input::-ms-placeholder{color:' + placeholderColor + ';}\
   .what3words-input::-moz-placeholder{color:' + placeholderColor + ';}\
