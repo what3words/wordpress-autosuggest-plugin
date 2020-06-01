@@ -19,6 +19,7 @@ if (targetInputs) {
     border-style:' + inputStyles.borderTopStyle + ' ' + inputStyles.borderRightStyle + ' ' + inputStyles.borderBottomStyle + ' ' + inputStyles.borderLeftStyle + '; \
     border-color:' + inputStyles.borderTopColor + ' ' + inputStyles.borderRightColor + ' ' + inputStyles.borderBottomColor + ' ' + inputStyles.borderLeftColor + '; \
     font-family:' + inputStyles.fontFamily + '; \
+    font-size:' + inputStyles.fontSize + '; \
     font-style:' + inputStyles.fontStyle + '; \
     font-family:' + inputStyles.fontFamily + '; \
     padding-bottom:' + inputStyles.paddingBottom + '; \
