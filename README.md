@@ -1,96 +1,160 @@
-# wordpress-autosuggest-plugin
-
-=== 3 word address validation field ===
+# what3words Autosuggest Plugin #
 Contributors: what3words
-Tags: what3words, w3w, what 3 words, autosuggest, address, 3 word address, postcode, coordinates, location, delivery, e-commerce, ecommerce, checkout, form, woocommerce
-Requires at least: 4.0.1
-Tested up to: 4.7.2
-Stable tag: 4.7.2
+Tags: what3words, 3 word address, three word address, searchbox, search, address, validation
+Requires at least: 4.7
+Tested up to: 5.4.1
+Requires PHP: 5.4.2 or later
+Stable tag: 3.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily capture 3 word addresses on your website with the 3 word address validation field plugin by what3words.
+This plugin allows you to easily add searching for, capturing, and validating a what3words address to a form on your WordPress powered site.
 
-== Description ==
+## Description ##
 
-what3words is a global addressing system. It has divided the world into a grid of 3m x 3m squares and assigned each one a unique 3 word address. what3words is more accurate than traditional street addressing, and even allows location information to be captured for places without addresses, such as parks or beaches.
+This plugin allows you to easily add searching for, capturing, and validating a what3words address to a form on your WordPress powered site.
 
-The 3 word address validation field plugin created by what3words allows you to easily integrate 3 word addresses into a form on your site.
-
-Returning suggestions based on full or partial 3 word addresses, its AutoSuggest feature helps users with the following types of input error:
-
-* typing errors
-* spelling errors
-* misremembered words (e.g. singular vs. plural) or words in the wrong order
+Returning suggestions based on full or partial 3 word addresses, the AutoSuggest feature helps users with the following types of input error:
+- typing errors
+- spelling errors
+- misremembered words (e.g. singular vs. plural) or words in the wrong order
 
 We recommend using the plugin when you want to capture a precise location from a user. This could be the exact location of your customer’s front door, for example, for delivering their purchase.
 
-= Build more with what3words =
 
-what3words is available in most of the official UN languages, as well as several others. 3 word addresses are pre-assigned and are much easier to remember than lat/long coordinates.
+## Installation ##
 
-Visit our [developer site](http://developer.what3words.com/) for more information on how to integrate your products with what3words.
+1. You can install what3words AutoSuggest plugin automatically from the WordPress admin panel. From the Dashboard, navigate to *Plugins / Add New* and search for *"what3words"* and click on the *"Install Now"* button.
+1. Or you can install what3words AutoSuggest plugin manually. Download the plugin Zip archive and uncompress it. Copy or upload the `3-word-address-validation-field` folder to the `wp-content/plugins` folder on your web server.
+1. Activate the plugin. From the Dashboard, navigate to Plugins and click on the *"Activate"* link under the entry for What3words Searchbox.
+1. Customise and configure the plugin; from the Dashboard, navigate to the *Settings / what3words AutoSuggest plugin* page or click on the *"Settings"* link from the Plugins page on the Dashboard.
+1. Click on the *"Save what3words AutoSuggest plugin Settings"* button to preserve your chosen settings and options.
 
+## Configuration ##
 
-== Installation ==
+### Enabling the plugin in a post or page ###
 
-You can install the 3 word address validation field plugin directly via the plugin directory, or by uploading the files manually to your server.
+To enable the plugin on a post or page, simply add a text input field, contained inside a form, and add the field’s id to the plugin’s Input Selector(s) configuration option as described below.
 
-Once the plugin has been installed, you must configure it via the plugin settings. See ‘Configuration’ below for more details.
+### what3words API settings ###
 
-= Configuration =
-
-= what3words API Settings =
-
-A what3words API key is required to use the plugin as it authenticates and interacts with the what3words RESTful API [autosuggest method](https://docs.what3words.com/api/v2/#autosuggest).
-
-If you don’t have a what3words API key yet, you'll need to [register](https://what3words.com/register?dev=true) for one.
-
-= AutoSuggest Settings =
-
-The 3 word address validation field uses the what3words autosuggest method to help users with input errors. It can be configured with the following settings:
-
-* Input field(s). You must specify the jQuery object selector(s) where you would like the 3 word address validation field to appear as an input field (.class or #id). Multiple instances can be separated using commas e.g. “#shipping_w3w, #billing_w3w”.
-
-* Number of results. Defines the number of 3 word address suggestions shown in the autosuggest results. The maximum number of results that can be shown is 20.
-
-* Language. The list of languages currently supported by what3words, defined as a 2 letter [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) code (default is "en").
-
-* Multilingual. When enabled, uses the multilingual variant of autosuggest API method (check [documentation](https://docs.what3words.com/api/v2/#autosuggest)).
-
-* UI Direction. Direction of the 3 word address validation field. Options are "Left to Right" or "Right to Left" (e.g. for Arabic).
-
-* Input placeholder. Placeholder text for the 3 word address validation field, for example "e.g. lock.spout.radar". We recommend using a placeholder of a 3 word address in the same language as the autosuggest language.
+A what3words API key is required to use this plugin as it authenticates and interacts with the [what3words API](https://developer.what3words.com/public-api).
+If you don’t have a what3words API key yet, you can quickly and easily sign-up and [register](https://accounts.what3words.com/create-api-key) for one.
 
 
-= WooCommerce Checkout =
+### General Settings ###
 
-The plugin also allows you to automatically add a 3 word address validation field to a WooCommerce checkout form and save the 3 word address against the customer’s order details.
+* Input Selectors (WordPress only) – the input fields that the plugin is configured to search for 3 word addresses, specified as a list of css selectors. Multiple fields can be supplies using commas, e.g. “.class, #id”.
 
-By enabling WooCommerce checkout integration, #shipping_w3w and #billing_w3w will be added by default to the AutoSuggest Input Field settings.
+* Input Placeholder Text – an optional placeholder to be displayed in the input fields that are configured in the Input Selector(s) option. We recommend providing an example what3words address here with “e.g.” to illustrate how a what3words address should be entered, for example, “e.g. index.home.raft”.
 
-== Frequently Asked Questions ==
+### WooCommerce Support ###
 
-For all frequently asked questions, and their answers, please visit our [support site](https://support.what3words.com/hc/en-us).
+The plugin also allows you to automatically add a 3 word address validation field to a WooCommerce checkout form and save the 3 word address against the customer’s order details. By enabling WooCommerce checkout integration, the `#shipping_w3w` and `#billing_w3w` selectors will be automatically  added to the list of `Input Selector(s)`.
 
-== Screenshots ==
+## Frequently Asked Questions ##
 
-1. A 3 word address field with custom placeholder text.
+### Is there a web site for this plugin? ###
 
-2. An example of autosuggest results optionally filtered by country.
+Absolutely. Go to the [what3words AutoSuggest plugin home page](https://developer.what3words.com/tools/e-commerce/wordpress) for the latest information. There’s also the official WordPress [plugin repository page](https://wordpress.org/plugins/what3words-searchbox/) and the source for the plugin is on [GitHub](https://github.com/what3words/wordpress-autosuggest-plugin/) as well.
 
-3. A validated 3 word address.
+### what3words AutoSuggest plugin isn't available in my language; can I submit a translation? ###
 
-4. Dashboard to configure 3 word address plugin settings.
+WordPress and this plugin use the Gnu gettext tools to support internationalisation. The source file containing each string that needs to be translated ships with the plugin in what3words-searchbox/lang/src/what3words-searchbox.po. See the [I18n for WordPress Developers](https://codex.wordpress.org/I18n_for_WordPress_Developers) page for more information or get in touch for help.
+
+### I have a question that's not answered here; what do I do? ###
+
+Have a read of the [what3words Knowledge Base](https://support.what3words.com), which contains many more frequently asked questions and their answers.
 
 
-== Changelog ==
+## Filter Support And Usage ##
 
-= 1.1.0 =
+what3words AutoSuggest plugin supports a single filter to change the default set of installation settings and options at plugin activation time.
+
+### what3wordssearchbox_default_settings ###
+
+Applied to the default set of plugin settings and options. Note that this filter is called once, upon plugin activation, when there are no what3words AutoSuggest plugin settings/options existing in the database.
+
+*Example:* Add the date and time that the plugin was first activated
+
+<pre><code>add_filter ('what3wordssearchbox_default_settings', 'add_activation_timestamp');
+
+function add_activation_timestamp ($options) {
+	// options = array (option name => option value)
+	$options['plugin_activation_timestamp'] = date (DATE_ATOM);
+
+	return $options;
+}
+</code></pre>
+
+
+## Changelog ##
+
+The current version is 3.0.6 (2020.06.02)
+
+### 3.0.6 ###
+* Released 2020.06.02
+* Further improvements to match theme styling
+* Clarified the purpose of the `Input Selector(s)` field
+* Updated readme
+
+### 3.0.5 ###
+* Released 2020.06.01
+* Apply missing `font-size` property.
+
+### 3.0.4 ###
+* Released 2020.06.01
+* Hotfix missing `font-size` property.
+
+### 3.0.3 ###
+* Released 2020.06.01
+* Plugin tweaked to take up less vertical height on themes with slimmer text inputs.
+
+### 3.0.2 ###
+* Released 2020.06.01
+* The plugin now inherits styles from the current wordpress theme for more seamless integration.
+* The following css properties are automatically applied to the upgraded input: `background-color`, `border`, `border-radius`, `color`, `font`, `height`.
+
+### 3.0.1 ###
+* Released 2020.05.27
+* Fixes an issue where country clipping would not work when shipping and billing addresses were in different countries.
+* Updated screenshots
+
+### 3.0.0 ###
+* Released 2020.05.26
+* Updated the plugin to use new web component and V3 of the what3words API. Note that this release simplifies the plugin setup and removes some settings.
+* Updated links to what3words documentation and developer site
+* Settings available are now: 
+- API key
+- CSS selector to specify which inputs should be upgraded to the auto suggest component
+- Placeholder text shown on inputs
+- Turn on/off the WooCommerce integration, to automatically add what3words address fields to your checkout forms
+
+### 2.0.4 ###
+* Released 2019.01.16
+* Added new function to allow a country field to be specified for country clipping
+
+### 2.0.3 ###
+* Released 2018.04.05
+* bug fixes
+
+### 2.0.2 ###
+* Released 2018.03.16
+* bug fixes
+
+### 2.0.1 ###
+* Released 2018.01.09
+* bug fixes
+
+### 2.0.0 ###
+* Released 2018.01.08
+* Reworked and redesigned plugin code base
+
+### 1.1.0 ###
 * uses what3words autosuggest jQuery plugin 1.2.0
 
-= 1.0.1 =
+### 1.0.1 ###
 * General fixes
 
-= 1.0.0 =
+### 1.0.0 ###
 * Initial release
