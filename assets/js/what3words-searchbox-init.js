@@ -40,8 +40,8 @@ if (targetInputs) {
   </style>')
 }
 
-targetInputs.forEach(function(targetInput) {
-
+for (var i=0; i<targetInputs.length; i++) {
+  var targetInput = targetInputs[i]
   var w3wComponent = document.createElement('what3words-autosuggest')
   var targetParent = targetInput.parentNode
 
@@ -80,7 +80,7 @@ targetInputs.forEach(function(targetInput) {
       targetInput.value = ''
     }
   })
-}) //  end forEach
+} //  end for loop
 
 if (document.querySelectorAll('#billing_country,#shipping_country').length && jQuery) {
 
