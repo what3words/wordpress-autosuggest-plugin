@@ -35,7 +35,6 @@ if (targetInputs) {
   .what3words-autosuggest_input > .what3words-logo{\
     line-height:1; vertical-align:middle; }\
   .what3words-autosuggest-state { height:16px; } \
-  what3words-autosuggest .options { top:100%; margin-top:-21px; }\
   what3words-autosuggest .options-wrap { transform:none; width:100%; }\
   </style>')
 }
