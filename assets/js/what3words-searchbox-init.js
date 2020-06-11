@@ -24,7 +24,7 @@ if (targetInputs) {
     padding-bottom:' + inputStyles.paddingBottom + '; \
     padding-top:' + inputStyles.paddingTop + '; \
   } \
-  .what3words-input{background-color:inherit; font-size:' + inputStyles.fontSize + '; padding:0;}\
+  .what3words-input{background-color:' + inputStyles.backgroundColor + '; font-size:' + inputStyles.fontSize + '; padding:0;}\
   .what3words-input:not(.what3words-input-invalid){color:'+inputStyles.color+';}\
   .what3words-input::-ms-placeholder{color:' + placeholderColor + ';}\
   .what3words-input::-moz-placeholder{color:' + placeholderColor + ';}\
