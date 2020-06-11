@@ -12,7 +12,7 @@ if (targetInputs) {
   what3words-autosuggest{\
     background-color:' + inputStyles.backgroundColor + ';\
     box-sizing:border-box; width:100%;} \
-    .what3words-autosuggest_input{\
+  .what3words-autosuggest_input{\
     box-sizing:border-box; \
     background-color:' + inputStyles.backgroundColor + '; \
     border-width:' + inputStyles.borderTopWidth + ' ' + inputStyles.borderRightWidth + ' ' + inputStyles.borderBottomWidth + ' ' + inputStyles.borderLeftWidth + '; \
@@ -22,10 +22,13 @@ if (targetInputs) {
     font-style:' + inputStyles.fontStyle + '; \
     font-family:' + inputStyles.fontFamily + '; \
     padding-bottom:' + inputStyles.paddingBottom + '; \
-    padding-top:' + inputStyles.paddingTop + '; \
-  } \
-  .what3words-input{background-color:' + inputStyles.backgroundColor + '; font-size:' + inputStyles.fontSize + '; padding:0;}\
-  .what3words-input:not(.what3words-input-invalid){color:'+inputStyles.color+';}\
+    padding-top:' + inputStyles.paddingTop + ';} \
+  .what3words-input{ \
+    background-color:' + inputStyles.backgroundColor + '; \
+    font-size:' + inputStyles.fontSize + '; \
+    padding:0;} \
+  .what3words-input:not(.what3words-input-invalid){ \
+    color:' + inputStyles.color + ';}\
   .what3words-input::-ms-placeholder{color:' + placeholderColor + ';}\
   .what3words-input::-moz-placeholder{color:' + placeholderColor + ';}\
   .what3words-input::-webkit-placeholder{color:' + placeholderColor + ';}\
@@ -33,9 +36,12 @@ if (targetInputs) {
   .woocommerce-checkout .what3words-autosuggest .what3words-input{\
     border-width:0; } \
   .what3words-autosuggest_input > .what3words-logo{\
-    line-height:1; vertical-align:middle; }\
+    line-height:1; \
+    vertical-align:middle; }\
   .what3words-autosuggest-state { height:16px; } \
-  what3words-autosuggest .options-wrap { transform:none; width:100%; }\
+  what3words-autosuggest .options-wrap { \
+    transform:none; \
+    width:100%;}\
   </style>')
 }
 
