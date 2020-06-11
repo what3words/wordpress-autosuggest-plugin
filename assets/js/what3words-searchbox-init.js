@@ -31,7 +31,7 @@
     padding:0;} \
   .what3words-input:not(.what3words-input-invalid){ \
     color:' + inputStyles.color + ';} \
-  .what3words-input::-ms-placeholder{color:' + placeholderColor + ';}\
+  .what3words-input:-ms-input-placeholder{color:' + placeholderColor + ';}\
   .what3words-input::-moz-placeholder{color:' + placeholderColor + ';}\
   .what3words-input::-webkit-placeholder{color:' + placeholderColor + ';}\
   .what3words-input::placeholder{color:' + placeholderColor + ';}\
