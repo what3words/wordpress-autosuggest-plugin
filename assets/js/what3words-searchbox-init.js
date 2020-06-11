@@ -21,11 +21,13 @@ if (targetInputs) {
     font-family:' + inputStyles.fontFamily + '; \
     font-style:' + inputStyles.fontStyle + '; \
     font-family:' + inputStyles.fontFamily + '; \
+    line-height:' + inputStyles.lineHeight + '; \
     padding-bottom:' + inputStyles.paddingBottom + '; \
     padding-top:' + inputStyles.paddingTop + ';} \
   .what3words-input{ \
     background-color:' + inputStyles.backgroundColor + '; \
     font-size:' + inputStyles.fontSize + '; \
+    line-height:1; \
     padding:0;} \
   .what3words-input:not(.what3words-input-invalid){ \
     color:' + inputStyles.color + ';}\
