@@ -1,13 +1,13 @@
+(function () {
 
-var targetInputs = document.querySelectorAll(What3wordsSearchbox.input_selectors)
+  var targetInputs = document.querySelectorAll(What3wordsSearchbox.input_selectors)
 
-if (targetInputs.length) {
+  if (targetInputs.length === 0) { return }
+
   var inputStyles = getComputedStyle(targetInputs[0]),
       placeholderColor = getComputedStyle(targetInputs[0], ':placeholder').color
-}
 
-/* temporary hack to fake style inheritance */
-if (targetInputs) {
+  /* temporary hack to fake style inheritance */
   document.head.insertAdjacentHTML("beforeend", '<style>\
   what3words-autosuggest{\
     background-color:' + inputStyles.backgroundColor + ';\
@@ -45,66 +45,67 @@ if (targetInputs) {
     transform:none; \
     width:100%;}\
   </style>')
-}
 
-for (var i=0; i<targetInputs.length; i++) {
-  var targetInput = targetInputs[i]
-  var w3wComponent = document.createElement('what3words-autosuggest')
-  var targetParent = targetInput.parentNode
+  for (var i=0; i<targetInputs.length; i++) {
+    var targetInput = targetInputs[i]
+    var w3wComponent = document.createElement('what3words-autosuggest')
+    var targetParent = targetInput.parentNode
 
-  if (What3wordsSearchbox.input_placeholder) {
-    w3wComponent.setAttribute('placeholder', What3wordsSearchbox.input_placeholder)
-  }
-  if (What3wordsSearchbox.color) {
-    w3wComponent.setAttribute('icon-color', What3wordsSearchbox.color)
-  }
-
-  //  fake label association with new input
-  if (targetInput.id) {
-    var targetLabel = document.querySelector('[for="' + targetInput.id + '"]')
-    targetLabel.addEventListener('click', function(event) {
-      event.preventDefault()
-      w3wComponent.querySelector('input').focus()
-    })
-  }
-
-  //  forward clicks on bordered div to the actual input
-  w3wComponent.addEventListener('click', function(event) {
-    if (event.target.classList.contains('what3words-autosuggest_input')) {
-      w3wComponent.querySelector('input').focus()
+    if (What3wordsSearchbox.input_placeholder) {
+      w3wComponent.setAttribute('placeholder', What3wordsSearchbox.input_placeholder)
     }
-  })
-
-  targetParent.insertBefore(w3wComponent, targetInput)
-  targetInput.style.display = 'none'
-  targetInput.setAttribute('readonly', true)
-
-  w3wComponent.addEventListener('valid', function(event) {
-    // if valid
-    if (event.detail) {
-      targetInput.value = '///' + event.target.value
-    } else {
-      targetInput.value = ''
+    if (What3wordsSearchbox.color) {
+      w3wComponent.setAttribute('icon-color', What3wordsSearchbox.color)
     }
-  })
-} //  end for loop
 
-if (document.querySelectorAll('#billing_country,#shipping_country').length && jQuery) {
+    //  fake label association with new input
+    if (targetInput.id) {
+      var targetLabel = document.querySelector('[for="' + targetInput.id + '"]')
+      targetLabel.addEventListener('click', function(event) {
+        event.preventDefault()
+        w3wComponent.querySelector('input').focus()
+      })
+    }
 
-  var $billingCountry = jQuery('[name="billing_country"]')
-  if ($billingCountry) {
-    $billingCountry.on('change',function(event) {
-      jQuery('#billing_w3w').prev('what3words-autosuggest')
-        .attr('clip-to-country', event.target.value)
+    //  forward clicks on bordered div to the actual input
+    w3wComponent.addEventListener('click', function(event) {
+      if (event.target.classList.contains('what3words-autosuggest_input')) {
+        w3wComponent.querySelector('input').focus()
+      }
     })
-    $billingCountry.trigger('change')
-  }
-  var $shippingCountry = jQuery('[name="shipping_country"]')
-  if ($shippingCountry) {
-    $shippingCountry.on('change',function(event) {
-      jQuery('#shipping_w3w').prev('what3words-autosuggest')
-        .attr('clip-to-country', event.target.value)
+
+    targetParent.insertBefore(w3wComponent, targetInput)
+    targetInput.style.display = 'none'
+    targetInput.setAttribute('readonly', true)
+
+    w3wComponent.addEventListener('valid', function(event) {
+      // if valid
+      if (event.detail) {
+        targetInput.value = '///' + event.target.value
+      } else {
+        targetInput.value = ''
+      }
     })
-    $shippingCountry.trigger('change')
-  }
-} //  end if(document.querySelectorAll && jQuery)
+  } //  end for loop
+
+  if (document.querySelectorAll('#billing_country,#shipping_country').length && jQuery) {
+
+    var $billingCountry = jQuery('[name="billing_country"]')
+    if ($billingCountry) {
+      $billingCountry.on('change',function(event) {
+        jQuery('#billing_w3w').prev('what3words-autosuggest')
+          .attr('clip-to-country', event.target.value)
+      })
+      $billingCountry.trigger('change')
+    }
+    var $shippingCountry = jQuery('[name="shipping_country"]')
+    if ($shippingCountry) {
+      $shippingCountry.on('change',function(event) {
+        jQuery('#shipping_w3w').prev('what3words-autosuggest')
+          .attr('clip-to-country', event.target.value)
+      })
+      $shippingCountry.trigger('change')
+    }
+  } //  end if(document.querySelectorAll && jQuery)
+
+})();
