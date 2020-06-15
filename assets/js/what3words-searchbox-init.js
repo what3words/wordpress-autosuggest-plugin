@@ -12,6 +12,7 @@
   what3words-autosuggest{\
     background-color:' + inputStyles.backgroundColor + ';\
     box-sizing:border-box; \
+    font-family:' + inputStyles.fontFamily + '; \
     width:100%;} \
   .what3words-autosuggest_input{\
     box-sizing:border-box; \
@@ -19,7 +20,7 @@
     border-width:' + inputStyles.borderTopWidth + ' ' + inputStyles.borderRightWidth + ' ' + inputStyles.borderBottomWidth + ' ' + inputStyles.borderLeftWidth + '; \
     border-style:' + inputStyles.borderTopStyle + ' ' + inputStyles.borderRightStyle + ' ' + inputStyles.borderBottomStyle + ' ' + inputStyles.borderLeftStyle + '; \
     border-color:' + inputStyles.borderTopColor + ' ' + inputStyles.borderRightColor + ' ' + inputStyles.borderBottomColor + ' ' + inputStyles.borderLeftColor + '; \
-    font-family:' + inputStyles.fontFamily + '; \
+    color:' + inputStyles.color + '; \
     font-style:' + inputStyles.fontStyle + '; \
     font-family:' + inputStyles.fontFamily + '; \
     line-height:' + inputStyles.lineHeight + '; \
@@ -30,25 +31,15 @@
     font-size:' + inputStyles.fontSize + '; \
     line-height:1; \
     padding:0;} \
-  .what3words-input:not(.what3words-input-invalid){ \
-    color:' + inputStyles.color + ';} \
-  .what3words-input:-ms-input-placeholder{color:' + placeholderColor + ';}\
-  .what3words-input::-moz-placeholder{color:' + placeholderColor + ';}\
-  .what3words-input::-webkit-placeholder{color:' + placeholderColor + ';}\
-  .what3words-input::placeholder{color:' + placeholderColor + ';}\
   .woocommerce-checkout .what3words-autosuggest .what3words-input{\
     border-width:0;} \
-  .what3words-autosuggest_input > .what3words-logo{\
-    line-height:1; \
-    vertical-align:middle;} \
   .what3words-autosuggest-state { height:16px; } \
-  what3words-autosuggest .options-wrap { \
-    width:100%;}\
-  .what3words-error { line-height: 1.5; }\
+  what3words-autosuggest .options-wrap { width:100%; }\
+  .what3words-error {\
+    position:absolute; \
+    top:100%;}\
   what3words-autosuggest .options{\
-    bottom:24px; \
-    top:auto; \
-    margin-top:0;}\
+    top:100%;}\
   </style>')
 
   for (var i=0; i<targetInputs.length; i++) {
