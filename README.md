@@ -4,7 +4,6 @@ Tags: what3words, 3 word address, three word address, searchbox, search, address
 Requires at least: 4.7
 Tested up to: 5.4.1
 Requires PHP: 5.4.2 or later
-Stable tag: 3.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,75 +85,3 @@ function add_activation_timestamp ($options) {
 	return $options;
 }
 </code></pre>
-
-
-## Changelog ##
-
-The current version is 3.0.6 (2020.06.02)
-
-### 3.0.6 ###
-* Released 2020.06.02
-* Further improvements to match theme styling
-* Clarified the purpose of the `Input Selector(s)` field
-* Updated readme
-
-### 3.0.5 ###
-* Released 2020.06.01
-* Apply missing `font-size` property.
-
-### 3.0.4 ###
-* Released 2020.06.01
-* Hotfix missing `font-size` property.
-
-### 3.0.3 ###
-* Released 2020.06.01
-* Plugin tweaked to take up less vertical height on themes with slimmer text inputs.
-
-### 3.0.2 ###
-* Released 2020.06.01
-* The plugin now inherits styles from the current wordpress theme for more seamless integration.
-* The following css properties are automatically applied to the upgraded input: `background-color`, `border`, `border-radius`, `color`, `font`, `height`.
-
-### 3.0.1 ###
-* Released 2020.05.27
-* Fixes an issue where country clipping would not work when shipping and billing addresses were in different countries.
-* Updated screenshots
-
-### 3.0.0 ###
-* Released 2020.05.26
-* Updated the plugin to use new web component and V3 of the what3words API. Note that this release simplifies the plugin setup and removes some settings.
-* Updated links to what3words documentation and developer site
-* Settings available are now: 
-- API key
-- CSS selector to specify which inputs should be upgraded to the auto suggest component
-- Placeholder text shown on inputs
-- Turn on/off the WooCommerce integration, to automatically add what3words address fields to your checkout forms
-
-### 2.0.4 ###
-* Released 2019.01.16
-* Added new function to allow a country field to be specified for country clipping
-
-### 2.0.3 ###
-* Released 2018.04.05
-* bug fixes
-
-### 2.0.2 ###
-* Released 2018.03.16
-* bug fixes
-
-### 2.0.1 ###
-* Released 2018.01.09
-* bug fixes
-
-### 2.0.0 ###
-* Released 2018.01.08
-* Reworked and redesigned plugin code base
-
-### 1.1.0 ###
-* uses what3words autosuggest jQuery plugin 1.2.0
-
-### 1.0.1 ###
-* General fixes
-
-### 1.0.0 ###
-* Initial release

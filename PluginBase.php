@@ -2,7 +2,7 @@
 /*
  * Name: PluginBase
  * Description: Base class for developing WordPress plugins; contains helper functions to add WordPress hooks consistently and sanitise hook method names.
- * Version: 3.0.5
+ * Version: 1.0.0
  * Author: what3words, Travis Smith
  * Author URI: http://what3words.com
  * License: GPL2
