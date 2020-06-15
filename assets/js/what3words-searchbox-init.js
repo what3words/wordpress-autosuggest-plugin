@@ -43,6 +43,11 @@
   .what3words-autosuggest-state { height:16px; } \
   what3words-autosuggest .options-wrap { \
     width:100%;}\
+  .what3words-error { line-height: 1.5; }\
+  what3words-autosuggest .options{\
+    bottom:24px; \
+    top:auto; \
+    margin-top:0; }\
   </style>')
 
   for (var i=0; i<targetInputs.length; i++) {
