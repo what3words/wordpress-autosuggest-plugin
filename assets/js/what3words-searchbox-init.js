@@ -11,7 +11,8 @@
   document.head.insertAdjacentHTML("beforeend", '<style>\
   what3words-autosuggest{\
     background-color:' + inputStyles.backgroundColor + ';\
-    box-sizing:border-box; width:100%;} \
+    box-sizing:border-box; \
+    width:100%;} \
   .what3words-autosuggest_input{\
     box-sizing:border-box; \
     background-color:' + inputStyles.backgroundColor + '; \
@@ -36,7 +37,7 @@
   .what3words-input::-webkit-placeholder{color:' + placeholderColor + ';}\
   .what3words-input::placeholder{color:' + placeholderColor + ';}\
   .woocommerce-checkout .what3words-autosuggest .what3words-input{\
-    border-width:0; } \
+    border-width:0;} \
   .what3words-autosuggest_input > .what3words-logo{\
     line-height:1; \
     vertical-align:middle;} \
@@ -47,7 +48,7 @@
   what3words-autosuggest .options{\
     bottom:24px; \
     top:auto; \
-    margin-top:0; }\
+    margin-top:0;}\
   </style>')
 
   for (var i=0; i<targetInputs.length; i++) {
