@@ -96,23 +96,26 @@
     })()
   } //  end for loop
 
-  if (document.querySelectorAll('#billing_country,#shipping_country').length && jQuery) {
-    var $billingCountry = jQuery('[name="billing_country"]')
-    if ($billingCountry) {
-      $billingCountry.on('change',function(event) {
-        jQuery('#billing_w3w').prev('what3words-autosuggest')
-          .attr('clip-to-country', event.target.value)
-      })
-      $billingCountry.trigger('change')
-    }
-    var $shippingCountry = jQuery('[name="shipping_country"]')
-    if ($shippingCountry) {
-      $shippingCountry.on('change',function(event) {
-        jQuery('#shipping_w3w').prev('what3words-autosuggest')
-          .attr('clip-to-country', event.target.value)
-      })
-      $shippingCountry.trigger('change')
-    }
-  } //  end if(document.querySelectorAll && jQuery)
+  jQuery(function($) {
+    if ($('#billing_country,#shipping_country').length) {
+      var $billingCountry = $('[name="billing_country"]')
+      if ($billingCountry) {
+        $billingCountry.on('change',function(event) {
+          $('#billing_w3w').prev('what3words-autosuggest')
+            .attr('clip-to-country', event.target.value)
+        })
+        $billingCountry.trigger('change')
+      }
+      var $shippingCountry = $('[name="shipping_country"]')
+      if ($shippingCountry) {
+        $shippingCountry.on('change',function(event) {
+          $('#shipping_w3w').prev('what3words-autosuggest')
+            .attr('clip-to-country', event.target.value)
+        })
+        $shippingCountry.trigger('change')
+      }
+    } //  end if(document.querySelectorAll
+  }) // end jQuery document.ready
+
 
 })();
