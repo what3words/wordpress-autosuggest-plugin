@@ -42,7 +42,6 @@
     vertical-align:middle;} \
   .what3words-autosuggest-state { height:16px; } \
   what3words-autosuggest .options-wrap { \
-    transform:none; \
     width:100%;}\
   </style>')
 
