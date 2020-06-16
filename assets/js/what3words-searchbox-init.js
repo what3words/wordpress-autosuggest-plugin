@@ -31,6 +31,7 @@
     font-size:' + inputStyles.fontSize + '; \
     line-height:1; \
     padding:0;} \
+  .what3words-input:-ms-input-placeholder{color:' + placeholderColor + ';} \
   .woocommerce-checkout .what3words-autosuggest .what3words-input{\
     border-width:0;} \
   .what3words-autosuggest-state { height:16px; } \
