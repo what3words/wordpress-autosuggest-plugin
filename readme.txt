@@ -95,10 +95,10 @@ function add_activation_timestamp ($options) {
 
 == Changelog ==
 
-The current version is 3.0.7 (2020.06.15)
+The current version is 3.0.7 (2020.06.17)
 
 = 3.0.7 =
-* Released 2020.06.15
+* Released 2020.06.17
 * Addresses an error that prevented the plugin loading on Internet Explorer.
 * Minor styling improvements.
 

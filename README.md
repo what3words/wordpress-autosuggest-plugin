@@ -7,8 +7,6 @@ Requires PHP: 5.4.2 or later
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin allows you to easily add searching for, capturing, and validating a what3words address to a form on your WordPress powered site.
-
 ## Description ##
 
 This plugin allows you to easily add searching for, capturing, and validating a what3words address to a form on your WordPress powered site.
@@ -19,6 +17,7 @@ Returning suggestions based on full or partial 3 word addresses, the AutoSuggest
 - misremembered words (e.g. singular vs. plural) or words in the wrong order
 
 We recommend using the plugin when you want to capture a precise location from a user. This could be the exact location of your customer’s front door, for example, for delivering their purchase.
+
 
 
 ## Installation ##
