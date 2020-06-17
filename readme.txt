@@ -4,7 +4,7 @@ Tags: what3words, 3 word address, three word address, searchbox, search, address
 Requires at least: 4.7
 Tested up to: 5.4.1
 Requires PHP: 5.4.2 or later
-Stable tag: 3.0.6
+Stable tag: 3.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,7 +95,12 @@ function add_activation_timestamp ($options) {
 
 == Changelog ==
 
-The current version is 3.0.6 (2020.06.02)
+The current version is 3.0.7 (2020.06.17)
+
+= 3.0.7 =
+* Released 2020.06.17
+* Addresses an error that prevented the plugin loading on Internet Explorer.
+* Minor styling improvements.
 
 = 3.0.6 =
 * Released 2020.06.02
