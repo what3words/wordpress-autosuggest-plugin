@@ -114,15 +114,15 @@ if (!class_exists('What3wordsSearchbox')) {
             //  This is the plugin script that loads web component
             $handle = 'what3words-searchbox-autosuggest-js';
             $src = 'https://assets.what3words.com/sdk/v3.1/what3words.js?key=' . $settings['api_key'];
-            $deps = ['jquery'];
-            $in_footer = false;
+            $deps = [];
+            $in_footer = true;
 
             wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
 
             //  Replace specified inputs with What3Words' AutoSuggest component
             $handle = 'what3words-searchbox-js';
             $src = WHAT3WORDS_SEARCHBOX_URL . 'assets/js/what3words-searchbox-init.js';
-            $deps = [];
+            $deps = ['jquery'];
             $in_footer = true;
 
             wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
