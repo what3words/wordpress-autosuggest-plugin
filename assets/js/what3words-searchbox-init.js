@@ -39,7 +39,7 @@
     top:100%;}\
   what3words-autosuggest .options{\
     top:100%;}\
-  </style>')
+  </style>');
 
   for (var i=0; i<targetInputs.length; i++) {
     // closure to stop targetInput etc getting hoisted
@@ -87,28 +87,22 @@
   } //  end for loop
 })();
 
-//  set clip-to-country property when address country is set
+//  set clip-to-country property when address country is set on 
+//  WooCommerce checkouts
 (function() {
-  var $j = jQuery.noConflict();
-  var $billingCountry = $j('[name="billing_country"]')
-  var $shippingCountry = $j('[name="shipping_country"]')
+  var $ = jQuery.noConflict(),
+      $billingCountry = $('[name="billing_country"]'),
+      $shippingCountry = $('[name="shipping_country"]');
 
-  if ( !($billingCountry.length || $shippingCountry.length) ) {
-    return;
-  }
-  if ($billingCountry) {
-    $billingCountry.on('change', function(event) {
-      console.log(event)
-      $j('#billing_w3w').prev('what3words-autosuggest')
-        .attr('clip-to-country', event.target.value)
-    })
-    $billingCountry.trigger('change')
-  }
-  if ($shippingCountry) {
-    $shippingCountry.on('change',function(event) {
-      $j('#shipping_w3w').prev('what3words-autosuggest')
-        .attr('clip-to-country', event.target.value)
-    })
-    $shippingCountry.trigger('change')
-  }
+  if (!($billingCountry.length || $shippingCountry.length)) return;
+  $billingCountry.on('change', function(event) {
+    $('#billing_w3w').prev('what3words-autosuggest')
+      .attr('clip-to-country', event.target.value)
+  })
+  $billingCountry.trigger('change')
+  $shippingCountry.on('change',function(event) {
+    $('#shipping_w3w').prev('what3words-autosuggest')
+      .attr('clip-to-country', event.target.value)
+  })
+  $shippingCountry.trigger('change')
 })();
