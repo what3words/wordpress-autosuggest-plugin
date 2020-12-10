@@ -2,7 +2,7 @@
 Contributors: what3words
 Tags: what3words, 3 word address, three word address, searchbox, search, address, validation
 Requires at least: 4.7
-Tested up to: 5.5.3
+Tested up to: 5.6
 Requires PHP: 5.4.2 or later
 Stable tag: 3.0.7
 License: GPLv2 or later
@@ -95,7 +95,12 @@ function add_activation_timestamp ($options) {
 
 == Changelog ==
 
-The current version is 3.0.7 (2020.06.17)
+The current version is 3.0.8 (2020.12.11)
+
+= 3.0.8 =
+* Released 2020.12.11
+* Improved interoperability, errors in 3rd party scripts will be less likely to prevent the plugin operating.
+* Bumped to latest WordPress release, 5.6
 
 = 3.0.7 =
 * Released 2020.06.17
