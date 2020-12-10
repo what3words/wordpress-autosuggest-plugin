@@ -120,9 +120,9 @@ if (!class_exists('What3wordsSearchbox')) {
             wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
 
             //  Replace specified inputs with What3Words' AutoSuggest component
-            $handle = 'what3words-searchbox-js';
+            $handle = 'what3words-searchbox-init-js';
             $src = WHAT3WORDS_SEARCHBOX_URL . 'assets/js/what3words-searchbox-init.js';
-            $deps = ['jquery'];
+            $deps = ['jquery', 'what3words-searchbox-autosuggest-js'];
             $in_footer = true;
 
             wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
