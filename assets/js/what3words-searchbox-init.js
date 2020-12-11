@@ -1,7 +1,5 @@
 (function () {
-
   var targetInputs = document.querySelectorAll(What3wordsSearchbox.input_selectors)
-
   if (targetInputs.length === 0) { return }
 
   var inputStyles = getComputedStyle(targetInputs[0]),
@@ -41,7 +39,7 @@
     top:100%;}\
   what3words-autosuggest .options{\
     top:100%;}\
-  </style>')
+  </style>');
 
   for (var i=0; i<targetInputs.length; i++) {
     // closure to stop targetInput etc getting hoisted
@@ -87,27 +85,24 @@
       })
     })()
   } //  end for loop
+})();
 
-  jQuery(function($) {
-    if ($('#billing_country,#shipping_country').length) {
-      var $billingCountry = $('[name="billing_country"]')
-      if ($billingCountry) {
-        $billingCountry.on('change',function(event) {
-          $('#billing_w3w').prev('what3words-autosuggest')
-            .attr('clip-to-country', event.target.value)
-        })
-        $billingCountry.trigger('change')
-      }
-      var $shippingCountry = $('[name="shipping_country"]')
-      if ($shippingCountry) {
-        $shippingCountry.on('change',function(event) {
-          $('#shipping_w3w').prev('what3words-autosuggest')
-            .attr('clip-to-country', event.target.value)
-        })
-        $shippingCountry.trigger('change')
-      }
-    } //  end if(document.querySelectorAll
-  }) // end jQuery document.ready
+//  set clip-to-country property when address country is set on 
+//  WooCommerce checkouts
+(function() {
+  var $ = jQuery.noConflict(),
+      $billingCountry = $('[name="billing_country"]'),
+      $shippingCountry = $('[name="shipping_country"]');
 
-
+  if (!($billingCountry.length || $shippingCountry.length)) return;
+  $billingCountry.on('change', function(event) {
+    $('#billing_w3w').prev('what3words-autosuggest')
+      .attr('clip-to-country', event.target.value)
+  })
+  $billingCountry.trigger('change')
+  $shippingCountry.on('change',function(event) {
+    $('#shipping_w3w').prev('what3words-autosuggest')
+      .attr('clip-to-country', event.target.value)
+  })
+  $shippingCountry.trigger('change')
 })();
