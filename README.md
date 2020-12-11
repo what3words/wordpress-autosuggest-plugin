@@ -1,5 +1,6 @@
 # what3words Autosuggest Plugin #
 
+
 ## Description ##
 
 This plugin allows you to easily add searching for, capturing, and validating a what3words address to a form on your WordPress powered site.
