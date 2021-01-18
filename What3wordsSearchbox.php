@@ -115,6 +115,7 @@ if (!class_exists('What3wordsSearchbox')) {
             $handle = 'what3words-searchbox-autosuggest-js';
             $src = 'https://assets.what3words.com/sdk/v3.1/what3words.js?key=' . $settings['api_key'];
             $deps = [];
+            $ver = NULL;
             $in_footer = true;
 
             wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
@@ -123,6 +124,7 @@ if (!class_exists('What3wordsSearchbox')) {
             $handle = 'what3words-searchbox-init-js';
             $src = WHAT3WORDS_SEARCHBOX_URL . 'assets/js/what3words-searchbox-init.js';
             $deps = ['jquery', 'what3words-searchbox-autosuggest-js'];
+            $ver = NULL;
             $in_footer = true;
 
             wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
