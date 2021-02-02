@@ -26,7 +26,7 @@ require_once(WHAT3WORDS_SEARCHBOX_PATH . '/What3wordsSearchboxAdmin.php');
 if (!class_exists('What3wordsSearchbox')) {
     class What3wordsSearchbox extends PluginBase {
         const VERSION = '200';
-        const DISPLAY_VERSION = '2.0.1';
+        const DISPLAY_VERSION = '3.0.8';
 
         protected static $instance;
 
@@ -108,6 +108,8 @@ if (!class_exists('What3wordsSearchbox')) {
          * scripts and styles.
          */
         public function enqueue_scripts() {
+            global $wp_version;
+            global $woocommerce;
             //  Get settings so we can append api key to script src
             $settings = $this->get_option();
 
@@ -145,6 +147,12 @@ if (!class_exists('What3wordsSearchbox')) {
                     $data['input_selectors'] = implode(',', $selectors);
                     $data['api_key'] = $settings['api_key'];
                     $data['input_placeholder'] = $settings['input_placeholder'];
+                    $data['php_version'] = PHP_VERSION;
+                    $data['wp_version'] = $wp_version;
+                    $data['wc_version'] = (isset($woocommerce)) 
+                        ? $woocommerce->version
+                        : 'NA';
+                    $data['w3_version'] = self::DISPLAY_VERSION;
                 //    $data['color'] = $settings['color'];
                     wp_localize_script($handle, 'What3wordsSearchbox', $data);
                 }

@@ -48,6 +48,15 @@
       var w3wComponent = document.createElement('what3words-autosuggest')
       var targetParent = targetInput.parentNode
 
+      w3wComponent.headers = JSON.stringify({
+        "X-W3W-Plugin":
+          `what3words-Wordpress/${What3wordsSearchbox.w3_version} (` + [
+            `PHP/${What3wordsSearchbox.php_version}`,
+            `WordPress/${What3wordsSearchbox.wp_version}`,
+            `WooCommerce/${What3wordsSearchbox.wc_version}`
+          ].join(' ') + ')'
+      })
+
       if (What3wordsSearchbox.input_placeholder) {
         w3wComponent.setAttribute('placeholder', What3wordsSearchbox.input_placeholder)
       }
