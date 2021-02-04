@@ -23,24 +23,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 <header><h2><?php _e( 'Customer Details', 'woocommerce' ); ?></h2></header>
 
 <table class="shop_table customer_details">
-	<?php if ( $order->customer_note ) : ?>
+	<?php if ( $order->get_customer_note() ) : ?>
 		<tr>
 			<th><?php _e( 'Note:', 'woocommerce' ); ?></th>
-			<td><?php echo wptexturize( $order->customer_note ); ?></td>
+			<td><?php echo wptexturize( $order->get_customer_note() ); ?></td>
 		</tr>
 	<?php endif; ?>
 
-	<?php if ( $order->billing_email ) : ?>
+	<?php if ( $order->get_billing_email() ) : ?>
 		<tr>
 			<th><?php _e( 'Email:', 'woocommerce' ); ?></th>
-			<td><?php echo esc_html( $order->billing_email ); ?></td>
+			<td><?php echo esc_html( $order->get_billing_email() ); ?></td>
 		</tr>
 	<?php endif; ?>
 
-	<?php if ( $order->billing_phone ) : ?>
+	<?php if ( $order->get_billing_phone() ) : ?>
 		<tr>
 			<th><?php _e( 'Telephone:', 'woocommerce' ); ?></th>
-			<td><?php echo esc_html( $order->billing_phone ); ?></td>
+			<td><?php echo esc_html( $order->get_billing_phone() ); ?></td>
 		</tr>
 	<?php endif; ?>
 
@@ -59,7 +59,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 </header>
 <address>
 	<?php echo ( $address = $order->get_formatted_billing_address() ) ? $address : __( 'N/A', 'woocommerce' ); ?>
-	<br><?php echo get_post_meta( $order->id, '_billing_w3w', true ); ?>
+	<br><?php echo get_post_meta( $order->get_id(), '_billing_w3w', true ); ?>
 </address>
 
 <?php if ( ! wc_ship_to_billing_address_only() && $order->needs_shipping_address() ) : ?>
@@ -71,7 +71,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</header>
 		<address>
 			<?php echo ( $address = $order->get_formatted_shipping_address() ) ? $address : __( 'N/A', 'woocommerce' ); ?>
-			<br><?php echo get_post_meta( $order->id, '_shipping_w3w', true ); ?>
+			<br><?php echo get_post_meta( $order->get_id(), '_shipping_w3w', true ); ?>
 		</address>
 	</div><!-- /.col-2 -->
 </div><!-- /.col2-set -->

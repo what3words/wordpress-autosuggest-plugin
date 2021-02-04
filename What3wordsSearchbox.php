@@ -187,7 +187,7 @@ if (!class_exists('What3wordsSearchbox')) {
          * custom order edit field values after the shipping address.
          */
         public function woocommerce_admin_order_data_after_shipping_address($order) {
-            echo '<p><strong>' . __('w3w Address', 'what3words-searchbox') . ':</strong> ' . get_post_meta($order->id, '_shipping_w3w', true) . '</p>';
+            echo '<p><strong>' . __('w3w Address', 'what3words-searchbox') . ':</strong> ' . get_post_meta($order->get_id(), '_shipping_w3w', true) . '</p>';
         }
 
         /**
@@ -195,7 +195,7 @@ if (!class_exists('What3wordsSearchbox')) {
          * custom order edit field values after the billing address.
          */
         public function woocommerce_admin_order_data_after_billing_address($order) {
-            echo '<p><strong>' . __('w3w Address', 'what3words-searchbox') . ':</strong> ' . get_post_meta($order->id, '_billing_w3w', true) . '</p>';
+            echo '<p><strong>' . __('w3w Address', 'what3words-searchbox') . ':</strong> ' . get_post_meta($order->get_id(), '_billing_w3w', true) . '</p>';
         }
 
         /**
