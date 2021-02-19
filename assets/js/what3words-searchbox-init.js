@@ -2,16 +2,6 @@
   var targetInputs = document.querySelectorAll(What3wordsSearchbox.input_selectors)
   if (targetInputs.length === 0) { return }
 
-  // var sdkScript = document.querySelector('[src*="what3words.js"]')
-  // var queryKey = (sdkScript.src.split('key=')[1] || '').split('&')[0]
-
-  // if (What3wordsSearchbox.api_key && What3wordsSearchbox.api_key !== queryKey) {
-  //   console.log(`key not set on script "${queryKey}" should be "${What3wordsSearchbox.api_key}"`)
-  //   what3words.api.setOptions({ key: What3wordsSearchbox.api_key })
-  // }
-
-  // console.log('queryKey', queryKey)
-
   var inputStyles = getComputedStyle(targetInputs[0]),
       placeholderColor = getComputedStyle(targetInputs[0], ':placeholder').color
 
