@@ -3,7 +3,7 @@
 Plugin Name: what3words Autosuggest Plugin
 Plugin URI: https://github.com/what3words/wordpress-autosuggest-plugin
 Description: WordPress plugin to capture and validate what3word's 3 word addresses
-Version: 3.0.9
+Version: 3.0.10
 Author: what3words
 Author URI: http://what3words.com
 License: GPLv2
@@ -12,6 +12,7 @@ Text Domain: what3words-searchbox
 
 if (!defined('ABSPATH')) exit;
 
+define('WHAT3WORDS_PLUGIN_DIRNAME', array_pop(explode('/', __DIR__)));
 define('WHAT3WORDS_SEARCHBOX_URL', plugin_dir_url(__FILE__));
 define('WHAT3WORDS_SEARCHBOX_PATH', plugin_dir_path(__FILE__));
 define('WHAT3WORDS_SEARCHBOX_NAME', plugin_basename(__FILE__));
@@ -85,7 +86,6 @@ if (!class_exists('What3wordsSearchbox')) {
                         'api_key' => '',
                         'input_selectors' => '',
                         'input_placeholder' => 'e.g. `index.home.raft`',
-                    //    'color' => '#e11f26',
                         'woocommerce_enabled' => false
                     ]
                 );
@@ -98,7 +98,7 @@ if (!class_exists('What3wordsSearchbox')) {
          * "init" action hook; called to initialise the plugin
          */
         function init() {
-            $lang_dir = '3-word-address-validation-field/languages';
+            $lang_dir = WHAT3WORDS_PLUGIN_DIRNAME . '/languages';
             load_plugin_textdomain ('what3words-searchbox', false, $lang_dir);
         }
 
@@ -115,7 +115,7 @@ if (!class_exists('What3wordsSearchbox')) {
 
             //  This is the plugin script that loads web component
             $handle = 'what3words-searchbox-autosuggest-js';
-            $src = 'https://assets.what3words.com/sdk/v3.1/what3words.js?key=' . $settings['api_key'];
+            $src = 'https://assets.what3words.com/sdk/v3.1/what3words.js?';
             $deps = [];
             $ver = NULL;
             $in_footer = true;

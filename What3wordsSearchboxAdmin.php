@@ -47,7 +47,7 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
          * on the plugins page (beside the activate/deactivate links)
          */
         public function action_links($actions, $plugin_file, $plugin_data, $context) {
-            $settings = sprintf('<a href="%s">%s</a>', admin_url('options-general.php?page=3-word-address-validation-field/What3wordsSearchboxAdmin.php'),  __('Settings', 'what3words-searchbox'));
+            $settings = sprintf('<a href="%s">%s</a>', admin_url('options-general.php?page=' . WHAT3WORDS_PLUGIN_DIRNAME . '/What3wordsSearchboxAdmin.php'),  __('Settings', 'what3words-searchbox'));
             array_unshift($actions, $settings);
 
             return $actions;
@@ -110,7 +110,7 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
                     }
 
                     if (!empty($notice)) {
-                        $notice[] = sprintf('You can go to the <a href="%s">What3words Searchbox Settings page</a> to do this now', admin_url('options-general.php?page=3-word-address-validation-field/What3wordsSearchboxAdmin.php'));
+                        $notice[] = sprintf('You can go to the <a href="%s">What3words Searchbox Settings page</a> to do this now', admin_url('options-general.php?page=' . WHAT3WORDS_PLUGIN_DIRNAME . '/What3wordsSearchboxAdmin.php'));
                         echo '<div class="error notice is-dismissible"><p>' . implode('. ', $notice) . '</p></div>';
                     }
                 }
@@ -192,7 +192,7 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
             ?>
             <div class="wrap">
                 <h1><?php echo '<img src="https://assets.what3words.com/images/what3words_header_logo_261x43.png" /><br />' . esc_html(get_admin_page_title()); ?></h1>
-                <form method="post" action="<?php echo esc_html(admin_url('options-general.php?page=3-word-address-validation-field/What3wordsSearchboxAdmin.php')); ?>">
+                <form method="post" action="<?php echo esc_html(admin_url('options-general.php?page=' . WHAT3WORDS_PLUGIN_DIRNAME . '/What3wordsSearchboxAdmin.php')); ?>">
                     <div id="what3words-searchbox-wrap">
                         <h2><?php _e('what3words API Settings', 'what3words-searchbox'); ?></h2>
                         <div id="what3words-searchbox-api-wrap">
@@ -255,7 +255,7 @@ if (!class_exists('What3wordsSearchboxAdmin')) {
             $settings = $this->get_option();
 
             if (!empty($_POST['what3words-searchbox-submit'])) {
-                if (strstr($_GET['page'], '3-word-address-validation-field') && check_admin_referer('what3words-searchbox-save-settings', 'what3words-searchbox-nonce')) {
+                if (strstr($_GET['page'], WHAT3WORDS_PLUGIN_DIRNAME) && check_admin_referer('what3words-searchbox-save-settings', 'what3words-searchbox-nonce')) {
                     $settings['api_key'] = $this->option('what3words-searchbox-api-key');
                     $settings['input_selectors'] = $this->option('what3words-searchbox-input-selector');
                     $settings['input_placeholder'] = $this->option('what3words-searchbox-input-placeholder');
