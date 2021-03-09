@@ -93,7 +93,11 @@ You can learn more about our privacy policy here: [what3words Privacy Policy](ht
 
 == Changelog ==
 
-The current version is 3.0.9 (2021.02.03)
+The current version is 3.0.10 (2021.03.09)
+
+= 3.0.10 =
+* Released 2021.03.09
+* Fixes passing API key to autosuggest for requests.
 
 = 3.0.9 =
 * Released 2021.02.03

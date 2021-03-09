@@ -48,6 +48,8 @@
       var w3wComponent = document.createElement('what3words-autosuggest')
       var targetParent = targetInput.parentNode
 
+      w3wComponent.setAttribute('api-key', What3wordsSearchbox.api_key)
+
       w3wComponent.headers = JSON.stringify({
         "X-W3W-Plugin":
           `what3words-Wordpress/${What3wordsSearchbox.w3_version} (` + [
