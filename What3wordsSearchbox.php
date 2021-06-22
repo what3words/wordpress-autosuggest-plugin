@@ -3,7 +3,7 @@
 Plugin Name: what3words Autosuggest Plugin
 Plugin URI: https://github.com/what3words/wordpress-autosuggest-plugin
 Description: WordPress plugin to capture and validate what3word's 3 word addresses
-Version: 3.0.10
+Version: 3.0.11
 Author: what3words
 Author URI: http://what3words.com
 License: GPLv2
@@ -12,7 +12,8 @@ Text Domain: what3words-searchbox
 
 if (!defined('ABSPATH')) exit;
 
-define('WHAT3WORDS_PLUGIN_DIRNAME', array_pop(explode('/', __DIR__)));
+$plugin_dirs = explode('/', __DIR__);
+define('WHAT3WORDS_PLUGIN_DIRNAME', array_pop($plugin_dirs));
 define('WHAT3WORDS_SEARCHBOX_URL', plugin_dir_url(__FILE__));
 define('WHAT3WORDS_SEARCHBOX_PATH', plugin_dir_path(__FILE__));
 define('WHAT3WORDS_SEARCHBOX_NAME', plugin_basename(__FILE__));
