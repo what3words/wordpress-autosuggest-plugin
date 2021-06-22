@@ -1,0 +1,12 @@
+{
+  "baseUrl": "http://localhost:8080",
+  "env": {
+    "ADMIN_USERNAME": "what3words",
+    "ADMIN_PASSWORD": "what3words",
+    "API_KEY": "TSTSTSTS",
+    "DB_HOST": "localhost",
+    "DB_USER": "root",
+    "DB_PASS": "wordpress",
+    "DB_DATABASE": "wordpress"
+  }
+}

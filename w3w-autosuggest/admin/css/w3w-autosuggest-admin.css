@@ -1,0 +1,84 @@
+@import "bootstrap-grid.min.css";
+@import "bootstrap-reboot.min.css";
+@import "bootstrap-utilities.min.css";
+@import "bootstrap.min.css";
+
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+body {
+  background: #f1f1f1;
+}
+
+input[type=radio] {
+  width: 16px;
+  height: 16px;
+}
+
+input[type=radio]:checked::before {
+  width: .5rem;
+  height: .5rem;
+  margin: .1875rem;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button,
+input[type=number] {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+.w3w-checkbox {
+  padding-left: .25rem !important;
+}
+
+.max-width {
+  max-width: 870px;
+}
+
+.text {
+  /* font-family: Arial; */
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.w3w-warning {
+  background: #f6d31f;
+  color: #0a3049;
+  padding: 8px 8px 8px 16px;
+}
+
+.btn-w3w {
+  background-color: #0071b1;
+  border-color: #0071b1;
+  color: #fff;
+}
+
+.dropstart .dropdown-toggle {
+  cursor: pointer;
+}
+
+.dropstart .dropdown-toggle:not(.expanded)::before {
+  display: inline-block;
+  margin-left: .255em;
+  content: "";
+  border-top: .3em solid transparent;
+  border-right: 0;
+  border-bottom: .3em solid transparent;
+  border-left: .3em solid;
+}
+
+.dropstart .dropdown-toggle.expanded::before {
+  display: inline-block;
+  margin-left: .255em;
+  vertical-align: .255em;
+  content: "";
+  border-top: .3em solid;
+  border-right: .3em solid transparent;
+  border-bottom: 0;
+  border-left: .3em solid transparent;
+}
