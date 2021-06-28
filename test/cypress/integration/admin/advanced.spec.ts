@@ -23,16 +23,9 @@ describe('Admin > Advanced Features', () => {
 
       it('Then the advanced features menu should expand when toggle is clicked', () => {
         cy.toggleAdvancedSettings()
-          .getElementByDataTestId('advanced_form')
-            .should('exist')
-            .should('be.visible')
-          .getElementByDataTestId('enable_placeholder')
-            .should('exist')
-            .should('be.visible')
-          .getElementByDataTestId('placeholder')
-            .should('exist')
-            .should('be.visible')
-          .getElementByDataTestId('')
+          .getElementByDataTestId('advanced_form').should('be.visible')
+          .getElementByDataTestId('enable_placeholder').should('be.visible')
+          .getElementByDataTestId('placeholder').should('be.visible')
       })
 
       describe('And the advanced features menu is expanded', () => {

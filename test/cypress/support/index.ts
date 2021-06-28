@@ -61,7 +61,7 @@ Cypress.Commands.add('getElementByDataTestId', (test_id: string) => {
 Cypress.Commands.add('setApiKey', (api_key: string) => {
   cy.intercept('POST', /admin.php/i).as('submit')
     .getElementByDataTestId('api_key').focus().type(api_key)
-    .getElementByDataTestId('save_api_key').click({ force: true }) // Forcing to ensure it is clickable
+    .getElementByDataTestId('save_api_key').should('be.visible').click({ force: true }) // Forcing to ensure it is clickable
     .wait('@submit')
     .getElementByDataTestId('api_key').should('have.value', api_key)
 })
@@ -109,11 +109,11 @@ Cypress.Commands.add('completeCheckoutForm', (
 })
 
 Cypress.Commands.add('saveSettings', () => {
-  cy.getElementByDataTestId('save_settings').click({ force: true })
+  cy.getElementByDataTestId('save_settings').should('be.visible').click({ force: true })
 })
 
 Cypress.Commands.add('saveAdvanced', () => {
-  cy.getElementByDataTestId('save_advanced').click({ force: true })
+  cy.getElementByDataTestId('save_advanced').should('be.visible').click({ force: true })
 })
 
 Cypress.Commands.add('placeOrder', () => {
@@ -121,49 +121,49 @@ Cypress.Commands.add('placeOrder', () => {
 })
 
 Cypress.Commands.add('selectManagedInput', () => {
-  cy.getElementByDataTestId('enable_w3w_managed').click({ force: true })
+  cy.getElementByDataTestId('enable_w3w_managed').should('be.visible').click({ force: true })
 })
 
 Cypress.Commands.add('selectInputSelector', () => {
-  cy.getElementByDataTestId('enable_input_selector').click({ force: true })
+  cy.getElementByDataTestId('enable_input_selector').should('be.visible').click({ force: true })
 })
 
 Cypress.Commands.add('toggleReturnCoordinates', () => {
-  cy.getElementByDataTestId('return_coordinates').click({ force: true })
+  cy.getElementByDataTestId('return_coordinates').should('be.visible').click({ force: true })
 })
 
 Cypress.Commands.add('toggleNearestPlace', () => {
-  cy.getElementByDataTestId('save_nearest_place').click({ force: true })
+  cy.getElementByDataTestId('save_nearest_place').should('be.visible').click({ force: true })
 })
 
 Cypress.Commands.add('toggleLabel', () => {
-  cy.getElementByDataTestId('enable_label').click({ force: true })
+  cy.getElementByDataTestId('enable_label').should('be.visible').click({ force: true })
 })
 
 Cypress.Commands.add('toggleAdvancedSettings', () => {
-  cy.getElementByDataTestId('advanced_dropdown').click({ force: true })
+  cy.getElementByDataTestId('advanced_dropdown').should('be.visible').click({ force: true })
 })
 
 Cypress.Commands.add('togglePlaceholder', () => {
-  cy.getElementByDataTestId('enable_placeholder').click({ force: true })
+  cy.getElementByDataTestId('enable_placeholder').should('be.visible').click({ force: true })
 })
 
 Cypress.Commands.add('toggleClipToCountry', () => {
-  cy.getElementByDataTestId('enable_clip_to_country').click({ force: true })
+  cy.getElementByDataTestId('enable_clip_to_country').should('be.visible').click({ force: true })
 })
 
 Cypress.Commands.add('toggleClipToCircle', () => {
-  cy.getElementByDataTestId('enable_clip_to_circle').click({ force: true })
+  cy.getElementByDataTestId('enable_clip_to_circle').should('be.visible').click({ force: true })
 })
 
 Cypress.Commands.add('toggleClipToBoundingBox', () => {
-  cy.getElementByDataTestId('enable_clip_to_bounding_box').click({ force: true })
+  cy.getElementByDataTestId('enable_clip_to_bounding_box').should('be.visible').click({ force: true })
 })
 
 Cypress.Commands.add('toggleClipToPolygon', () => {
-  cy.getElementByDataTestId('enable_clip_to_polygon').click({ force: true })
+  cy.getElementByDataTestId('enable_clip_to_polygon').should('be.visible').click({ force: true })
 })
 
 Cypress.Commands.add('saveAdvanced', () => {
-  cy.getElementByDataTestId('save_advanced').click({ force: true })
+  cy.getElementByDataTestId('save_advanced').should('be.visible').click({ force: true })
 })

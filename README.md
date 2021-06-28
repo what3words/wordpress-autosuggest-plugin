@@ -42,7 +42,7 @@ Learn more about our [Privacy Policy](https://what3words.com/privacy) or [Terms 
 
 ### Credit
 
-This project was extended from the [WordPress Plugin Boilerplate](docs/boilerplate.md) and it's source can be found [here](https://github.com/DevinVinson/WordPress-Plugin-Boilerplate).
+This project was extended from the [WordPress Plugin Boilerplate](docs/boilerplate.md) and its source can be found [here](https://github.com/DevinVinson/WordPress-Plugin-Boilerplate).
 
 
 ## Contributing to the project

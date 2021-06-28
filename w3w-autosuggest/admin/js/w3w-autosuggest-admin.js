@@ -48,8 +48,7 @@ window.addEventListener('load', () => {
   const apiKeyInput = document.querySelector('input#w3w_api_key')
   const apiKeyBtn = document.querySelector('button#api_key_btn')
   function handleApiKeySetting(value) {
-    if (value.length !== 8) apiKeyBtn.disabled = true
-    else apiKeyBtn.disabled = false
+    apiKeyBtn.disabled = value.length !== 8
   }
 
   if (apiKeyInput && apiKeyBtn) {
@@ -218,8 +217,7 @@ window.addEventListener('load', () => {
           return e.preventDefault()
         }
         if (!validateTarget(clipToCircleRadiusInput, function(value) {
-          const parsedValue = /\d+/.test(value.trim())
-          return parsedValue !== NaN
+          return /\d+/.test(value.trim())
         })) {
           clipToCircleRadiusInput.scrollTo()
           return e.preventDefault()
