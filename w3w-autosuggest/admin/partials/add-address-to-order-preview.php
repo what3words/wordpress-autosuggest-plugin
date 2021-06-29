@@ -11,6 +11,7 @@
  * @package    W3W_Autosuggest
  * @subpackage W3W_Autosuggest/admin/partials
  */
+
 ?>
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 
@@ -21,5 +22,6 @@
       ///{{data.shipping_w3w}}
     </a><br />
     <small>{{data.shipping_nearest_place}}</small>
+    <small>{{data.shipping_w3w_coordinates}}</small>
   </div>
 </div>

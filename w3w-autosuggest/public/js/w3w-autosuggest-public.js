@@ -107,11 +107,20 @@
       const billingTargetSibling = billingTarget.nextSibling
       const billingTargetParent = billingTarget.parentElement
       const billingW3wComponent = createAutosuggestComponent(billingTarget, billingTargetParent, billingTargetSibling)
+      billingW3wComponent.setAttribute('name', 'billing_w3w')
       
       if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place) {
         billingW3wComponent.addEventListener('selected_suggestion', function(e) {
           const nearestPlace = e.detail.suggestion.nearestPlace
           $('#billing_nearest_place').attr('value', nearestPlace)
+        })
+      }
+
+      if (W3W_AUTOSUGGEST_SETTINGS.return_coordinates) {
+        billingW3wComponent.addEventListener('coordinates_changed', function(e) {
+          const coordinates = e.detail.coordinates
+          $('#billing_w3w_lat').attr('value', coordinates.lat)
+          $('#billing_w3w_lng').attr('value', coordinates.lng)
         })
       }
       
@@ -131,11 +140,20 @@
         shippingTargetParent,
         shippingTargetSibling,
       )
+      shippingW3wComponent.setAttribute('name', 'shipping_w3w')
   
       if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place) {
         shippingW3wComponent.addEventListener('selected_suggestion', function(e) {
           const nearestPlace = e.detail.suggestion.nearestPlace
           $('#shipping_nearest_place').attr('value', nearestPlace)
+        })
+      }
+
+      if (W3W_AUTOSUGGEST_SETTINGS.return_coordinates) {
+        shippingW3wComponent.addEventListener('coordinates_changed', function(e) {
+          const coordinates = e.detail.coordinates
+          $('#shipping_w3w_lat').attr('value', coordinates.lat)
+          $('#shipping_w3w_lng').attr('value', coordinates.lng)
         })
       }
       

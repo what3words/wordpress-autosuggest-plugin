@@ -22,4 +22,7 @@
   <?php if ( isset( $nearest_place ) ) { ?>
   <br /><?php echo $nearest_place; ?>
   <?php } ?>
+  <?php if ( isset( $lat ) ) { ?>
+  <?php echo '(' . $lat . ', ' . $lng . ')'; ?>
+  <?php } ?>
 </p>

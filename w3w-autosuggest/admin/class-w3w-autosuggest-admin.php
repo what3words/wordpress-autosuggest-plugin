@@ -195,6 +195,8 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
       $settings = get_option( $this->settings_name );
       $words = get_post_meta( $order_id, '_billing_w3w', true );
       $nearest_place = get_post_meta( $order_id, '_billing_nearest_place', true );
+      $lat = get_post_meta( $order_id, '_billing_w3w_lat', true );
+      $lng = get_post_meta( $order_id, '_billing_w3w_lng', true );
       $label = $settings['enable_label'] ? $settings['label'] : 'w3w Address';
 
       require plugin_dir_path( __FILE__ ) . 'partials/add-address-to-order-page.php';
@@ -213,6 +215,8 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
       $settings = get_option( $this->settings_name );
       $words = get_post_meta( $order_id, '_shipping_w3w', true );
       $nearest_place = get_post_meta( $order_id, '_shipping_nearest_place', true );
+      $lat = get_post_meta( $order_id, '_shipping_w3w_lat', true );
+      $lng = get_post_meta( $order_id, '_shipping_w3w_lng', true );
       $label = $settings['enable_label'] ? $settings['label'] : 'w3w Address';
 
       require plugin_dir_path( __FILE__ ) . 'partials/add-address-to-order-page.php';
@@ -225,9 +229,14 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
       $settings = get_option( $this->settings_name );
       $words = get_post_meta( $order_id, '_shipping_w3w', true );
       $nearest_place = get_post_meta( $order_id, '_shipping_nearest_place', true );
+      $shipping_w3w_lat = get_post_meta( $order_id, '_shipping_w3w_lat', true );
+      $shipping_w3w_lng = get_post_meta( $order_id, '_shipping_w3w_lng', true );
       $data['label_w3w'] = strlen( $settings['label'] ) > 0 ? $settings['label'] : 'w3w Address';
       $data['shipping_w3w'] = str_replace( '///', '', $words );
       $data['shipping_nearest_place'] = $nearest_place;
+      $data['shipping_w3w_coordinates'] = $shipping_w3w_lat && $shipping_w3w_lng
+        ? '(' . $shipping_w3w_lat . ',' . $shipping_w3w_lng . ')'
+        : '';
 
       return $data;
 
@@ -235,6 +244,7 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
 
     public function render_order_data_before() {
       
+      $settings = get_option( $this->settings_name );
       require plugin_dir_path( __FILE__ ) . 'partials/add-address-to-order-preview.php';
       
     }

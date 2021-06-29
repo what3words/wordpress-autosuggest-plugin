@@ -219,14 +219,43 @@ class W3W_Autosuggest_Public {
         $fields['billing']['billing_nearest_place'] = [
           'type' => 'hidden',
           'required' => false,
-          'clear' => false,
+          'clear' => true,
           'class' => ['hidden', 'form-row-wide'],
         ];
         $fields['shipping']['shipping_nearest_place'] = [
           'type' => 'hidden',
           'required' => false,
-          'clear' => false,
+          'clear' => true,
           'class' => ['hidden', 'form-row-wide'],
+        ];
+
+      }
+
+      if ( $settings['return_coordinates'] ) {
+
+        $fields['billing']['billing_w3w_lat'] = [
+          'type' => 'hidden',
+          'required' => false,
+          'clear' => false,
+          'class' => ['hidden', 'form-row-wide']
+        ];
+        $fields['billing']['billing_w3w_lng'] = [
+          'type' => 'hidden',
+          'required' => false,
+          'clear' => false,
+          'class' => ['hidden', 'form-row-wide']
+        ];
+        $fields['shipping']['shipping_w3w_lat'] = [
+          'type' => 'hidden',
+          'required' => false,
+          'clear' => false,
+          'class' => ['hidden', 'form-row-wide']
+        ];
+        $fields['shipping']['shipping_w3w_lng'] = [
+          'type' => 'hidden',
+          'required' => false,
+          'clear' => false,
+          'class' => ['hidden', 'form-row-wide']
         ];
 
       }
