@@ -1,5 +1,6 @@
 /// <reference type="cypress"
 const knex = require('knex')
+const Cypress = require('cypress')
 
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins

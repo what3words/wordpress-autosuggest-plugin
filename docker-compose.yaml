@@ -2,28 +2,12 @@ version: "3.8"
 
 services:
 
-  cypress:
-    image: cypress/included:7.5.0
-    container_name: w3w-cypress
-    depends_on:
-      - wordpress
-    environment:
-      - CYPRESS_baseUrl=http://wordpress:80
-      - CYPRESS_DB_HOST=mysql
-    working_dir: /test
-    volumes:
-      - ./test:/test
-    depends_on:
-      wordpress:
-        condition: service_healthy
-
-
   wordpress:
     image: 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:0.1.0
     container_name: w3w-wp
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:80"]
-      interval: 5s
+      interval: 10s
       timeout: 10s
       retries: 10
       start_period: 30s

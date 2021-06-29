@@ -64,27 +64,11 @@ __TODO__
 
 ### Testing changes
 
-#### Docker/Docker-Compose (recommended)
-
-To test changes this project ships with a way to locally run WordPress and inject your latest changes in real-time and run Cypress end-to-end tests against the project.
-
-To do this you need [Docker Desktop](https://www.docker.com/products/docker-desktop).
-
-You will also need to [authenticate your Docker with the what3words private ECR registry](https://docs.aws.amazon.com/AmazonECR/latest/userguide/getting-started-cli.html#cli-authenticate-registry) and you should pull the WordPress image in the services with `docker pull 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:<VERSION>`. This image has WooCommerce baked into it, which makes it quicker and easier to test with WooCommerce enabled/disabled.
-
-Once you have Docker and Docker Compose available and the WordPress image pulled locally then you can run
-
-`docker compose up` or `docker-compose up`
-
-This will run the MySQL, WordPress and Cypress services and run the Cypress spec also.
-
-#### NPM
-
-You can run the Cypress tests locally using NPM.
+You can run the Cypress tests with the following.
 
 ```
 docker pull 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:<VERSION>
-docker compose up wordpress mysql -d
+docker compose up -d
 cd test
 npm i
 npx cypress open|run

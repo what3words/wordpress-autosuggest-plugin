@@ -3,6 +3,8 @@ import { Chance } from 'chance'
 const CH = new Chance()
 const ALPHA_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
+Cypress.on('uncaught:exception', console.log)
+
 describe('Admin > Advanced Features', () => {
   beforeEach(() => cy.login(Cypress.env('ADMIN_USERNAME'), Cypress.env('ADMIN_PASSWORD')))
 
