@@ -9,6 +9,7 @@ services:
       - wordpress
     environment:
       - CYPRESS_baseUrl=http://wordpress:80
+      - CYPRESS_DB_HOST=mysql
     working_dir: /test
     volumes:
       - ./test:/test
@@ -18,8 +19,8 @@ services:
 
 
   wordpress:
-    image: wordpress:5.7.2-php7.3-apache
-    container_name: w3w-wp1
+    image: 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:0.1.0
+    container_name: w3w-wp
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:80"]
       interval: 5s
@@ -34,7 +35,6 @@ services:
       - WORDPRESS_DEBUG=1
     volumes:
       - ./w3w-autosuggest:/var/www/html/wp-content/plugins/w3w-autosuggest
-      - ./test/.plugins/woocommerce:/var/www/html/wp-content/plugins/woocommerce
     ports:
       - 8080:80
     depends_on:
@@ -43,7 +43,7 @@ services:
 
   mysql:
     image: mysql:5.7
-    container_name: w3w-wpdb1
+    container_name: w3w-wpdb
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pwordpress"]
       interval: 5s

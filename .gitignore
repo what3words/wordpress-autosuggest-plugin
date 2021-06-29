@@ -210,3 +210,4 @@ test/database/data/*
 node_modules
 autosuggest
 videos
+screenshots

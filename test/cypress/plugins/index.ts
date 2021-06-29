@@ -1,15 +1,5 @@
 /// <reference type="cypress"
 const knex = require('knex')
-const DB = knex({
-  client: 'mysql',
-  connection: {
-    host: 'localhost',
-    user: 'root',
-    password: 'wordpress',
-    database: 'wordpress',
-  },
-  pool: { min: 1, max: 2 },
-})
 
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
@@ -31,6 +21,17 @@ const DB = knex({
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
+  const DB = knex({
+    client: 'mysql',
+    connection: {
+      host: config.env.DB_HOST,
+      user: config.env.DB_USER,
+      password: config.env.DB_PASS,
+      database: config.env.DB_DATABASE,
+    },
+    pool: { min: 1, max: 2 },
+  })
+
   on('task', {
     'db:setup'() {
       return Promise.all([

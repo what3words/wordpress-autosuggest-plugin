@@ -252,11 +252,13 @@ window.addEventListener('load', () => {
       }
 
       if (clipToPolygonCheckbox.checked && !validateTarget(clipToPolygonTextarea, function(value) {
-        const pairs = value.trim().split(';').map(pair => pair.trim().split(',').map(coord => coord.trim()))
+        const pairs = value.trim()
+          .split('],')
+          .map(pair => pair.trim().replace('[', '').replace(']', '').split(',').map(coord => coord.trim()))
         const containsInvalidPair = pairs.find(pair => !Array.isArray(pair) || pair.length !== 2)
         const containsInvalidCoord = pairs.find(pair => pair.find(coord => !COORD_REGEX.test(coord)))
-        if (pairs.length < 3 || containsInvalidPair || containsInvalidCoord) return false
-        return true
+        const isClosed = pairs[0][0] === pairs[pairs.length - 1][0] && pairs[0][1] === pairs[pairs.length - 1][1]
+        return pairs.length > 2 && !containsInvalidPair && !containsInvalidCoord && isClosed
       })) {
         clipToPolygonTextarea.scrollTo()
         return e.preventDefault()

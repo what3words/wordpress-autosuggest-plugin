@@ -321,7 +321,7 @@
                 <label for="clip_to_polygon" class="form-label fw-bold">
                   Latitude & longitude coordinates
                   <div class="fw-light fst-italic small">
-                    Separate latitude and longitude values with a colon, and different coordinates with a comma
+                    Accepts polygon coordinates in geojson coordinates format. A polygon can be created using <a href="https://geojson.io" target="_blank">https://geojson.io</a> and the coordinates block copied into here:
                   </div>
                 </label>
               </div>
@@ -330,9 +330,26 @@
                   class="form-control"
                   id="clip_to_polygon"
                   name="clip_to_polygon"
-                  placeholder="e.g. 51.521, -0.343; 52.6, 2.3324; 54.234, 8.343; 51.521, -0.343"
+                  placeholder="e.g.
+                    [
+                      -1.8237304687499998,
+                      53.05442186546102
+                    ],
+                    [
+                      -3.14208984375,
+                      52.29504228453735
+                    ],
+                    [
+                      -1.77978515625,
+                      51.23440735163459
+                    ],
+                    [
+                      -1.8237304687499998,
+                      53.05442186546102
+                    ]"
                   disabled
                   tabindex="26"
+                  rows="20"
                   data-testid="clip_to_polygon"><?php echo $settings['clip_to_polygon']; ?></textarea>
               </div>
             </div>

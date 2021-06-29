@@ -70,9 +70,9 @@
       w3wComponent.setAttribute('clip_to_country', W3W_AUTOSUGGEST_SETTINGS.clip_to_country)
     }
     if (W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_polygon) {
-      const polygon = W3W_AUTOSUGGEST_SETTINGS.clip_to_polygon
-        .split(';')
-        .map(coords => coords.trim().replace(' ', ''))
+      const polygon = W3W_AUTOSUGGEST_SETTINGS.clip_to_polygon.trim()
+        .split('],')
+        .map(coords => coords.trim().replace('[', '').replace(']', '').replace(/\s/g, ''))
         .join(',')
       w3wComponent.setAttribute('clip_to_polygon', polygon)
     }
