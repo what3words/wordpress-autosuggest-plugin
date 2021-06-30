@@ -46,6 +46,7 @@ commands:
           name: "Export build time env vars"
           command: |
             echo "export PIPELINE_NUM=<< pipeline.number >>" >> $BASH_ENV
+            echo "export VERSION="$(cat << parameters.version_path >> | grep '\"Version\":' | sed -e 's/ \* Version:           //')" >> $BASH_ENV
   jobstatus:
     description: "Send customised status messages to Slack"
     steps:
@@ -91,7 +92,8 @@ jobs:
     executor: build-executor
     steps:
       - checkout
-      - setup_environment
+      - setup_environment:
+          version_path: ./w3w-autosuggest/w3w-autosuggest.php
       - run: apt-get -yqq install mysql\*
       - node/install
       - node/install-packages:
@@ -134,6 +136,3 @@ workflows:
           attach-workspace: true
           command: cd test && npx cypress run
           wait-on: 'http://localhost:80'
-      - gh_publish:
-          requires:
-            - cypress/run
