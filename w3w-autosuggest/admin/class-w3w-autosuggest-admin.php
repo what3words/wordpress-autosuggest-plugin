@@ -184,26 +184,6 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
     }
 
     /**
-     * Add the billing 3wa to the checkout complete page using the woocommerce_admin_order_data_after_billing_address
-     * action
-     * 
-     * @since    4.0.0
-     */
-    public function add_billing_address_to_order_page( $order ) {
-
-      $order_id = $order->get_id();
-      $settings = get_option( $this->settings_name );
-      $words = get_post_meta( $order_id, '_billing_w3w', true );
-      $nearest_place = get_post_meta( $order_id, '_billing_nearest_place', true );
-      $lat = get_post_meta( $order_id, '_billing_w3w_lat', true );
-      $lng = get_post_meta( $order_id, '_billing_w3w_lng', true );
-      $label = $settings['enable_label'] ? $settings['label'] : 'w3w Address';
-
-      require plugin_dir_path( __FILE__ ) . 'partials/add-address-to-order-page.php';
-
-    } 
-
-    /**
      * Add the shipping 3wa to the checkout complete page using the woocommerce_admin_order_data_after_shipping_address
      * action
      * 

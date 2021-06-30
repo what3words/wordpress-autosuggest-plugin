@@ -16,20 +16,12 @@
 <section class="woocommerce-columns woocommerce-columns--2 woocommerce-columns--addresses col2-set addresses">
   <?php if ( isset( $billing_words ) ) { ?>
   <div class="woocommerce-column woocommerce-column--1 woocommerce-column--billing-address col-1">
-    <p><strong><?php echo $label; ?></strong></p>
-    <p>
-      <a
-        href="http://what3words.com/<?php echo str_replace( '///', '', $billing_words ); ?>"
-        target="_blank"
-        data-testid="billing_words"><?php echo $billing_words; ?></a>
-    </p>
-    <p><small data-testid="billing_nearest_place"><?php echo $billing_nearest_place; ?></small></p>
   </div>
   <?php } ?>
 
   <?php if ( isset( $shipping_words ) ) { ?>
   <div class="woocommerce-column woocommerce-column--2 woocommerce-column--shipping-address col-2">
-    <p><strong><?php echo $label; ?></strong></p>
+    <p><strong>what3words Address:</strong></p>
     <p>
       <a
         href="http://what3words.com/<?php echo str_replace( '///', '', $shipping_words ); ?>"

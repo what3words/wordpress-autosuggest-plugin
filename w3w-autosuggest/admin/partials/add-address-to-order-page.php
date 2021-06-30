@@ -15,14 +15,14 @@
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 
 <p>
-  <strong><?php echo __( $label, $this->i18n_domain ); ?>:</strong><br />
+  <strong><?php echo __( 'what3words Address', $this->i18n_domain ); ?>:</strong><br />
   <a href="http://what3words.com/<?php echo str_replace( '///', '', $words ); ?>?partner=wordpress" target="_blank">
     <?php echo $words; ?>
   </a>
   <?php if ( isset( $nearest_place ) ) { ?>
   <br /><?php echo $nearest_place; ?>
   <?php } ?>
-  <?php if ( isset( $lat ) ) { ?>
+  <?php if ( isset( $lat ) && $lat !== "" && isset( $lng ) && $lng !== "" ) { ?>
   <?php echo '(' . $lat . ', ' . $lng . ')'; ?>
   <?php } ?>
 </p>

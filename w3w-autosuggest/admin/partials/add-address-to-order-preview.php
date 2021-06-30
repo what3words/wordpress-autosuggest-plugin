@@ -17,7 +17,7 @@
 
 <div class="wc-order-preview-addresses">
   <div class="wc-order-preview-address">
-    <strong>{{data.label_w3w}}</strong>
+    <strong><?php echo __( 'what3words Address', $this->i18n_domain ); ?>:</strong>
     <a href="https://what3words.com/{{data.shipping_w3w}}?partner=wordpress" target="_blank">
       ///{{data.shipping_w3w}}
     </a><br />

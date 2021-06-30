@@ -194,7 +194,6 @@ class W3W_Autosuggest {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
     $this->loader->add_action( $wc_preview_action_name, $plugin_admin, 'render_order_data_before', 11, 2 );
-    $this->loader->add_action( $wc_billing_action_name, $plugin_admin, 'add_billing_address_to_order_page' );
     $this->loader->add_action( $wc_shipping_action_name, $plugin_admin, 'add_shipping_address_to_order_page' );
     $this->loader->add_filter( $plugin_action_name, $plugin_admin, 'plugin_action_links', 10, 4 );
     $this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'plugin_row_meta', 10, 2 );

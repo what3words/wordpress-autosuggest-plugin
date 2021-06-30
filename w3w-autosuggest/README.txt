@@ -117,10 +117,6 @@ For WooCommerce checkouts we recommend skipping these options as the clip to cou
 
 == Frequently Asked Questions ==
 
-= Is there a web site for this plugin? =
-
-Absolutely. Go to the [what3words Adress Field home page](https://developer.what3words.com/tools/e-commerce/wordpress) for the latest information. There’s also the official [WordPress Plugin Page](https://wordpress.org/plugins/3-word-address-validation-field/).
-
 = I have a question that's not answered here; what do I do? =
 
 Have a read of the [what3words Knowledge Base](https://support.what3words.com), which contains many more frequently asked questions and their answers.
@@ -150,7 +146,7 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 
 == Changelog ==
 
-= 4.0 =
+= 4.0.0 =
 * Released <DATE>
 * Updated plugin listing information
 * Added useful links on plugins page
