@@ -93,7 +93,11 @@ You can learn more about our privacy policy here: [what3words Privacy Policy](ht
 
 == Changelog ==
 
-The current version is 3.0.10 (2021.03.09)
+The current version is 3.0.11 (2021.06.30)
+
+= 3.0.11 =
+* Released 2021.06.30
+* Fixes non-fatal debugging log output for PHP "Variable assignment" error
 
 = 3.0.10 =
 * Released 2021.03.09
