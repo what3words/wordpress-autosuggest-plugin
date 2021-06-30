@@ -13,9 +13,9 @@
  * @package           w3w-autosuggest
  *
  * @wordpress-plugin
- * Plugin Name:       what3words Autosuggest Plugin
+ * Plugin Name:       what3words Address Field
  * Plugin URI:        https://github.com/what3words/wordpress-autosuggest-plugin
- * Description:       Capture three word addresses with this address field
+ * Description:       Official plugin to allow customers to enter and validate a what3words address on your checkout for accurate deliveries
  * Version:           4.0.0
  * Author:            what3words
  * Author URI:        https://what3words.com
@@ -26,18 +26,18 @@
  */
 
 /*
-what3words Autosuggest Plugin is free software: you can redistribute it and/or modify
+what3words Address Field is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
 any later version.
 
-what3words Autosuggest Plugin is distributed in the hope that it will be useful,
+what3words Address Field is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with what3words Autosuggest Plugin. If not, see https://what3words.com.
+along with what3words Address Field. If not, see https://what3words.com.
 */
 
 // If this file is called directly, abort.
