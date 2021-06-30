@@ -14,11 +14,6 @@
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 
 <section class="woocommerce-columns woocommerce-columns--2 woocommerce-columns--addresses col2-set addresses">
-  <?php if ( isset( $billing_words ) ) { ?>
-  <div class="woocommerce-column woocommerce-column--1 woocommerce-column--billing-address col-1">
-  </div>
-  <?php } ?>
-
   <?php if ( isset( $shipping_words ) ) { ?>
   <div class="woocommerce-column woocommerce-column--2 woocommerce-column--shipping-address col-2">
     <p><strong>what3words Address:</strong></p>
