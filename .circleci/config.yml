@@ -88,7 +88,7 @@ commands:
           command: git push -f --tags
 
 jobs:
-  build_test:
+  build:
     executor: build-executor
     steps:
       - checkout
