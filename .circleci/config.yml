@@ -125,6 +125,7 @@ workflows:
   build-and-test:
     jobs:
       - build:
+          context: org-global
           filters:
             branches:
               only:
