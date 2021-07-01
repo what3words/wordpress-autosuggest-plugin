@@ -126,10 +126,19 @@
       
       billingW3wComponent.appendChild(billingTarget)
       billingTargetParent.insertBefore(billingW3wComponent, billingTargetSibling)
-      billingCountry.on('change', function(e) {
-        $('#w3w-billing').closest('what3words-autosuggest').attr('clip_to_country', e.target.value)
-      })
-      billingCountry.trigger('change')
+
+      if (
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_country &&
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_circle &&
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_bounding_box &&
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_polygon
+      ) {
+        console.log('inside')
+        billingCountry.on('change', function(e) {
+          $('#w3w-billing').closest('what3words-autosuggest').attr('clip_to_country', e.target.value)
+        })
+        billingCountry.trigger('change')
+      }
     }
 
     if (shippingCountry && shippingTarget) {
@@ -159,10 +168,19 @@
       
       shippingW3wComponent.appendChild(shippingTarget)
       shippingTargetParent.insertBefore(shippingW3wComponent, shippingTargetSibling)
-      shippingCountry.on('change', function(e) {
-        $('#w3w-shipping').closest('what3words-autosuggest').attr('clip_to_country', e.target.value)
-      })
-      shippingCountry.trigger('change')
+
+      if (
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_country &&
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_circle &&
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_bounding_box &&
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_polygon
+      ) {
+        console.log('inside')
+        shippingCountry.on('change', function(e) {
+          $('#w3w-shipping').closest('what3words-autosuggest').attr('clip_to_country', e.target.value)
+        })
+        shippingCountry.trigger('change')
+      }
     }
   } else {
     const targets = document.querySelectorAll(W3W_AUTOSUGGEST_SETTINGS.selector)

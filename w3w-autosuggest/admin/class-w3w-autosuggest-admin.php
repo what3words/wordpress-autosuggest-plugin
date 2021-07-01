@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -22,7 +23,7 @@
  */
 if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
   class W3W_Autosuggest_Admin {
-
+    
     /**
      * The ID of this plugin.
      *
@@ -31,7 +32,7 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
      * @var      string    $plugin_name    The ID of this plugin.
      */
     private $plugin_name;
-
+    
     /**
      * The version of this plugin.
      *
@@ -40,13 +41,13 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
      * @var      string    $version    The current version of this plugin.
      */
     private $version;
-
+    
     private $settings_name;
-
+    
     private $i18n_domain;
-
+    
     private $settings_url;
-
+    
     /**
      * Initialize the class and set its properties.
      *
@@ -55,12 +56,14 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
      * @param      string    $version    The version of this plugin.
      */
     public function __construct( $plugin_name, $version, $settings_name, $i18n_domain, $settings_url ) {
-
+      
       $this->plugin_name = $plugin_name;
       $this->version = $version;
       $this->settings_name = $settings_name;
       $this->i18n_domain = $i18n_domain;
       $this->settings_url = $settings_url;
+      
+      $this->handle_form_submission( $_POST );
 
     }
 
@@ -235,5 +238,45 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
 
     }
 
+    private function handle_form_submission() {
+
+      $settings = get_option( $this->settings_name );
+
+      if ( isset( $_POST ) && $_POST ) {
+        
+        if ( isset( $_POST['settings_form'] ) ) {
+          $settings['return_coordinates'] = false;
+          $settings['save_nearest_place'] = false;
+          $settings['enable_label'] = false;
+        }
+
+        if ( isset( $_POST['advanced_form'] ) ) {
+          $settings['enable_placeholder'] = false;
+          $settings['enable_clip_to_country'] = false;
+          $settings['enable_clip_to_circle'] = false;
+          $settings['enable_clip_to_bounding_box'] = false;
+          $settings['enable_clip_to_polygon'] = false;
+        }
+
+        foreach ( $_POST as $key => $val ) {
+          if ( $key === 'woocommerce_enabled' ) $settings[$key] = $val === 'on' ? true : false;
+          else if ( $key === 'return_coordinates' && $val === 'on' ) $settings[$key] = true;
+          else if ( $key === 'save_nearest_place' && $val === 'on' ) $settings[$key] = true;
+          else if ( $key === 'enable_label' && $val === 'on' ) $settings[$key] = true;
+          else if ( $key === 'enable_placeholder' ) $settings[$key] = $val === 'on' ? true : false;
+          else if ( $key === 'enable_clip_to_country' ) $settings[$key] = $val === 'on' ? true : false;
+          else if ( $key === 'enable_clip_to_circle' ) $settings[$key] = $val === 'on' ? true : false;
+          else if ( $key === 'enable_clip_to_bounding_box' ) $settings[$key] = $val === 'on' ? true : false;
+          else if ( $key === 'enable_clip_to_polygon' ) $settings[$key] = $val === 'on' ? true : false;
+          else $settings[$key] = $val;
+        }
+
+        update_option( $this->settings_name, $settings );
+
+      }
+
+    }
+
   }
+
 }

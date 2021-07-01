@@ -14,37 +14,6 @@
 
 $settings = get_option( $this->settings_name );
 
-if ( isset( $_POST ) && $_POST ) {
-  
-  if ( isset( $_POST['settings_form'] ) ) {
-    $settings['return_coordinates'] = false;
-    $settings['save_nearest_place'] = false;
-    $settings['enable_label'] = false;
-  }
-
-  if ( isset( $_POST['advanced_form'] ) ) {
-    $settings['enable_placeholder'] = false;
-    $settings['enable_clip_to_country'] = false;
-    $settings['enable_clip_to_circle'] = false;
-    $settings['enable_clip_to_bounding_box'] = false;
-    $settings['enable_clip_to_polygon'] = false;
-  }
-
-  foreach ( $_POST as $key => $val ) {
-    if ( $key === 'woocommerce_enabled' ) $settings[$key] = $val === 'on' ? true : false;
-    else if ( $key === 'return_coordinates' && $val === 'on' ) $settings[$key] = true;
-    else if ( $key === 'save_nearest_place' && $val === 'on' ) $settings[$key] = true;
-    else if ( $key === 'enable_label' && $val === 'on' ) $settings[$key] = true;
-    else if ( $key === 'enable_placeholder' ) $settings[$key] = $val === 'on' ? true : false;
-    else if ( $key === 'enable_clip_to_country' ) $settings[$key] = $val === 'on' ? true : false;
-    else if ( $key === 'enable_clip_to_circle' ) $settings[$key] = $val === 'on' ? true : false;
-    else if ( $key === 'enable_clip_to_bounding_box' ) $settings[$key] = $val === 'on' ? true : false;
-    else if ( $key === 'enable_clip_to_polygon' ) $settings[$key] = $val === 'on' ? true : false;
-    else $settings[$key] = $val;
-  }
-
-  update_option( $this->settings_name, $settings );
-}
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
@@ -82,7 +51,7 @@ if ( isset( $_POST ) && $_POST ) {
                 <a
                   id="get_api_key"
                   class="btn btn-w3w text-white"
-                  href="https://accounts.what3words.com/create-api-key"
+                  href="https://what3words.com/select-plan"
                   target="_blank"
                   data-testid="get_api_key">
                   Get an API key
