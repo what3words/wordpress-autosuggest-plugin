@@ -12,6 +12,7 @@ executors:
   build-executor:
     docker:
       - image: 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:0.1.0
+        entrypoint: docker-entrypoint.sh apache2 || true
         environment:
           WORDPRESS_DB_NAME: wordpress
           WORDPRESS_DB_USER: root
@@ -107,7 +108,6 @@ jobs:
       - run:
           name: Prepare WordPress
           command: |
-            docker-entrypoint.sh apache2
             cp -r w3w-autosuggest /var/www/html/wp-content/plugins/3-word-address-validation-field
             service apache2 start
       - run:
