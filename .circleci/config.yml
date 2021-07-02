@@ -12,11 +12,12 @@ executors:
   build-executor:
     docker:
       - image: 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:0.1.0
+        entrypoint: docker-entrypoint.sh
         environment:
           WORDPRESS_DB_NAME: wordpress
           WORDPRESS_DB_USER: root
           WORDPRESS_DB_PASSWORD: wordpress
-          WORDPRESS_DB_HOST: mysql:3306
+          WORDPRESS_DB_HOST: localhost:3306
           CYPRESS_baseUrl: http://localhost:80
       - image: 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site-db:0.1.0
         environment:
@@ -105,8 +106,11 @@ jobs:
       - node/install-packages:
           app-dir: ./test
       - run:
-          name: Add plugin to WordPress plugins directory
-          command: cp -r w3w-autosuggest /var/www/html/wp-content/plugins/3-word-address-validation-field
+          name: Prepare WordPress
+          command: |
+            docker-entrypoint.sh apache2
+            cp -r w3w-autosuggest /var/www/html/wp-content/plugins/3-word-address-validation-field
+            service apache2 start
       - run:
           name: Run tests
           command: |
