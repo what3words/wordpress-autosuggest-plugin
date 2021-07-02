@@ -16,13 +16,14 @@ executors:
           WORDPRESS_DB_NAME: wordpress
           WORDPRESS_DB_USER: root
           WORDPRESS_DB_PASSWORD: wordpress
-          WORDPRESS_DB_HOST: localhost:3306
+          WORDPRESS_DB_HOST: mysql
           CYPRESS_baseUrl: http://localhost
-          CYPRESS_DB_HOST: localhost:3306
+          CYPRESS_DB_HOST: mysql
           CYPRESS_DB_USER: root
           CYPRESS_DB_PASS: wordpress
           CYPRESS_DB_DATABASE: wordpress
       - image: 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site-db:0.1.0
+        name: mysql
         environment:
           MYSQL_ROOT_PASSWORD: wordpress
           MYSQL_USER: wordpress
@@ -111,13 +112,14 @@ jobs:
       - run:
           name: Prepare WordPress
           command: |
+            cd /var/www/html
             docker-entrypoint.sh apache2 || true
             cp -r w3w-autosuggest /var/www/html/wp-content/plugins/3-word-address-validation-field
             service apache2 start
       - run:
           name: Run tests
           command: |
-            cd test
+            cd ~/project/test
             npx cypress run
   tag:
     executor: build-executor
