@@ -46,7 +46,7 @@ commands:
           name: "Export build time env vars"
           command: |
             echo "export PIPELINE_NUM=<< pipeline.number >>" >> $BASH_ENV
-            echo "export VERSION="$(cat << parameters.version_path >> | grep '\"Version\":' | sed -e 's/ \* Version:           //')" >> $BASH_ENV
+            echo "export VERSION=$(cat << parameters.version_path >> | grep '\"Version\":' | sed -e 's/ \* Version:           //')" >> $BASH_ENV
   jobstatus:
     description: "Send customised status messages to Slack"
     steps:
@@ -106,7 +106,7 @@ jobs:
           root: .
           paths: 
             - ./
-      - jobstatus
+      # - jobstatus
   tag:
     executor: build-executor
     steps:
