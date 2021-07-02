@@ -18,7 +18,7 @@ executors:
           WORDPRESS_DB_PASSWORD: wordpress
           WORDPRESS_DB_HOST: mysql:3306
           CYPRESS_baseUrl: http://localhost:80
-      - image: mysql:5.7
+      - image: 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site-db:0.1.0
         environment:
           MYSQL_ROOT_PASSWORD: wordpress
           MYSQL_USER: wordpress
@@ -98,10 +98,7 @@ jobs:
       - node/install
       - node/install-packages:
           app-dir: ./test
-      - run: |
-          mysql -h localhost -u wordpress -pwordpress < test/database/sql/wordpress-5.7.2.sql
-          cp w3w-autosuggest /var/www/html/wp-content/plugins/w3w-autosuggest
-          service apache2 restart
+      - run: cp w3w-autosuggest /var/www/html/wp-content/plugins/3-word-address-validation-field
       - persist_to_workspace:
           root: .
           paths: 
