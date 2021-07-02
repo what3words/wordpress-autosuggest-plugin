@@ -116,8 +116,7 @@ jobs:
             cd /var/www/html
             source $APACHE_ENVVARS
             docker-entrypoint.sh apache2 || true
-            cp -r ~/project/w3w-autosuggest /var/www/html/wp-content/plugins/3-word-address-validation-field
-            service apache2 start
+            cp -r ~/project/w3w-autosuggest /var/www/html/wp-content/plugins/w3w-autosuggest
       - run:
           name: Run tests
           command: |
