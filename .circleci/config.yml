@@ -98,7 +98,7 @@ jobs:
       - node/install
       - node/install-packages:
           app-dir: ./test
-      - run: cp w3w-autosuggest /var/www/html/wp-content/plugins/3-word-address-validation-field
+      - run: cp -r w3w-autosuggest /var/www/html/wp-content/plugins/3-word-address-validation-field
       - persist_to_workspace:
           root: .
           paths: 
