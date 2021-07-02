@@ -88,22 +88,21 @@ commands:
           command: git push -f --tags
 
 jobs:
-  build:
+  test:
     executor: build-executor
     steps:
       - checkout
       - setup_environment:
           version_path: ./w3w-autosuggest/w3w-autosuggest.php
       - run: apt-get -yqq install mysql\*
-      - node/install
+      - node/install:
+          node-version: v14.16.0
       - node/install-packages:
           app-dir: ./test
       - run: cp -r w3w-autosuggest /var/www/html/wp-content/plugins/3-word-address-validation-field
-      - persist_to_workspace:
-          root: .
-          paths: 
-            - ./
-      # - jobstatus
+      - run:
+          cd test
+          npx cypress run
   tag:
     executor: build-executor
     steps:
@@ -121,16 +120,9 @@ jobs:
 workflows:
   build-and-test:
     jobs:
-      - build:
+      - test:
           context: org-global
           filters:
             branches:
               only:
                 - TT-3715
-      - cypress/run:
-          executor: build-executor
-          requires: 
-            - build
-          attach-workspace: true
-          command: cd test && npx cypress run
-          wait-on: 'http://localhost:80'
