@@ -211,3 +211,4 @@ node_modules
 autosuggest
 videos
 screenshots
+*.zip
