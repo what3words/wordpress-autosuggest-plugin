@@ -100,7 +100,7 @@ jobs:
       - node/install-packages:
           app-dir: ./test
       - run: cp -r w3w-autosuggest /var/www/html/wp-content/plugins/3-word-address-validation-field
-      - run:
+      - run: |
           cd test
           npx cypress run
   tag:
