@@ -120,7 +120,7 @@ class W3W_Autosuggest_Public {
       $this->js_lib_cdn_url . '/what3words.esm.js',
       array(),
       $this->version,
-      false,
+      false
     );
     
     /**
@@ -131,7 +131,7 @@ class W3W_Autosuggest_Public {
       $this->js_lib_cdn_url . '/what3words.js',
       array(),
       $this->version,
-      false,
+      false
     );
 
     /**
