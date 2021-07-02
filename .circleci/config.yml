@@ -94,16 +94,22 @@ jobs:
       - checkout
       - setup_environment:
           version_path: ./w3w-autosuggest/w3w-autosuggest.php
-      - run: apt-get -yqq install mysql\*
+      - run:
+          name: Install dependencies
+          command: apt-get -yqq install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
       - node/install:
           node-version: v14.16.0
           npm-version: 6.14.1
       - node/install-packages:
           app-dir: ./test
-      - run: cp -r w3w-autosuggest /var/www/html/wp-content/plugins/3-word-address-validation-field
-      - run: |
-          cd test
-          npx cypress run
+      - run:
+          name: Add plugin to WordPress plugins directory
+          command: cp -r w3w-autosuggest /var/www/html/wp-content/plugins/3-word-address-validation-field
+      - run:
+          name: Run tests
+          command: |
+            cd test
+            npx cypress run
   tag:
     executor: build-executor
     steps:
