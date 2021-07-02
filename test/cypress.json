@@ -5,6 +5,7 @@
     "ADMIN_PASSWORD": "what3words",
     "API_KEY": "TSTSTSTS",
     "DB_HOST": "localhost",
+    "DB_PORT": "3306",
     "DB_USER": "root",
     "DB_PASS": "wordpress",
     "DB_DATABASE": "wordpress"

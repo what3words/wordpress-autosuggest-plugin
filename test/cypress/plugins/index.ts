@@ -26,6 +26,7 @@ module.exports = (on, config) => {
     client: 'mysql',
     connection: {
       host: config.env.DB_HOST,
+      port: config.env.DB_PORT,
       user: config.env.DB_USER,
       password: config.env.DB_PASS,
       database: config.env.DB_DATABASE,
