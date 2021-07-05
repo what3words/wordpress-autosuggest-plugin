@@ -117,7 +117,7 @@ jobs:
             source $APACHE_ENVVARS
             docker-entrypoint.sh apache2 || true
             cp -r ~/project/w3w-autosuggest /var/www/html/wp-content/plugins/w3w-autosuggest
-            mysql -h ${CYPRESS_DB_HOST} -u ${CYPRESS_DB_USER} -p${CYPRESS_DB_PASS} -P ${CYPRESS_DB_PORT} ${CYPRESS_DB_DATABASE} < ~/project/test/database/sql/wordpress-5.7.2.sql
+            mysql -h ${CYPRESS_DB_HOST} -u ${CYPRESS_DB_USER} -p${CYPRESS_DB_PASS} -P ${CYPRESS_DB_PORT} < ~/project/test/database/sql/wordpress-5.7.2.sql
       - run:
           name: Run tests
           command: |
