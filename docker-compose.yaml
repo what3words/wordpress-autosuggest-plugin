@@ -20,7 +20,7 @@ services:
     volumes:
       - ./w3w-autosuggest:/var/www/html/wp-content/plugins/w3w-autosuggest
     ports:
-      - 8080:80
+      - 80:80
     depends_on:
       mysql:
         condition: service_healthy
