@@ -13,8 +13,8 @@
 ?>
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 
+<?php if ( isset( $shipping_words ) && !!$shipping_words ) { ?>
 <section class="woocommerce-columns woocommerce-columns--2 woocommerce-columns--addresses col2-set addresses">
-  <?php if ( isset( $shipping_words ) ) { ?>
   <div class="woocommerce-column woocommerce-column--2 woocommerce-column--shipping-address col-2">
     <p><strong>what3words Address:</strong></p>
     <p>
@@ -25,5 +25,5 @@
     </p>
     <p><small data-testid="shipping_nearest_place"><?php echo $shipping_nearest_place; ?></small></p>
   </div>
-  <?php } ?>
 </section>
+<?php } ?>

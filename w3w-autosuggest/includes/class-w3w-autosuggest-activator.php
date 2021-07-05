@@ -59,30 +59,22 @@ if ( !class_exists( 'W3W_Autosuggest_Activator' ) ) {
 
       $api_key = isset( $legacy_v3['api_key'] )
         ? $legacy_v3['api_key']
-        : isset( $legacy_v1['w3w_field_api_key'] )
-          ? $legacy_v1['w3w_field_api_key']
-          : ''
+        : ''
       ;
 
       $selector = isset( $legacy_v3['input_selectors'] )
         ? $legacy_v3['input_selectors']
-        : isset( $legacy_v1['w3w_field_input'] )
-          ? $legacy_v1['w3w_field_input']
-          : ''
+        : ''
       ;
 
       $woocommerce_enabled = isset( $legacy_v3['woocommerce_enabled'] )
         ? $legacy_v3['woocommerce_enabled']
-        : isset( $legacy_v1['w3w_field_woocommerce_fields'] )
-          ? self::convert_to_boolean( $legacy_v1['w3w_field_woocommerce_fields'] )
-          : true
+        : true
       ;
 
       $placeholder = isset( $legacy_v3['input_placeholder'] )
         ? $legacy_v3['input_placeholder']
-        : isset( $legacy_v1['w3w_field_placeholder'] )
-          ? $legacy_v1['w3w_field_placeholder']
-          : ''
+        : ''
       ;
 
       $enable_placeholder = strlen( $placeholder ) > 0;
@@ -113,9 +105,8 @@ if ( !class_exists( 'W3W_Autosuggest_Activator' ) ) {
         'clip_to_polygon' => '',
       ];
       $settings = get_option( $settings_name, $default );
+
       update_option( $settings_name, $settings );
-      delete_option( $legacy_v1_name );
-      delete_option( $legacy_v3_name );
     }
 
     private static function convert_to_boolean( $value ) {

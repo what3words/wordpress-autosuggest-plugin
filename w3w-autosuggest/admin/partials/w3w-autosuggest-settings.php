@@ -15,7 +15,7 @@
             <?php if ( $settings['woocommerce_enabled'] ) echo "checked"; ?>
             tabindex="3"
             data-testid="enable_w3w_managed">
-          <label class="form-check-label fw-normal" for="enable_w3w_managed_input">
+          <label class="form-check-label fw-bold" for="enable_w3w_managed_input">
             Add what3words Address Field to my checkout page for me (this is recommended for Woocommerce users)
             <div class="fw-light fst-italic small">
               This will add a #w3w-billing field to your checkout page.
@@ -34,7 +34,7 @@
             <?php if ( !$settings['woocommerce_enabled'] ) echo "checked"; ?>
             tabindex="4"
             data-testid="enable_input_selector">
-          <label class="form-check-label fw-normal" for="enable_input_selector">
+          <label class="form-check-label fw-bold" for="enable_input_selector">
             Convert an existing field to a what3words Address Field
             <div class="fw-light fst-italic small">
               This allows you to specify an existing #id or .class to transform into a what3words Address Field.
@@ -58,7 +58,8 @@
                 value="<?php echo $settings['selector']; ?>"
                 disabled
                 tabindex="5"
-                data-testid="input_selector">
+                data-testid="input_selector"
+                style="width: 100%">
             </div>
           </div>
         </div>
@@ -76,7 +77,7 @@
                 tabindex="6"
                 data-testid="return_coordinates">
             </div>
-            <div class="d-inline">
+            <div class="d-inline fw-bold">
               Save coordinates
               <div class="fw-light fst-italic small">
                 This will save the GPS coordinates of the what3words address and display them in the Order Details page.<br />
@@ -99,7 +100,7 @@
                 tabindex="7"
                 data-testid="save_nearest_place">
             </div>
-            <div class="d-inline">
+            <div class="d-inline fw-bold">
               Save nearest place
               <div class="fw-light fst-italic small">
                 This will save the nearest place location of the what3words address and display it in the Order Details page.
@@ -121,7 +122,7 @@
                 tabindex="8"
                 data-testid="enable_label">
             </div>
-            <div class="d-inline">
+            <div class="d-inline fw-bold">
               Add field label
               <div class="fw-light fst-italic small">
                 This adds a label element to the created field. We recommend using the default label but you can customise this if needed.
@@ -140,7 +141,8 @@
                 value="<?php echo $settings['label']; ?>"
                 disabled
                 tabindex="9"
-                data-testid="label">
+                data-testid="label"
+                style="width: 100%">
             </div>
           </div>
         </div>
@@ -148,7 +150,7 @@
         <!--- Button --->
         <div class="col-12 mb-3">
           <button
-            class="btn btn-w3w text-white"
+            class="button button-primary"
             type="submit"
             style="width: 134px;"
             tabindex="10"

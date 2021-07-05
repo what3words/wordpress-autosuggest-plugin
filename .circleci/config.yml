@@ -34,6 +34,9 @@ executors:
     environment:
       PERCY_PARALLEL_NONE: $CIRCLE_JOB
       PERCY_PARALLEL_TOTAL: -1
+  publish-executor:
+    docker:
+      - image: cimg/base:2021.04
 
 commands:
   add_fingerprint:
@@ -125,8 +128,24 @@ jobs:
           command: |
             cd ~/project/test
             npx cypress run --record
+  publish:
+    executor: publish-executor
+    steps:
+      - checkout
+      - setup_environment:
+          version_path: ./w3w-autosuggest/w3w-autosuggest.php
+      - run:
+          name: Install dependencies
+          command: |
+            apt-get update -yqq
+            apt-get -yqq install subversion
+      - run:
+          name: publish to WordPress
+          command: |
+            svn ci -m "Release ${VERSION}"
+
   tag:
-    executor: build-executor
+    executor: test-executor
     steps:
       - checkout
       - add_fingerprint:

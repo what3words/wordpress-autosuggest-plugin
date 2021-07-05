@@ -1,7 +1,5 @@
 @import "bootstrap-grid.min.css";
-@import "bootstrap-reboot.min.css";
 @import "bootstrap-utilities.min.css";
-@import "bootstrap.min.css";
 
 /**
  * All of the CSS for your admin-specific functionality should be
@@ -32,6 +30,10 @@ input[type=number] {
 
 .w3w-checkbox {
   padding-left: .25rem !important;
+}
+
+.bg-white {
+  background-color: #fff !important;
 }
 
 .max-width {
@@ -65,6 +67,7 @@ input[type=number] {
   display: inline-block;
   margin-left: .255em;
   content: "";
+  padding-left: 15px;
   border-top: .3em solid transparent;
   border-right: 0;
   border-bottom: .3em solid transparent;
@@ -76,6 +79,7 @@ input[type=number] {
   margin-left: .255em;
   vertical-align: .255em;
   content: "";
+  margin-right: 6px;
   border-top: .3em solid;
   border-right: .3em solid transparent;
   border-bottom: 0;

@@ -143,7 +143,7 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
 
       $settings = get_option( $this->settings_name );
 
-      if ( !$settings['api_key'] )
+      if ( !isset( $settings['api_key'] ) || !$settings['api_key'] )
 
       require_once plugin_dir_path( __FILE__ ) . '/partials/add-admin-notice.php';
 
@@ -211,25 +211,18 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
       $order_id = $order->get_id();
       $settings = get_option( $this->settings_name );
       $words = get_post_meta( $order_id, '_shipping_w3w', true );
-      $nearest_place = get_post_meta( $order_id, '_shipping_nearest_place', true );
-      $shipping_w3w_lat = get_post_meta( $order_id, '_shipping_w3w_lat', true );
-      $shipping_w3w_lng = get_post_meta( $order_id, '_shipping_w3w_lng', true );
-      $data['label_w3w'] = strlen( $settings['label'] ) > 0 ? $settings['label'] : 'w3w Address';
-      $data['shipping_w3w'] = str_replace( '///', '', $words );
-      $data['shipping_nearest_place'] = $nearest_place;
-      $data['shipping_w3w_coordinates'] = $shipping_w3w_lat && $shipping_w3w_lng
-        ? '(' . $shipping_w3w_lat . ',' . $shipping_w3w_lng . ')'
-        : '';
+
+      if ( !!$words ) {
+        
+        $data['formatted_shipping_address'] .= '<br/>' . $words;
+        $data['shipping_address_map_url'] = 'https://what3words.com/' .
+                                            str_replace( '///', '', $words ) .
+                                            '?application=wordpress';
+      
+      }
 
       return $data;
 
-    }
-
-    public function render_order_data_before() {
-      
-      $settings = get_option( $this->settings_name );
-      require plugin_dir_path( __FILE__ ) . 'partials/add-address-to-order-preview.php';
-      
     }
 
     public function run() {
@@ -243,6 +236,8 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
       $settings = get_option( $this->settings_name );
 
       if ( isset( $_POST ) && $_POST ) {
+
+        wp_die( 'FORM SUBMISSION DETECTED' );
         
         if ( isset( $_POST['settings_form'] ) ) {
           $settings['return_coordinates'] = false;

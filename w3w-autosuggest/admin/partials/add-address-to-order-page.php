@@ -11,6 +11,8 @@
  * @package    W3W_Autosuggest
  * @subpackage W3W_Autosuggest/admin/partials
  */
+
+if ( $words !== "" ) {
 ?>
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 
@@ -26,3 +28,5 @@
   <?php echo '(' . $lat . ', ' . $lng . ')'; ?>
   <?php } ?>
 </p>
+
+<?php } ?>

@@ -50,7 +50,7 @@ $settings = get_option( $this->settings_name );
               <div class="col-12 mb-3">
                 <a
                   id="get_api_key"
-                  class="btn btn-w3w text-white"
+                  class="button button-primary"
                   href="https://what3words.com/select-plan"
                   target="_blank"
                   data-testid="get_api_key">
@@ -65,7 +65,7 @@ $settings = get_option( $this->settings_name );
                     <div class="col-12">
                       <label for="w3w_api_key" class="form-label fw-bold">API Key (required)</label>
                     </div>
-                    <div class="col-3">
+                    <div class="col-12">
                       <input
                         type="text"
                         class="form-control form-control-lg"
@@ -79,7 +79,7 @@ $settings = get_option( $this->settings_name );
                       <button
                         id="api_key_btn"
                         type="submit"
-                        class="btn btn-w3w"
+                        class="button button-primary"
                         tabindex="2"
                         disabled
                         data-testid="save_api_key">Save</button>
