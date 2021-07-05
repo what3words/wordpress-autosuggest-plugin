@@ -1,4 +1,5 @@
 {
+  "projectId": "rxtpk4",
   "baseUrl": "http://localhost:8080",
   "env": {
     "ADMIN_USERNAME": "what3words",

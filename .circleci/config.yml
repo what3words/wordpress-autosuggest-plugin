@@ -23,6 +23,7 @@ executors:
           CYPRESS_DB_USER: root
           CYPRESS_DB_PASS: wordpress
           CYPRESS_DB_DATABASE: wordpress
+          CYPRESS_RECORD_KEY: 4f274874-4969-4293-b53a-24e21046fdd0
       - image: mysql:5.7
         name: mysql
         environment:
@@ -123,7 +124,7 @@ jobs:
           name: Run tests
           command: |
             cd ~/project/test
-            npx cypress run
+            npx cypress run --record
   tag:
     executor: build-executor
     steps:
