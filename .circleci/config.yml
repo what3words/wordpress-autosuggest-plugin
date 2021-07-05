@@ -23,7 +23,7 @@ executors:
           CYPRESS_DB_USER: root
           CYPRESS_DB_PASS: wordpress
           CYPRESS_DB_DATABASE: wordpress
-      - image: 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site-db:0.1.0
+      - image: mysql:5.7
         name: mysql
         environment:
           MYSQL_ROOT_PASSWORD: wordpress
@@ -104,7 +104,7 @@ jobs:
           name: Install dependencies
           command: |
             apt-get update -yqq
-            apt-get -yqq install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+            apt-get -yqq install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb mysql\*
       - node/install:
           node-version: v14.16.0
           npm-version: 6.14.1
@@ -117,6 +117,7 @@ jobs:
             source $APACHE_ENVVARS
             docker-entrypoint.sh apache2 || true
             cp -r ~/project/w3w-autosuggest /var/www/html/wp-content/plugins/w3w-autosuggest
+            mysql -h ${CYPRESS_DB_HOST} -u ${CYPRESS_DB_USER} -p${CYPRESS_DB_PASS} -P ${CYPRESS_DB_PORT} ${CYPRESS_DB_DATABASE} < ~/project/test/database/wordpress-5.7.2.sql
       - run:
           name: Run tests
           command: |
