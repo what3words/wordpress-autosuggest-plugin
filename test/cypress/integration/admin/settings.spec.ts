@@ -50,7 +50,7 @@ describe('Admin > Settings', () => {
       })
 
       it('Then the nearest place checkbox is not checked by default', () => {
-        cy.getElementByDataTestId('nearest_place')
+        cy.getElementByDataTestId('save_nearest_place')
           .should('not.be.checked')
       })
 

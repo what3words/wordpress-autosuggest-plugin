@@ -9,7 +9,7 @@ orbs:
   docker: circleci/docker@1.6.0
 
 executors:
-  build-executor:
+  test-executor:
     docker:
       - image: 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:0.1.0
         environment:
@@ -97,7 +97,7 @@ commands:
 
 jobs:
   test:
-    executor: build-executor
+    executor: test-executor
     steps:
       - checkout
       - setup_environment:

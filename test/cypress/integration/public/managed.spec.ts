@@ -13,7 +13,7 @@ describe('Managed fields', () => {
       .getElementByDataTestId('enable_w3w_managed').should('be.checked')
   )
 
-  describe('Given WooCommerce is not enabled', () => {
+  describe.skip('Given WooCommerce is not enabled', () => {
     beforeEach(() => cy.deactivatePlugin('woocommerce'))
 
     it('Then no autosuggest is shown', () => {
