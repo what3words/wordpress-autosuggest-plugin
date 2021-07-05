@@ -29,6 +29,7 @@ executors:
           MYSQL_ROOT_PASSWORD: wordpress
           MYSQL_USER: wordpress
           MYSQL_PASSWORD: wordpress
+          MYSQL_DATABASE: wordpress
     environment:
       PERCY_PARALLEL_NONE: $CIRCLE_JOB
       PERCY_PARALLEL_TOTAL: -1
