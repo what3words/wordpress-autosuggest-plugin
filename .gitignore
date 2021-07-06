@@ -212,3 +212,4 @@ autosuggest
 videos
 screenshots
 *.zip
+*.env

@@ -109,24 +109,5 @@ if ( !class_exists( 'W3W_Autosuggest_Activator' ) ) {
       update_option( $settings_name, $settings );
     }
 
-    private static function convert_to_boolean( $value ) {
-
-      if ( !is_string( $value ) ) return (bool) $value;
-
-      switch ( strtolower( $value ) ) {
-        
-        case '1':
-        case 'true':
-        case 'on':
-        case 'yes':
-        case 'y':
-          return true;
-        default:
-          return false;
-
-      }
-
-    }
-
   }
 }

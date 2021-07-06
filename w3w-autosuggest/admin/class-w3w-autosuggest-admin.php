@@ -236,8 +236,6 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
       $settings = get_option( $this->settings_name );
 
       if ( isset( $_POST ) && $_POST ) {
-
-        wp_die( 'FORM SUBMISSION DETECTED' );
         
         if ( isset( $_POST['settings_form'] ) ) {
           $settings['return_coordinates'] = false;

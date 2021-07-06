@@ -142,7 +142,14 @@ jobs:
       - run:
           name: publish to WordPress
           command: |
-            svn ci -m "Release ${VERSION}"
+            svn co https://plugins.svn.wordpress.org:443/3-word-address-validation-field ~/svn
+            rm -rf ~/svn/assets
+            rm -rf ~/svn/trunk
+            cp -r ~/project/assets/* ~/svn/assets
+            cp -r ~/project/w3w-autosuggest/* ~/svn/trunk
+            svn ci -m "Updating trunk with release ${VERSION}" --username ${SVN_USERNAME} --password ${SVN_PASSWORD}
+            svn cp ~/svn/trunk ~/svn/tags/${VERSION}
+            svn ci -m "Tagging release version ${VERSION}" --username ${SVN_USERNAME} --password ${SVN_PASSWORD}
 
   tag:
     executor: test-executor
