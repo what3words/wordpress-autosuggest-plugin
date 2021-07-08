@@ -18,7 +18,7 @@ if ( $words !== "" ) {
 
 <p>
   <strong><?php echo __( 'what3words Address', $this->i18n_domain ); ?>:</strong><br />
-  <a href="http://what3words.com/<?php echo str_replace( '///', '', $words ); ?>?partner=wordpress" target="_blank">
+  <a href="http://what3words.com/<?php echo str_replace( '///', '', $words ); ?>?application=wordpress" target="_blank">
     <?php echo $words; ?>
   </a>
   <?php if ( isset( $nearest_place ) ) { ?>

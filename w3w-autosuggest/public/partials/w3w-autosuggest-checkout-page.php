@@ -19,7 +19,7 @@
     <p><strong>what3words Address:</strong></p>
     <p>
       <a
-        href="http://what3words.com/<?php echo str_replace( '///', '', $shipping_words ); ?>"
+        href="http://what3words.com/<?php echo str_replace( '///', '', $shipping_words ); ?>?application=wordpress"
         target="_blank"
         data-testid="shipping_words"><?php echo $shipping_words; ?></a>
     </p>
