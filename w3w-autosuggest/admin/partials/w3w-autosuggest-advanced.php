@@ -320,9 +320,9 @@
               <div class="row g-1 mb-2">
                 <div class="col-12">
                   <label for="clip_to_polygon" class="form-label fw-bold">
-                    Latitude & longitude coordinates
+                    Longitude & latitude coordinates
                     <div class="fw-light fst-italic small">
-                      Accepts polygon coordinates in geojson coordinates format. A polygon can be created using <a href="https://geojson.io" target="_blank">https://geojson.io</a> and the coordinates block copied into here:
+                      Accepts polygon coordinates in geojson coordinates format (longitude, latitude). A polygon can be created using <a href="https://geojson.io" target="_blank">https://geojson.io</a> and the coordinates block copied into here:
                     </div>
                   </label>
                 </div>

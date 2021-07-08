@@ -72,7 +72,14 @@
     if (W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_polygon) {
       const polygon = W3W_AUTOSUGGEST_SETTINGS.clip_to_polygon.trim()
         .split('],')
-        .map(coords => coords.trim().replace('[', '').replace(']', '').replace(/\s/g, ''))
+        .map(coords => {
+          const [lng, lat] = coords.trim()
+            .replace('[', '')
+            .replace(']', '')
+            .replace(/\s/g, '')
+            .split(',')
+          return `${lat.trim()},${lng.trim()}`
+        })
         .join(',')
       w3wComponent.setAttribute('clip_to_polygon', polygon)
     }
