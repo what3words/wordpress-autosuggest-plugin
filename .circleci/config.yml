@@ -143,8 +143,8 @@ jobs:
           name: publish to WordPress
           command: |
             svn co https://plugins.svn.wordpress.org:443/3-word-address-validation-field ~/svn
-            rm -rf ~/svn/assets
-            rm -rf ~/svn/trunk
+            rm -rf ~/svn/assets/*
+            rm -rf ~/svn/trunk/*
             cp -r ~/project/assets/* ~/svn/assets
             cp -r ~/project/w3w-autosuggest/* ~/svn/trunk
             svn ci -m "Updating trunk with release ${VERSION}" --username ${SVN_USERNAME} --password ${SVN_PASSWORD}
