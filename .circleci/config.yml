@@ -11,7 +11,7 @@ orbs:
 executors:
   test-executor:
     docker:
-      - image: 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:0.1.0
+      - image: 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:0.1.1
         environment:
           WORDPRESS_DB_HOST: mysql:3306
           WORDPRESS_DB_USER: root
