@@ -50,8 +50,7 @@ describe('Managed fields', () => {
         })
 
         it('Then the autosuggest value is displayed on the order review customer page', () => {
-          cy.getElementByDataTestId('billing_words').contains(/\/\/\/(?:[A-Z]+\.){2}[A-Z]+/i)
-            .getElementByDataTestId('shipping_words').contains(/\/\/\/(?:[A-Z]+\.){2}[A-Z]+/i)
+          cy.getElementByDataTestId('shipping_words').contains(/\/\/\/(?:[A-Z]+\.){2}[A-Z]+/i)
         })
       })
 
@@ -83,8 +82,7 @@ describe('Managed fields', () => {
         })
 
         it('Then the autosuggest value is displayed on the order review customer page', () => {
-          cy.get('[data-testid=billing_words]').contains(/\/\/\/(?:[A-Z]+\.){2}[A-Z]+/i)
-            .get('[data-testid=shipping_words]').contains(/\/\/\/(?:[A-Z]+\.){2}[A-Z]+/i)
+          cy.get('[data-testid=shipping_words]').contains(/\/\/\/(?:[A-Z]+\.){2}[A-Z]+/i)
         })
       })
     })
