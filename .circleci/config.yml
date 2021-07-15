@@ -123,6 +123,7 @@ jobs:
             docker-entrypoint.sh apache2 || true
             cp -r ~/project/w3w-autosuggest /var/www/html/wp-content/plugins/w3w-autosuggest
             mysql -h ${CYPRESS_DB_HOST} -u ${CYPRESS_DB_USER} -p${CYPRESS_DB_PASS} -P ${CYPRESS_DB_PORT} < ~/project/test/database/sql/wordpress-5.7.2.sql
+            rm -rf /var/www/html/.maintenance # Remove maintenance file that causes WP to run in maintenance mode
       - run:
           name: Run tests
           command: |
