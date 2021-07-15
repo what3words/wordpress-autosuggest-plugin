@@ -17,6 +17,8 @@ executors:
           WORDPRESS_DB_USER: root
           WORDPRESS_DB_PASSWORD: wordpress
           WORDPRESS_DB_NAME: wordpress
+          WORDPRESS_CONFIG_EXTRA: |
+            define('DISABLE_WP_CRON', 'true');
           CYPRESS_baseUrl: http://localhost
           CYPRESS_DB_HOST: mysql
           CYPRESS_DB_PORT: 3306
