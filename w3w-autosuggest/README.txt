@@ -146,25 +146,18 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 == Changelog ==
 
 = 4.0.0 =
-* Released <DATE>
-* Updated plugin listing information
-* Added useful links on plugins page
-* Added a what3words WP menu item
-* Updated the admin settings page
-* Updated to what3words Autosuggest Component v4
-* Improvements to WooCommerce integration
-* Removed template override for customer checkout page
-* Added 3 word address information to order preview page
-* Updated 3 word address information on order review page
+* Released 2021.07.20
+* Upgraded to use V4 of the what3words AutoSuggest Component with improved styling and functionality.
+* Updated admin section interface.
+* Addition of advanced clipping options to restrict suggestions displayed to a user.
+* Addition of options to store latitude and longitude coordinates and nearest place against a record.
+* Added ability to change the field label.
 
 
 == Upgrade Notice ==
 
 = 4.0 =
-* Major improvements to the plugin configuration
-* Updated autosuggest component to v4
-* Improved integration with WooCommerce
-* Removed override of WooCommerce templates - now using hooks!
+Upgrade the what3words address field plugin to use the latest version of the what3words AutoSuggest Component and new plugin features.
 
 = 3.0 =
 This is the 9th version of the plugin

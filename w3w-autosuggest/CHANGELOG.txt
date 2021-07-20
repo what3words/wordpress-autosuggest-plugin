@@ -1,3 +1,11 @@
+= 4.0.0 =
+* Released 2021.07.20
+* Upgraded to use V4 of the what3words AutoSuggest Component with improved styling and functionality.
+* Updated admin section interface.
+* Addition of advanced clipping options to restrict suggestions displayed to a user.
+* Addition of options to store latitude and longitude coordinates and nearest place against a record.
+* Added ability to change the field label.
+
 = 3.0.11 =
 * Released 2021.06.30
 * Fixes non-fatal debugging log output for PHP "Variable assignment" error
