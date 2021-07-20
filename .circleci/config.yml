@@ -154,20 +154,6 @@ jobs:
             svn cp ~/svn/trunk ~/svn/tags/${VERSION}
             svn ci -m "Tagging release version ${VERSION}" --username ${SVN_USERNAME} --password ${SVN_PASSWORD}
 
-  tag:
-    executor: test-executor
-    steps:
-      - checkout
-      - add_fingerprint:
-          fingerprint: "3a:f1:b4:f8:ea:43:76:68:8e:c0:f6:6c:09:d3:e9:14"
-      - setup_environment
-      - git_config:
-          email: circleci@what3words.com
-          author: $CIRCLE_USERNAME
-      - git_tag:
-          tag: v$VERSION
-      - git_push_tags
-
 workflows:
   build-and-test:
     jobs:
@@ -182,6 +168,7 @@ workflows:
             - test
           filters:
             branches:
+              only: ci/workflow
               ignore: /^.*$/
             tags:
               only: /^v.*$/
