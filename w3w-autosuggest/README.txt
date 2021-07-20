@@ -147,11 +147,12 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 
 = 4.0.0 =
 * Released 2021.07.20
-* Upgraded to use V4 of the what3words AutoSuggest Component with improved styling and functionality.
-* Updated admin section interface.
-* Addition of advanced clipping options to restrict suggestions displayed to a user.
-* Addition of options to store latitude and longitude coordinates and nearest place against a record.
-* Added ability to change the field label.
+* Updated to the [what3words AutoSuggest Component v4](https://developer.what3words.com/tutorial/javascript-autosuggest-component-v4) with improvements to functionality, integration and style overriding.
+* Updates to the what3words admin settings and options interface.
+* Updates to the advanced clipping options to restrict suggestions displayed to a user for localisation.
+* Retrieve more metadata such as coordinates and nearest place information for a selected what3words address.
+* Improved customisation of the Autosuggest Component and optional <label> element displayed to your customers.
+* Improved integration with WooCommerce Cart, Checkout and Orders.
 
 
 == Upgrade Notice ==
