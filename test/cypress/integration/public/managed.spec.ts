@@ -32,8 +32,8 @@ describe('Managed fields', () => {
       )
 
       it('Then the autosuggest search field is displayed', () => {
-        cy.get('#w3w-billing').parent('what3words-autosuggest').should('exist')
-        cy.get('#w3w-shipping').parent('what3words-autosuggest').should('exist')
+        cy.get('#w3w-billing').closest('what3words-autosuggest').should('exist')
+        cy.get('#w3w-shipping').closest('what3words-autosuggest').should('exist')
       })
 
       describe('And the customer completes billing information only', () => {
