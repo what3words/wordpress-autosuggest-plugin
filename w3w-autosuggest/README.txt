@@ -138,10 +138,9 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 
 == Screenshots ==
 
-1. Simple and fast to integrate
-2. Powered by what3words AutoSuggest
-3. Use 3 word addresses for precise and reliable deliveries
-4. Accept 3 word addresses at checkout
+1. Accept what3words addresses on your checkout page, or in a custom field.
+2. Display autosuggest results with geolocations to reduce user error
+3. Customize the autosuggest results with advanced features
 
 
 == Changelog ==
