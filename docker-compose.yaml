@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+
+  wordpress:
+    image: 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:0.1.1
+    container_name: w3w-wp
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+    environment:
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_HOST: mysql:3306
+      WORDPRESS_DEBUG: 1
+      WORDPRESS_CONFIG_EXTRA: |
+        define('DISABLE_WP_CRON', 'true');
+    volumes:
+      - ./w3w-autosuggest:/var/www/html/wp-content/plugins/w3w-autosuggest
+    ports:
+      - 80:80
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    image: mysql:5.7
+    container_name: w3w-wpdb
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pwordpress"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+    ports: 
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+    volumes:
+      - ./test/database/data:/var/lib/mysql
+      - ./test/database/sql/wordpress-5.7.2.sql:/docker-entrypoint-initdb.d/wordpress-5.7.2.sql

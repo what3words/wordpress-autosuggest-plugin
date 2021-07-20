@@ -1,79 +1,76 @@
-# what3words Autosuggest Plugin #
+![what3words Address Field](assets/wordpress-header.jpg, "what3wordsAddress Field")
+# what3words Autosuggest Plugin
 
-## Description ##
+The what3words Autosuggest helps you capture what3words addresses at checkout, using an address validation field. By giving a what3words address, your customers can accurately pinpoint their desired delivery destination.
 
-The *what3words Autosuggest plugin* helps you capture what3words addresses at checkout, using an address validation field.  By giving a what3words address, your customers can accurately pinpoint their desired delivery destination.
+### What is what3words?
 
-what3words is a global addressing system that provides the simplest way to communicate location. It has divided the world into 3 metre squares and assigned each one a unique address made of just 3 words. It is more accurate than traditional street addressing, and even allows location information to be captured for places without addresses, such as parks or beaches.
+what3words is a global addressing system that provides the simplest way to communicate location. It has divided the World into 3 metre squares and assigned each one a unique address made of just 3 words. It is more accurate than traditional street addressing and even allows location information to be captured for places without addresses, such as parks or beaches.
 
-### How does this help your business? ###
+### How does this help your business?
 
-It’s quick and easy to implement the what3words AutoSuggest Plugin. what3words addresses can be converted to GPS coordinates, which can then be passed onto delivery drivers. With a what3words address, deliveries can then arrive precisely in the right place and on time, giving a more reliable delivery experience for your customers.
+It's quick and easy to implement the what3words Autosuggest Plugin. what3words addresses can be converted to GPS coordinates, which can then be passed onto delivery drivers With a what3words address, deliveries can then arrive precisely in the right place and on time, giving a more reliable delivery experience for your customers.
 
-### And for your customers? ###
+### And for your customers?
 
-Your customers will have the option of providing the what3words address for their delivery location at the checkout. This gives them a way of providing a delivery location without the need to add complicated delivery instructions, and helps give them peace of mind that their delivery will be made to the right place, helping them to trust your business.
+Your customers will have the option of providing the what3words address for their delivery location at the checkout. This gives them a way of providing delivery location without the need to add complicated delivery instructions, and helps give them peace of mind that their delivery will be made to the right place, helping them trust your business.
 
-### How does it work? ###
+### How does it work?
 
-This plugin allows you to easily add capturing and validating a what3words address to a form on your WordPress powered site.
-Powered by our AutoSuggest feature, the what3words address field returns suggestions based on full or partial what3words addresses,  helping users with the following types of input error:
+This plugin allows you to easily add capturing and validating a what3words address to a form on your WordPress powered site. Powered by our [Autosuggest Component](https://developer.what3words.com/components), the what3words address field returns suggestions based on full or partial what3words addresses, helping users with the following types of input error:
 
-- typing errors
-- spelling errors
-- misremembered words (e.g. singular vs. plural) or words in the wrong order
-We recommend using the plugin when you want to capture a precise location from a user, such as a customer’s front door or specific entrance of a larger building.
+* typing errors
+* spelling errors
+* misremembered words (e.g. singular vs plural) or words in the wrong order.
 
-## Installation ##
+We recommend using the plugin when you want to capture a precise location from a user, such as a customer's front door or specific entrance of a larger building.
 
-- You can install what3words AutoSuggest plugin automatically from the WordPress admin panel. From the Dashboard, navigate to *Plugins / Add New* and search for *"what3words"* and click on the *"Install Now"* button.
-- Or you can install what3words AutoSuggest plugin manually. Download the plugin Zip archive and uncompress it. Copy or upload the `3-word-address-validation-field` folder to the `wp-content/plugins` folder on your web server.
-- Activate the plugin. From the Dashboard, navigate to Plugins and click on the *"Activate"* link under the entry for What3words Searchbox.
-- Customise and configure the plugin; from the Dashboard, navigate to the *Settings / what3words AutoSuggest plugin* page or click on the *"Settings"* link from the Plugins page on the Dashboard.
-- Click on the *"Save what3words AutoSuggest plugin Settings"* button to preserve your chosen settings and options.
 
-## Configuration ##
+## Contents
 
-### Enabling the plugin in a post or page ###
+* [Installation](docs/install.md)
+* [Configuration](docs/configuration.md)
+* [FAQ](docs/faq.md)
 
-To enable the plugin on a post or page, simply add a text input field contained inside a form, and add the field’s id to the plugin’s Input Selector(s) configuration option as described below.
+### More about what3words
 
-### what3words API settings ###
+what3words is available in 45+ languages, with pre-assigned, standardised 3 word addresses that are much easier to remember than lat/lng coordinates.
 
-You’ll need a  what3words API key to use this plugin, as it authenticates and interacts with the [what3words API](https://developer.what3words.com/public-api).
-If you don’t have a what3words API key yet, you can quickly and easily sign-up and register for one. It will just take a few minutes to do!
+Find our full [developer documentation](https://developer.what3words.com).
 
-### General Settings ###
+Learn more about our [Privacy Policy](https://what3words.com/privacy) or [Terms & Conditions](https://what3words.com/terms).
 
-- Input Selectors (WordPress only) – the input fields that the plugin is configured to search for 3 word addresses, specified as a list of css selectors. Multiple fields can be specified using commas, e.g. “.class, #id”.
-- Input Placeholder Text – an optional placeholder to be displayed in the input fields that are configured in the Input Selector(s) option. We recommend providing an example what3words address here with “e.g.” to illustrate how a what3words address should be entered, for example, “e.g. index.home.raft”
 
-### WooCommerce Support ###
+### Credit
 
-The plugin also allows you to automatically add a 3 word address validation field to a WooCommerce checkout form and save the 3 word address against the customer’s order details. By enabling WooCommerce checkout integration, the `#shipping_w3w` and `#billing_w3w` selectors will be automatically added to the list of Input Selector(s).
+This project was extended from the [WordPress Plugin Boilerplate](docs/boilerplate.md) and its source can be found [here](https://github.com/DevinVinson/WordPress-Plugin-Boilerplate).
 
-## Frequently Asked Questions ##
 
-### Is there a web site for this plugin? ###
+## Contributing to the project
 
-Absolutely. Go to the [what3words AutoSuggest plugin home page](https://developer.what3words.com/tools/e-commerce/wordpress) for the latest information. There’s also the official WordPress [plugin repository page](https://wordpress.org/plugins/what3words-searchbox/) and the source for the plugin is on [GitHub](https://github.com/what3words/wordpress-autosuggest-plugin/) as well.
+### Publishing changes
 
-### what3words AutoSuggest plugin isn't available in my language; can I submit a translation? ###
+In order to contribute to this project you should follow the guide to modifying code and submitting your code.
 
-WordPress and this plugin use the Gnu gettext tools to support internationalisation. The source file containing each string that needs to be translated ships with the plugin in what3words-searchbox/lang/src/what3words-searchbox.po. See the [I18n for WordPress Developers](https://codex.wordpress.org/I18n_for_WordPress_Developers) page for more information or get in touch for help.
+1. Make the relevant modifications to the code
 
-### I have a question that's not answered here; what do I do? ###
+2. Before committing to remote you should ensure you pre-emptively bump the version in both `w3w-autosuggest/README.txt` and most importantly the doc comment headers `w3w-autosuggest/w3w-autosuggest.php`.
 
-Have a read of the [what3words Knowledge Base](https://support.what3words.com), which contains many more frequently asked questions and their answers.
+3. Commit your changes to a suitably named branch and open a PR with the relevant details of your changes included. If you are working from a JIRA ticket you should try to include the name of the JIRA ticket in your commit in square braces, e.g. _"[TT-1234] My PR which resolves issues X"_
 
-## Filter Support And Usage ##
+__TODO__
 
-what3words AutoSuggest plugin supports a single filter to change the default set of installation settings and options at plugin activation time.
+4. Once your PR has been reviewed and merged the CI pipeline should automatically deploy your changes to the WordPress plugin version control repository (SVN).
 
-## More about what3words ##
-what3words is available in 45+ languages, with pre-assigned, standardised 3 word addresses that are much easier to remember than lat/long coordinates.
 
-Find our full developer documentation here:
-[what3words.com](https://developer.what3words.com/)
+### Testing changes
 
-You can learn more about our privacy policy here: [what3words Privacy Policy](https://corpassets.what3words.com/wp-content/uploads/2020/07/Privacy-and-Cookie-Policy-31-July.pdf)
+You can run the Cypress tests with the following.
+
+```
+docker pull 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:<VERSION>
+docker compose up -d
+cd test
+npm i
+npx cypress open|run
+```

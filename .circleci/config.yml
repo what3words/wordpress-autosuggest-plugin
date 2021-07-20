@@ -1,0 +1,179 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.5.1
+  slack: circleci/slack@3.4.2
+  aws-s3: circleci/aws-s3@1.0.15
+  cypress: cypress-io/cypress@1.26.0
+  percy: percy/agent@0.1.3
+  docker: circleci/docker@1.6.0
+
+executors:
+  test-executor:
+    docker:
+      - image: 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:0.1.1
+        environment:
+          WORDPRESS_DB_HOST: mysql:3306
+          WORDPRESS_DB_USER: root
+          WORDPRESS_DB_PASSWORD: wordpress
+          WORDPRESS_DB_NAME: wordpress
+          WORDPRESS_CONFIG_EXTRA: |
+            define('DISABLE_WP_CRON', 'true');
+          CYPRESS_baseUrl: http://localhost
+          CYPRESS_DB_HOST: mysql
+          CYPRESS_DB_PORT: 3306
+          CYPRESS_DB_USER: root
+          CYPRESS_DB_PASS: wordpress
+          CYPRESS_DB_DATABASE: wordpress
+          CYPRESS_RECORD_KEY: 4f274874-4969-4293-b53a-24e21046fdd0
+      - image: mysql:5.7
+        name: mysql
+        environment:
+          MYSQL_ROOT_PASSWORD: wordpress
+          MYSQL_USER: wordpress
+          MYSQL_PASSWORD: wordpress
+          MYSQL_DATABASE: wordpress
+    environment:
+      PERCY_PARALLEL_NONE: $CIRCLE_JOB
+      PERCY_PARALLEL_TOTAL: -1
+  publish-executor:
+    docker:
+      - image: cimg/base:2021.04
+
+commands:
+  add_fingerprint:
+    parameters:
+      fingerprint:
+        type: string
+    steps:
+      - add_ssh_keys:
+          fingerprints: << parameters.fingerprint >>
+  setup_environment:
+    description: "Export pipeline number as env var"
+    parameters:
+      version_path:
+        type: string
+        default: ./
+    steps:
+      - run:
+          name: "Export build time env vars"
+          command: |
+            echo "export PIPELINE_NUM=<< pipeline.number >>" >> $BASH_ENV
+            echo "export VERSION=$(cat << parameters.version_path >> | grep '\"Version\":' | sed -e 's/ \* Version:           //')" >> $BASH_ENV
+  jobstatus:
+    description: "Send customised status messages to Slack"
+    steps:
+      - slack/status:
+          failure_message: ':red_circle: ${CIRCLE_JOB} job of pipeline ${PIPELINE_NUM} for ${CIRCLE_TAG:-$CIRCLE_BRANCH} by ${CIRCLE_USERNAME} has failed'
+          success_message: ':bananadance: ${CIRCLE_JOB} job of pipeline ${PIPELINE_NUM} for ${CIRCLE_TAG:-$CIRCLE_BRANCH} by ${CIRCLE_USERNAME} has passed'
+  git_config:
+    parameters:
+      email:
+        type: string
+      author:
+        type: string
+    steps:
+      - run:
+          name: git configuration
+          command: |
+            git config --global user.email << parameters.email >>
+            git config --global user.name << parameters.author >>
+            ssh-keyscan github.com >> ~/.ssh/known_hosts
+  git_tag:
+    description: "Tag the project"
+    parameters:
+      tag:
+        type: string
+      when:
+        type: string
+        default: on_success
+    steps:
+      - run:
+          name: Git tag
+          command: |
+            git tag -f << parameters.tag >>
+          when: << parameters.when >>
+  git_push_tags:
+    description: "Push tags to remote repository"
+    steps:
+      - run:
+          name: git push tags
+          command: git push -f --tags
+
+jobs:
+  test:
+    executor: test-executor
+    steps:
+      - checkout
+      - setup_environment:
+          version_path: ./w3w-autosuggest/w3w-autosuggest.php
+      - run:
+          name: Install dependencies
+          command: |
+            apt-get update -yqq
+            apt-get -yqq install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb mysql\*
+      - node/install:
+          node-version: v14.16.0
+          npm-version: 6.14.1
+      - node/install-packages:
+          app-dir: ./test
+      - run:
+          name: Prepare WordPress
+          command: |
+            cd /var/www/html
+            source $APACHE_ENVVARS
+            docker-entrypoint.sh apache2 || true
+            cp -r ~/project/w3w-autosuggest /var/www/html/wp-content/plugins/w3w-autosuggest
+            mysql -h ${CYPRESS_DB_HOST} -u ${CYPRESS_DB_USER} -p${CYPRESS_DB_PASS} -P ${CYPRESS_DB_PORT} < ~/project/test/database/sql/wordpress-5.7.2.sql
+            rm -rf /var/www/html/.maintenance # Remove maintenance file that causes WP to run in maintenance mode
+      - run:
+          name: Run tests
+          command: |
+            cd ~/project/test
+            npx cypress run --record
+  publish:
+    executor: publish-executor
+    steps:
+      - checkout
+      - setup_environment:
+          version_path: ./w3w-autosuggest/w3w-autosuggest.php
+      - run:
+          name: Install dependencies
+          command: |
+            apt-get update -yqq
+            apt-get -yqq install subversion
+      - run:
+          name: publish to WordPress
+          command: |
+            svn co https://plugins.svn.wordpress.org:443/3-word-address-validation-field ~/svn
+            rm -rf ~/svn/assets/*
+            rm -rf ~/svn/trunk/*
+            cp -r ~/project/assets/* ~/svn/assets
+            cp -r ~/project/w3w-autosuggest/* ~/svn/trunk
+            svn ci -m "Updating trunk with release ${VERSION}" --username ${SVN_USERNAME} --password ${SVN_PASSWORD}
+            svn cp ~/svn/trunk ~/svn/tags/${VERSION}
+            svn ci -m "Tagging release version ${VERSION}" --username ${SVN_USERNAME} --password ${SVN_PASSWORD}
+
+  tag:
+    executor: test-executor
+    steps:
+      - checkout
+      - add_fingerprint:
+          fingerprint: "3a:f1:b4:f8:ea:43:76:68:8e:c0:f6:6c:09:d3:e9:14"
+      - setup_environment
+      - git_config:
+          email: circleci@what3words.com
+          author: $CIRCLE_USERNAME
+      - git_tag:
+          tag: v$VERSION
+      - git_push_tags
+
+workflows:
+  build-and-test:
+    jobs:
+      - test:
+          context: org-global
+          filters:
+            branches:
+              only:
+                - TT-3715

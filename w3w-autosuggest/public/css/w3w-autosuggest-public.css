@@ -1,0 +1,12 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+what3words-autosuggest input {
+  margin: 0px !important;
+}
+
+.what3words-autosuggest-suggestions {
+  z-index: 1000000 !important;
+}
