@@ -178,6 +178,8 @@ workflows:
               only: /^v.*$/
       - publish:
           context: org-global
+          requires:
+            - test
           filters:
             branches:
               ignore: /^.*$/
