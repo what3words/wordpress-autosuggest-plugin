@@ -38,7 +38,7 @@ executors:
       PERCY_PARALLEL_TOTAL: -1
   publish-executor:
     docker:
-      - image: cimg/base:2021.04
+      - image: ubuntu-1604:202004-01
 
 commands:
   add_fingerprint:
