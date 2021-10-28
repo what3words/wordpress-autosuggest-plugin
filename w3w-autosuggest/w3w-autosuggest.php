@@ -55,7 +55,7 @@ if ( !defined( 'W3W_AUTOSUGGEST_PLUGIN_BASENAME' ) ) {
  * Current plugin version.
  */
 if ( !defined( 'W3W_PLUGIN_VERSION' ) ) {
-  define( 'W3W_PLUGIN_VERSION', '4.0.0' );
+  define( 'W3W_PLUGIN_VERSION', '4.0.1' );
 }
 /**
  * Plugin settings name
@@ -68,7 +68,7 @@ if ( !defined( 'W3W_SETTINGS_NAME' ) ) {
  * Defines the JS-library to point to (includes the version of the JS-library)
  */
 if ( !defined( 'W3W_JS_LIB_CDN_URL' ) ) {
-  define ( 'W3W_JS_LIB_CDN_URL', 'https://cdn.what3words.com/javascript-components@4.0.0/dist/what3words' );
+  define ( 'W3W_JS_LIB_CDN_URL', 'https://cdn.what3words.com/javascript-components@4.0.3/dist/what3words' );
 }
 
 /**

@@ -171,11 +171,11 @@ class W3W_Autosuggest_Public {
   public function add_attribute( $tag, $handle, $src ) {
 
     if ( $handle === $this->js_comp_esm_lib ) {
-      return '<script type="module" src="' . esc_url( $src ) . '"></script>';
+      return '<script type="module" src="' . esc_url( $src ) . '" async></script>';
     }
 
     if ( $handle === $this->js_comp_webpack_lib ) {
-      return '<script nomodule src="' . esc_url( $src ) . '"></script>';
+      return '<script nomodule src="' . esc_url( $src ) . '" async></script>';
     }
 
     return $tag;
