@@ -107,10 +107,31 @@ class W3W_Autosuggest_Public {
     global $woocommerce;
 
     $settings = get_option( W3W_SETTINGS_NAME );
-    $settings['wp_version'] = $wp_version;
-    $settings['wc_version'] = isset( $woocommerce ) ? $woocommerce->version : 'N/A';
-    $settings['php_version'] = phpversion();
-    $data = 'const W3W_AUTOSUGGEST_SETTINGS = ' . json_encode( $settings ) . ';';
+    $exposed_settings['version'] = $settings['version'];
+    $exposed_settings['php_version'] = phpversion();
+    $exposed_settings['wp_version'] = $wp_version;
+    $exposed_settings['wc_version'] = isset( $woocommerce ) ? $woocommerce->version : 'N/A';
+    $exposed_settings['api_key'] = $settings['api_key'];
+    $exposed_settings['woocommerce_enabled'] = $settings['woocommerce_enabled'];
+    $exposed_settings['enable_placeholder'] = $settings['enable_placeholder'];
+    $exposed_settings['placeholder'] = $settings['placeholder'];
+    $exposed_settings['enable_label'] = $settings['enable_label'];
+    $exposed_settings['label'] = $settings['label'];
+    $exposed_settings['save_nearest_place'] = $settings['save_nearest_place'];
+    $exposed_settings['enable_clip_to_country'] = $settings['enable_clip_to_country'];
+    $exposed_settings['clip_to_country'] = $settings['clip_to_country'];
+    $exposed_settings['enable_clip_to_bounding_box'] = $settings['enable_clip_to_bounding_box'];
+    $exposed_settings['clip_to_bounding_box_ne_lat'] = $settings['clip_to_bounding_box_ne_lat'];
+    $exposed_settings['clip_to_bounding_box_ne_lng'] = $settings['clip_to_bounding_box_ne_lng'];
+    $exposed_settings['clip_to_bounding_box_sw_lat'] = $settings['clip_to_bounding_box_sw_lat'];
+    $exposed_settings['clip_to_bounding_box_sw_lng'] = $settings['clip_to_bounding_box_sw_lng'];
+    $exposed_settings['enable_clip_to_circle'] = $settings['enable_clip_to_circle'];
+    $exposed_settings['clip_to_circle_lat'] = $settings['clip_to_circle_lat'];
+    $exposed_settings['clip_to_circle_lng'] = $settings['clip_to_circle_lng'];
+    $exposed_settings['clip_to_circle_radius'] = $settings['clip_to_circle_radius'];
+    $exposed_settings['return_coordinates'] = $settings['return_coordinates'];
+    $exposed_settings['selector'] = $settings['selector'];
+    $data = 'const W3W_AUTOSUGGEST_SETTINGS = ' . json_encode( $exposed_settings ) . ';';
 
     /**
      * Add modular JS component script tag
