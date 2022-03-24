@@ -55,7 +55,7 @@
         label.innerHTML = W3W_AUTOSUGGEST_SETTINGS.label
         targetParent.insertBefore(label, targetSibling)
       }
-      if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place) {
+      if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place && !W3W_AUTOSUGGEST_SETTINGS['woocommerce-process-checkout-nonce']) {
         const nearestPlaceInput = document.createElement('input')
         nearestPlaceInput.setAttribute('type', 'hidden')
         nearestPlaceInput.setAttribute('name', `${target.name || 'what3words_3wa'}_nearest_place`)
@@ -101,8 +101,41 @@
       w3wComponent.setAttribute('clip_to_circle', circle)
     }
 
+    if (W3W_AUTOSUGGEST_SETTINGS['woocommerce-process-checkout-nonce']) {
+      const isBilling = target.className.indexOf('billing') !== -1 || target.id.indexOf('billing') !== -1;
+      const country = isBilling ? $('#billing_country') : $('#shipping_country')
+  
+      if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place) {
+        w3wComponent.addEventListener('selected_suggestion', function(e) {
+          const nearestPlace = e.detail.suggestion.nearestPlace
+          $(isBilling ? '#billing_nearest_place' : '#shipping_nearest_place').attr('value', nearestPlace)
+        })
+      }
+  
+      if (W3W_AUTOSUGGEST_SETTINGS.return_coordinates) {
+        w3wComponent.addEventListener('coordinates_changed', function(e) {
+          const coordinates = e.detail.coordinates
+          $(isBilling ? '#billing_w3w_lat' : '#shipping_w3w_lat').attr('value', coordinates.lat)
+          $(isBilling ? '#billing_w3w_lng' : '#shipping_w3w_lng').attr('value', coordinates.lng)
+        })
+      }
+  
+      if (
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_country &&
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_circle &&
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_bounding_box &&
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_polygon
+      ) {
+        country.on('change', function(e) {
+          w3wComponent.setAttribute('clip_to_country', e.target.value)
+        })
+        country.trigger('change')
+      }
+    }
+
     return w3wComponent
   }
+
 
   if (W3W_AUTOSUGGEST_SETTINGS.woocommerce_enabled) {
     const billingCountry = $('#billing_country')
