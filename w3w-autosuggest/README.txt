@@ -3,7 +3,7 @@ Contributors: what3words
 Tags: what3words, 3 word address, three word address, searchbox, search, address, validation, autosuggest, w3w
 Requires at least: 4.7
 Tested up to: 5.8
-Stable tag: 4.0.0
+Stable tag: 4.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -155,6 +155,10 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 
 
 == Upgrade Notice ==
+
+= 4.0.1 =
+* Released 2022.03.xx
+* Fix bug where metadata wasn't sent to WooCommerce if applying autosuggest to an existing field.
 
 = 4.0 =
 Upgrade the what3words address field plugin to use the latest version of the what3words AutoSuggest Component and new plugin features.

@@ -9,7 +9,7 @@
  * that starts the plugin.
  *
  * @link              https://developer.what3words.com/tutorial/installing-the-wordpress-plugin
- * @since             4.0.0
+ * @since             4.0.1
  * @package           w3w-autosuggest
  *
  * @wordpress-plugin
@@ -55,7 +55,7 @@ if ( !defined( 'W3W_AUTOSUGGEST_PLUGIN_BASENAME' ) ) {
  * Current plugin version.
  */
 if ( !defined( 'W3W_PLUGIN_VERSION' ) ) {
-  define( 'W3W_PLUGIN_VERSION', '4.0.0' );
+  define( 'W3W_PLUGIN_VERSION', '4.0.1' );
 }
 /**
  * Plugin settings name
