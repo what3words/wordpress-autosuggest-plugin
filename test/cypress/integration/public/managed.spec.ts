@@ -3,7 +3,6 @@ import { Chance } from 'chance'
 const CH = new Chance()
 
 describe('Managed fields', () => {
-  
   beforeEach(() =>
     cy.task('db:setup')
       .login(Cypress.env('ADMIN_USERNAME'), Cypress.env('ADMIN_PASSWORD'))
@@ -87,5 +86,4 @@ describe('Managed fields', () => {
       })
     })
   })
-
 })

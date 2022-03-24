@@ -113,7 +113,7 @@
           $(isBilling ? '#billing_nearest_place' : '#shipping_nearest_place').attr('value', nearestPlace)
         })
       }
-  
+
       if (W3W_AUTOSUGGEST_SETTINGS.return_coordinates) {
         w3wComponent.addEventListener('coordinates_changed', function(e) {
           const coordinates = e.detail.coordinates
@@ -121,7 +121,7 @@
           $(isBilling ? '#billing_w3w_lng' : '#shipping_w3w_lng').attr('value', coordinates.lng)
         })
       }
-  
+
       if (
         !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_country &&
         !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_circle &&
@@ -150,7 +150,7 @@
       const billingTargetParent = billingTarget.parentElement
       const billingW3wComponent = createAutosuggestComponent(billingTarget, billingTargetParent, billingTargetSibling)
       billingW3wComponent.setAttribute('name', 'billing_w3w')
-      
+
       if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place) {
         billingW3wComponent.addEventListener('selected_suggestion', function(e) {
           const nearestPlace = e.detail.suggestion.nearestPlace
@@ -165,7 +165,7 @@
           $('#billing_w3w_lng').attr('value', coordinates.lng)
         })
       }
-      
+
       billingW3wComponent.appendChild(billingTarget)
       billingTargetParent.insertBefore(billingW3wComponent, billingTargetSibling)
 
@@ -192,7 +192,7 @@
         shippingTargetSibling,
       )
       shippingW3wComponent.setAttribute('name', 'shipping_w3w')
-  
+
       if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place) {
         shippingW3wComponent.addEventListener('selected_suggestion', function(e) {
           const nearestPlace = e.detail.suggestion.nearestPlace
@@ -207,7 +207,7 @@
           $('#shipping_w3w_lng').attr('value', coordinates.lng)
         })
       }
-      
+
       shippingW3wComponent.appendChild(shippingTarget)
       shippingTargetParent.insertBefore(shippingW3wComponent, shippingTargetSibling)
 
@@ -226,7 +226,7 @@
     }
   } else {
     const targets = document.querySelectorAll(W3W_AUTOSUGGEST_SETTINGS.selector)
-   
+
     for (let i = 0; i < targets.length; i++) {
       const target = targets[i]
       const targetSibling = target.nextSibling
