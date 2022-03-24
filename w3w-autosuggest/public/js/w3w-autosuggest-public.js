@@ -29,6 +29,8 @@
 	 * Although scripts in the WordPress core, Plugins and Themes may be
 	 * practising this, we should strive to set a better example in our own work.
 	 */
+  const isFullWooCommerce = W3W_AUTOSUGGEST_SETTINGS.woocommerce_enabled
+  const isPartialWooCommerce = W3W_AUTOSUGGEST_SETTINGS['woocommerce-process-checkout-nonce']
 
   function createAutosuggestComponent(target, targetParent, targetSibling) {
     const w3wComponent = document.createElement('what3words-autosuggest')
@@ -44,8 +46,8 @@
     }))
     w3wComponent.setAttribute('api_key', W3W_AUTOSUGGEST_SETTINGS.api_key)
     w3wComponent.setAttribute('return_coordinates', true)
-    
-    if (!W3W_AUTOSUGGEST_SETTINGS.woocommerce_enabled) {
+
+    if (!isFullWooCommerce) {
       if (W3W_AUTOSUGGEST_SETTINGS.enable_placeholder){
         target.setAttribute('placeholder', W3W_AUTOSUGGEST_SETTINGS.placeholder)
       }
@@ -55,7 +57,7 @@
         label.innerHTML = W3W_AUTOSUGGEST_SETTINGS.label
         targetParent.insertBefore(label, targetSibling)
       }
-      if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place && !W3W_AUTOSUGGEST_SETTINGS['woocommerce-process-checkout-nonce']) {
+      if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place && !isPartialWooCommerce) {
         const nearestPlaceInput = document.createElement('input')
         nearestPlaceInput.setAttribute('type', 'hidden')
         nearestPlaceInput.setAttribute('name', `${target.name || 'what3words_3wa'}_nearest_place`)
@@ -101,7 +103,7 @@
       w3wComponent.setAttribute('clip_to_circle', circle)
     }
 
-    if (W3W_AUTOSUGGEST_SETTINGS['woocommerce-process-checkout-nonce']) {
+    if (isPartialWooCommerce) {
       const isBilling = target.className.indexOf('billing') !== -1 || target.id.indexOf('billing') !== -1;
       const country = isBilling ? $('#billing_country') : $('#shipping_country')
   
@@ -137,7 +139,7 @@
   }
 
 
-  if (W3W_AUTOSUGGEST_SETTINGS.woocommerce_enabled) {
+  if (isFullWooCommerce) {
     const billingCountry = $('#billing_country')
     const shippingCountry = $('#shipping_country')
     const billingTarget = document.querySelector('#w3w-billing')
