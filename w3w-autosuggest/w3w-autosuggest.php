@@ -9,7 +9,7 @@
  * that starts the plugin.
  *
  * @link              https://developer.what3words.com/tutorial/installing-the-wordpress-plugin
- * @since             4.0.2
+ * @since             4.0.0
  * @package           w3w-autosuggest
  *
  * @wordpress-plugin
