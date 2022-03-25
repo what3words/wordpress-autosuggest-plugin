@@ -106,21 +106,35 @@
       }
 
       if (isPartialWooCommerce) {
-        const isBilling = target.className.indexOf('billing') !== -1 || target.id.indexOf('billing') !== -1;
+        const isBilling = document.querySelector('.woocommerce-billing-fields').contains(target)
+        const sameAddress = document.querySelector('#ship-to-different-address-checkbox').checked
         const country = isBilling ? $('#billing_country') : $('#shipping_country')
 
         if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place) {
           w3wComponent.addEventListener('selected_suggestion', function(e) {
             const nearestPlace = e.detail.suggestion.nearestPlace
-            $(isBilling ? '#billing_nearest_place' : '#shipping_nearest_place').attr('value', nearestPlace)
+            if (sameAddress) {
+              $('#billing_nearest_place').attr('value', nearestPlace)
+              $('#shipping_nearest_place').attr('value', nearestPlace)
+            } else {
+              $(isBilling ? '#billing_nearest_place' : '#shipping_nearest_place').attr('value', nearestPlace)
+            }
           })
         }
 
         if (W3W_AUTOSUGGEST_SETTINGS.return_coordinates) {
           w3wComponent.addEventListener('coordinates_changed', function(e) {
             const coordinates = e.detail.coordinates
-            $(isBilling ? '#billing_w3w_lat' : '#shipping_w3w_lat').attr('value', coordinates.lat)
-            $(isBilling ? '#billing_w3w_lng' : '#shipping_w3w_lng').attr('value', coordinates.lng)
+            if (sameAddress) {
+              $('#billing_w3w_lat').attr('value', coordinates.lat)
+              $('#billing_w3w_lng').attr('value', coordinates.lng)
+              $('#shipping_w3w_lat').attr('value', coordinates.lat)
+              $('#shipping_w3w_lng').attr('value', coordinates.lng)
+
+            } else {
+              $(isBilling ? '#billing_w3w_lat' : '#shipping_w3w_lat').attr('value', coordinates.lat)
+              $(isBilling ? '#billing_w3w_lng' : '#shipping_w3w_lng').attr('value', coordinates.lng)
+            }
           })
         }
 

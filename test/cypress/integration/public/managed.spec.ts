@@ -121,6 +121,9 @@ describe('Managed fields', () => {
           cy.get('#billing_nearest_place').should('have.value', 'Bayswater, London')
           cy.get('#billing_w3w_lat').should('have.value', '51.520847')
           cy.get('#billing_w3w_lng').should('have.value', '-0.195521')
+          cy.get('#shipping_nearest_place').should('have.value', 'Bayswater, London')
+          cy.get('#shipping_w3w_lat').should('have.value', '51.520847')
+          cy.get('#shipping_w3w_lng').should('have.value', '-0.195521')
         })
 
         describe('When the customer submits their order', () => {
@@ -135,7 +138,7 @@ describe('Managed fields', () => {
         })
       })
 
-      describe('And the customer completes billing and shipping information', () => {
+      describe('And the customer completes billing and shipping information separately', () => {
         beforeEach(() => {
           const [first, last] = CH.name().split(' ')
           const city = CH.city()
@@ -200,13 +203,13 @@ describe('Managed fields', () => {
             .placeOrder()
         })
 
-        it('Then the autosuggest value is not displayed on the order review customer page', () => {
+        it('Then the autosuggest value is NOT displayed on the order review customer page as the shipping form was never used', () => {
           cy.get('address').first().should('not.contain', /\/\/\/(?:[A-Z]+\.){2}[A-Z]+/i)
           cy.get('address').last().should('not.contain', /\/\/\/(?:[A-Z]+\.){2}[A-Z]+/i)
         })
       })
 
-      describe('And the customer completes billing and shipping information', () => {
+      describe('And the customer completes billing and shipping information separately', () => {
         beforeEach(() => {
           const [first, last] = CH.name().split(' ')
           const address = CH.address()
@@ -216,9 +219,10 @@ describe('Managed fields', () => {
           const [first2, last2] = CH.name().split(' ')
           const city2 = CH.city()
           const phone2 = CH.phone()
-          const hint2 = 'filled.count.soa'
-          cy.completeCheckoutForm({ first, last, address, city, postcode, phone }, true, false)
-            .get('span').contains('Ship to a different address?').click()
+          const hint2 = 'filled.count.soap'
+
+          cy.get('span').contains('Ship to a different address?').click()
+            .completeCheckoutForm({ first, last, address, city, postcode, phone }, true, false)
             .completeCheckoutForm({
               first: first2,
               last: last2,
