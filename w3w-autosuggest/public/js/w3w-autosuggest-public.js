@@ -30,7 +30,7 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
   const isFullWooCommerce = W3W_AUTOSUGGEST_SETTINGS.woocommerce_enabled
-  const isPartialWooCommerce = W3W_AUTOSUGGEST_SETTINGS['woocommerce-process-checkout-nonce']
+  const isPartialWooCommerce = document.body.className.indexOf('woocommerce') !== -1
 
   function createAutosuggestComponent(target, targetParent, targetSibling) {
     const w3wComponent = document.createElement('what3words-autosuggest')
