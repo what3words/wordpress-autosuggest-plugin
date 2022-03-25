@@ -68,6 +68,7 @@ __TODO__
 You can run the Cypress tests with the following.
 
 ```
+AWS_PROFILE=dev aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 449290502274.dkr.ecr.eu-west-2.amazonaws.com
 docker pull 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:<VERSION>
 docker compose up -d
 cd test
