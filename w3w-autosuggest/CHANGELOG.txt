@@ -1,3 +1,8 @@
+= 4.0.1 =
+* Released 2021.11.xx
+* Security vulnerability fixed for `get_option` exposing sensitive information.
+* Loading the w3w autosuggest script asynchronously
+
 = 4.0.0 =
 * Released 2021.07.20
 * Upgraded to use V4 of the what3words AutoSuggest Component with improved styling and functionality.
