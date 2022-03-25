@@ -1,4 +1,4 @@
-![what3words Address Field](assets/wordpress-header.jpg, "what3wordsAddress Field")
+![what3words Address Field](/assets/banner-772x250.jpg)
 # what3words Autosuggest Plugin
 
 The what3words Autosuggest helps you capture what3words addresses at checkout, using an address validation field. By giving a what3words address, your customers can accurately pinpoint their desired delivery destination.
@@ -68,6 +68,7 @@ __TODO__
 You can run the Cypress tests with the following.
 
 ```
+AWS_PROFILE=dev aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 449290502274.dkr.ecr.eu-west-2.amazonaws.com
 docker pull 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:<VERSION>
 docker compose up -d
 cd test

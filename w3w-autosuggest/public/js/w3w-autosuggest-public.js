@@ -176,7 +176,6 @@
           !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_bounding_box &&
           !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_polygon
         ) {
-          console.log('inside')
           billingCountry.on('change', function(e) {
             $('#w3w-billing').closest('what3words-autosuggest').attr('clip_to_country', e.target.value)
           })
@@ -218,7 +217,6 @@
           !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_bounding_box &&
           !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_polygon
         ) {
-          console.log('inside')
           shippingCountry.on('change', function(e) {
             $('#w3w-shipping').closest('what3words-autosuggest').attr('clip_to_country', e.target.value)
           })
