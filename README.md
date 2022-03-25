@@ -1,4 +1,4 @@
-![what3words Address Field](assets/wordpress-header.jpg, "what3wordsAddress Field")
+![what3words Address Field](/assets/banner-772x250.jpg)
 # what3words Autosuggest Plugin
 
 The what3words Autosuggest helps you capture what3words addresses at checkout, using an address validation field. By giving a what3words address, your customers can accurately pinpoint their desired delivery destination.
