@@ -1,6 +1,6 @@
 {
   "projectId": "rxtpk4",
-  "baseUrl": "http://localhost:8080",
+  "baseUrl": "http://localhost:80",
   "env": {
     "ADMIN_USERNAME": "what3words",
     "ADMIN_PASSWORD": "what3words",
