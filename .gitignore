@@ -178,6 +178,7 @@ wp-config.php
 *.vi
 *~
 *.sass-cache
+.dccache
 
 # OS or Editor folders
 .DS_Store

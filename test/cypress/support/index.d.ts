@@ -6,13 +6,15 @@ declare namespace Cypress {
     openSettingsPage(plugin_name: string): Chainable
     getElementByDataTestId(test_id: string): Chainable<Element>
     setApiKey(api_key: string): Chainable
+    setSelector(selector: string): Chainable
     assertApiKeyNotice(exists: boolean): Chainable
     assertTargetValidity(selector: string, validity: boolean): Chainable
     completeCheckoutForm(
       formData: {
-        first: string, last: string, address: string, city: string, postcode: string, phone: string, hint: string,
+        first: string, last: string, address?: string, city: string, postcode: string, phone: string, hint?: string,
       },
-      isBilling?: boolean
+      isBilling?: boolean,
+      hasSeparate3waField?: boolean,
     ): Chainable
     saveSettings(): Chainable
     placeOrder(): Chainable

@@ -66,6 +66,15 @@ Cypress.Commands.add('setApiKey', (api_key: string) => {
     .getElementByDataTestId('api_key').should('have.value', api_key)
 })
 
+Cypress.Commands.add('setSelector', (selector: string) => {
+  cy.intercept('POST', /admin.php/i).as('submit')
+    .getElementByDataTestId('enable_input_selector').click()
+    .getElementByDataTestId('input_selector').type(selector)
+    .getElementByDataTestId('save_settings').should('be.visible').click({ force: true }) // Forcing to ensure it is clickable
+    .wait('@submit')
+    .getElementByDataTestId('input_selector').should('have.value', selector)
+})
+
 Cypress.Commands.add('assertApiKeyNotice', (exists: boolean) => {
   if (exists) {
     cy.getElementByDataTestId('api_key_notice').should('exist').should('be.visible')
@@ -87,25 +96,39 @@ Cypress.Commands.add('assertTargetValidity', (test_id: string, validity: boolean
 Cypress.Commands.add('completeCheckoutForm', (
   { first, last, address, city, postcode, phone, hint },
   isBilling = true,
+  hasSeparate3waField = true,
 ) => {
   const fieldPrefix = isBilling ? '#billing_' : '#shipping_'
   const selectPrefix = isBilling ? '#select2-billing_' : '#select2-shipping_'
   cy.intercept(/api.what3words.com\/v3\/autosuggest/i).as('autosuggest')
     .get(`${fieldPrefix}first_name`).focus().clear().type(first)
     .get(`${fieldPrefix}last_name`).focus().clear().type(last)
-    .get(`${fieldPrefix}address_1`).focus().clear().type(address)
     .get(`${fieldPrefix}city`).focus().clear().type(city)
     .get(`${fieldPrefix}postcode`).focus().clear().type(postcode)
     .get(`${selectPrefix}country-container`).click()
     .get('li').contains('United Kingdom').click()
-  
-  if (isBilling) cy.get(`${fieldPrefix}phone`).focus().clear().type(phone)
-  
-  cy.get(isBilling ? '#w3w-billing' : '#w3w-shipping').click().clear().type(hint)
-    .wait('@autosuggest')
-    .get(isBilling ? '#w3w-billing' : '#w3w-shipping')
+
+  if (hasSeparate3waField) {
+    cy.get(`${fieldPrefix}address_1`).focus().clear().type(address)
+
+    cy.get(isBilling ? '#w3w-billing' : '#w3w-shipping').click().clear().type(hint)
+      .wait('@autosuggest')
+      .get(isBilling ? '#w3w-billing' : '#w3w-shipping')
       .closest('what3words-autosuggest')
       .find('[data-testid=suggestion-0]').click()
+  } else {
+    if (address) {
+      cy.get(`${fieldPrefix}address_1`).focus().clear().type(address)
+    } else {
+      cy.get(`${fieldPrefix}address_1`).click().clear().type(hint)
+        .wait('@autosuggest')
+        .get(`${fieldPrefix}address_1`)
+        .closest('what3words-autosuggest')
+        .find('[data-testid=suggestion-0]').click()
+    }
+  }
+
+  if (isBilling) cy.get(`${fieldPrefix}phone`).focus().clear().type(phone)
 })
 
 Cypress.Commands.add('saveSettings', () => {

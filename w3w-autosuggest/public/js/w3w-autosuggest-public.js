@@ -30,6 +30,9 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
+  const isFullWooCommerce = W3W_AUTOSUGGEST_SETTINGS.woocommerce_enabled
+  const isPartialWooCommerce = !isFullWooCommerce && W3W_AUTOSUGGEST_SETTINGS.woocommerce_activated
+
   function createAutosuggestComponent(target, targetParent, targetSibling) {
     const w3wComponent = document.createElement('what3words-autosuggest')
 
@@ -44,9 +47,9 @@
     }))
     w3wComponent.setAttribute('api_key', W3W_AUTOSUGGEST_SETTINGS.api_key)
     w3wComponent.setAttribute('return_coordinates', true)
-    
-    if (!W3W_AUTOSUGGEST_SETTINGS.woocommerce_enabled) {
-      if (W3W_AUTOSUGGEST_SETTINGS.enable_placeholder){
+
+    if (!isFullWooCommerce) {
+      if (W3W_AUTOSUGGEST_SETTINGS.enable_placeholder) {
         target.setAttribute('placeholder', W3W_AUTOSUGGEST_SETTINGS.placeholder)
       }
       if (W3W_AUTOSUGGEST_SETTINGS.enable_label) {
@@ -55,7 +58,7 @@
         label.innerHTML = W3W_AUTOSUGGEST_SETTINGS.label
         targetParent.insertBefore(label, targetSibling)
       }
-      if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place) {
+      if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place && !isPartialWooCommerce) {
         const nearestPlaceInput = document.createElement('input')
         nearestPlaceInput.setAttribute('type', 'hidden')
         nearestPlaceInput.setAttribute('name', `${target.name || 'what3words_3wa'}_nearest_place`)
@@ -101,10 +104,56 @@
       w3wComponent.setAttribute('clip_to_circle', circle)
     }
 
+    if (isPartialWooCommerce) {
+      const isBilling = document.querySelector('.woocommerce-billing-fields').contains(target)
+      const sameAddress = document.querySelector('#ship-to-different-address-checkbox').checked
+      const country = isBilling ? $('#billing_country') : $('#shipping_country')
+
+      if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place) {
+        w3wComponent.addEventListener('selected_suggestion', function(e) {
+          const nearestPlace = e.detail.suggestion.nearestPlace
+          if (sameAddress) {
+            $('#billing_nearest_place').attr('value', nearestPlace)
+            $('#shipping_nearest_place').attr('value', nearestPlace)
+          } else {
+            $(isBilling ? '#billing_nearest_place' : '#shipping_nearest_place').attr('value', nearestPlace)
+          }
+        })
+      }
+
+      if (W3W_AUTOSUGGEST_SETTINGS.return_coordinates) {
+        w3wComponent.addEventListener('coordinates_changed', function(e) {
+          const coordinates = e.detail.coordinates
+          if (sameAddress) {
+            $('#billing_w3w_lat').attr('value', coordinates.lat)
+            $('#billing_w3w_lng').attr('value', coordinates.lng)
+            $('#shipping_w3w_lat').attr('value', coordinates.lat)
+            $('#shipping_w3w_lng').attr('value', coordinates.lng)
+
+          } else {
+            $(isBilling ? '#billing_w3w_lat' : '#shipping_w3w_lat').attr('value', coordinates.lat)
+            $(isBilling ? '#billing_w3w_lng' : '#shipping_w3w_lng').attr('value', coordinates.lng)
+          }
+        })
+      }
+
+      if (
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_country &&
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_circle &&
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_bounding_box &&
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_polygon
+      ) {
+        country.on('change', function(e) {
+          w3wComponent.setAttribute('clip_to_country', e.target.value)
+        })
+        country.trigger('change')
+      }
+    }
+
     return w3wComponent
   }
 
-  if (W3W_AUTOSUGGEST_SETTINGS.woocommerce_enabled) {
+  if (isFullWooCommerce) {
     const billingCountry = $('#billing_country')
     const shippingCountry = $('#shipping_country')
     const billingTarget = document.querySelector('#w3w-billing')
@@ -115,7 +164,7 @@
       const billingTargetParent = billingTarget.parentElement
       const billingW3wComponent = createAutosuggestComponent(billingTarget, billingTargetParent, billingTargetSibling)
       billingW3wComponent.setAttribute('name', 'billing_w3w')
-      
+
       if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place) {
         billingW3wComponent.addEventListener('selected_suggestion', function(e) {
           const nearestPlace = e.detail.suggestion.nearestPlace
@@ -130,7 +179,7 @@
           $('#billing_w3w_lng').attr('value', coordinates.lng)
         })
       }
-      
+
       billingW3wComponent.appendChild(billingTarget)
       billingTargetParent.insertBefore(billingW3wComponent, billingTargetSibling)
 
@@ -156,7 +205,7 @@
         shippingTargetSibling,
       )
       shippingW3wComponent.setAttribute('name', 'shipping_w3w')
-  
+
       if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place) {
         shippingW3wComponent.addEventListener('selected_suggestion', function(e) {
           const nearestPlace = e.detail.suggestion.nearestPlace
@@ -171,7 +220,7 @@
           $('#shipping_w3w_lng').attr('value', coordinates.lng)
         })
       }
-      
+
       shippingW3wComponent.appendChild(shippingTarget)
       shippingTargetParent.insertBefore(shippingW3wComponent, shippingTargetSibling)
 
@@ -189,17 +238,15 @@
     }
   } else {
     const targets = document.querySelectorAll(W3W_AUTOSUGGEST_SETTINGS.selector)
-   
+
     for (let i = 0; i < targets.length; i++) {
       const target = targets[i]
       const targetSibling = target.nextSibling
       const targetParent = target.parentElement
       const w3wComponent = createAutosuggestComponent(target, targetParent, targetSibling)
-  
+
       w3wComponent.appendChild(target)
       targetParent.insertBefore(w3wComponent, targetSibling)
     }
   }
-
 })( jQuery );
-

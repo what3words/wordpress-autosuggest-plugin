@@ -1,5 +1,9 @@
+= 4.0.2 =
+* Released 2022.03.xx
+* Fix bug where metadata wasn't sent to WooCommerce if applying autosuggest to an existing field.
+
 = 4.0.1 =
-* Released 2021.11.xx
+* Released 2022.03.xx
 * Security vulnerability fixed for `get_option` exposing sensitive information.
 * Loading the w3w autosuggest script asynchronously
 

@@ -112,6 +112,9 @@ class W3W_Autosuggest_Public {
     $exposed_settings['wp_version'] = $wp_version;
     $exposed_settings['wc_version'] = isset( $woocommerce ) ? $woocommerce->version : 'N/A';
     $exposed_settings['api_key'] = $settings['api_key'];
+    // Determine if WordPress is running with WooCommerce enabled
+    // https://woocommerce.com/document/query-whether-woocommerce-is-activated/
+    $exposed_settings['woocommerce_activated'] = class_exists( 'woocommerce' );
     if ( isset( $settings['woocommerce_enabled'] ) )
       $exposed_settings['woocommerce_enabled'] = $settings['woocommerce_enabled'];
     if ( isset( $settings['enable_placeholder'] ) )
@@ -254,51 +257,51 @@ class W3W_Autosuggest_Public {
         'clear' => true
       ];
 
-      if ( $settings['save_nearest_place'] ) {
+    }
 
-        $fields['billing']['billing_nearest_place'] = [
-          'type' => 'hidden',
-          'required' => false,
-          'clear' => true,
-          'class' => ['hidden', 'form-row-wide'],
-        ];
-        $fields['shipping']['shipping_nearest_place'] = [
-          'type' => 'hidden',
-          'required' => false,
-          'clear' => true,
-          'class' => ['hidden', 'form-row-wide'],
-        ];
+    if ( $settings['save_nearest_place'] ) {
 
-      }
+      $fields['billing']['billing_nearest_place'] = [
+        'type' => 'hidden',
+        'required' => false,
+        'clear' => true,
+        'class' => ['hidden', 'form-row-wide'],
+      ];
+      $fields['shipping']['shipping_nearest_place'] = [
+        'type' => 'hidden',
+        'required' => false,
+        'clear' => true,
+        'class' => ['hidden', 'form-row-wide'],
+      ];
 
-      if ( $settings['return_coordinates'] ) {
+    }
 
-        $fields['billing']['billing_w3w_lat'] = [
-          'type' => 'hidden',
-          'required' => false,
-          'clear' => false,
-          'class' => ['hidden', 'form-row-wide']
-        ];
-        $fields['billing']['billing_w3w_lng'] = [
-          'type' => 'hidden',
-          'required' => false,
-          'clear' => false,
-          'class' => ['hidden', 'form-row-wide']
-        ];
-        $fields['shipping']['shipping_w3w_lat'] = [
-          'type' => 'hidden',
-          'required' => false,
-          'clear' => false,
-          'class' => ['hidden', 'form-row-wide']
-        ];
-        $fields['shipping']['shipping_w3w_lng'] = [
-          'type' => 'hidden',
-          'required' => false,
-          'clear' => false,
-          'class' => ['hidden', 'form-row-wide']
-        ];
+    if ( $settings['return_coordinates'] ) {
 
-      }
+      $fields['billing']['billing_w3w_lat'] = [
+        'type' => 'hidden',
+        'required' => false,
+        'clear' => false,
+        'class' => ['hidden', 'form-row-wide']
+      ];
+      $fields['billing']['billing_w3w_lng'] = [
+        'type' => 'hidden',
+        'required' => false,
+        'clear' => false,
+        'class' => ['hidden', 'form-row-wide']
+      ];
+      $fields['shipping']['shipping_w3w_lat'] = [
+        'type' => 'hidden',
+        'required' => false,
+        'clear' => false,
+        'class' => ['hidden', 'form-row-wide']
+      ];
+      $fields['shipping']['shipping_w3w_lng'] = [
+        'type' => 'hidden',
+        'required' => false,
+        'clear' => false,
+        'class' => ['hidden', 'form-row-wide']
+      ];
 
     }
 
