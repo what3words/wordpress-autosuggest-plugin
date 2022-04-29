@@ -153,50 +153,12 @@
     return w3wComponent
   }
 
-  if (isFullWooCommerce) {
-    const billingCountry = $('#billing_country')
+  function addShippingComponent() {
+    const exists = !!$( 'what3words-autosuggest[name="shipping_w3w"] ').length
     const shippingCountry = $('#shipping_country')
-    const billingTarget = document.querySelector('#w3w-billing')
     const shippingTarget = document.querySelector('#w3w-shipping')
 
-    if (billingCountry && billingTarget) {
-      const billingTargetSibling = billingTarget.nextSibling
-      const billingTargetParent = billingTarget.parentElement
-      const billingW3wComponent = createAutosuggestComponent(billingTarget, billingTargetParent, billingTargetSibling)
-      billingW3wComponent.setAttribute('name', 'billing_w3w')
-
-      if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place) {
-        billingW3wComponent.addEventListener('selected_suggestion', function(e) {
-          const nearestPlace = e.detail.suggestion.nearestPlace
-          $('#billing_nearest_place').attr('value', nearestPlace)
-        })
-      }
-
-      if (W3W_AUTOSUGGEST_SETTINGS.return_coordinates) {
-        billingW3wComponent.addEventListener('coordinates_changed', function(e) {
-          const coordinates = e.detail.coordinates
-          $('#billing_w3w_lat').attr('value', coordinates.lat)
-          $('#billing_w3w_lng').attr('value', coordinates.lng)
-        })
-      }
-
-      billingW3wComponent.appendChild(billingTarget)
-      billingTargetParent.insertBefore(billingW3wComponent, billingTargetSibling)
-
-      if (
-        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_country &&
-        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_circle &&
-        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_bounding_box &&
-        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_polygon
-      ) {
-        billingCountry.on('change', function(e) {
-          $('#w3w-billing').closest('what3words-autosuggest').attr('clip_to_country', e.target.value)
-        })
-        billingCountry.trigger('change')
-      }
-    }
-
-    if (shippingCountry && shippingTarget) {
+    if (!exists && shippingCountry && shippingTarget) {
       const shippingTargetSibling = shippingTarget.nextSibling
       const shippingTargetParent = shippingTarget.parentElement
       const shippingW3wComponent = createAutosuggestComponent(
@@ -236,8 +198,56 @@
         shippingCountry.trigger('change')
       }
     }
-  } else {
+  }
+
+  function addBillingComponent() {
+    const exists = !!$( 'what3words-autosuggest[name="billing_w3w"] ').length
+    const billingCountry = $('#billing_country')
+    const billingTarget = document.querySelector('#w3w-billing')
+
+    if (!exists && billingCountry && billingTarget) {
+      const billingTargetSibling = billingTarget.nextSibling
+      const billingTargetParent = billingTarget.parentElement
+      const billingW3wComponent = createAutosuggestComponent(billingTarget, billingTargetParent, billingTargetSibling)
+      billingW3wComponent.setAttribute('name', 'billing_w3w')
+
+      if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place) {
+        billingW3wComponent.addEventListener('selected_suggestion', function(e) {
+          const nearestPlace = e.detail.suggestion.nearestPlace
+          $('#billing_nearest_place').attr('value', nearestPlace)
+        })
+      }
+
+      if (W3W_AUTOSUGGEST_SETTINGS.return_coordinates) {
+        billingW3wComponent.addEventListener('coordinates_changed', function(e) {
+          const coordinates = e.detail.coordinates
+          $('#billing_w3w_lat').attr('value', coordinates.lat)
+          $('#billing_w3w_lng').attr('value', coordinates.lng)
+        })
+      }
+
+      billingW3wComponent.appendChild(billingTarget)
+      billingTargetParent.insertBefore(billingW3wComponent, billingTargetSibling)
+
+      if (
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_country &&
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_circle &&
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_bounding_box &&
+        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_polygon
+      ) {
+        billingCountry.on('change', function(e) {
+          $('#w3w-billing').closest('what3words-autosuggest').attr('clip_to_country', e.target.value)
+        })
+        billingCountry.trigger('change')
+      }
+    }
+  }
+
+  function addByCustomSelector() {
+    const exists = !!$( `what3words-autosuggest > ${W3W_AUTOSUGGEST_SETTINGS.selector}` ).length
     const targets = document.querySelectorAll(W3W_AUTOSUGGEST_SETTINGS.selector)
+
+    if (exists) return;
 
     for (let i = 0; i < targets.length; i++) {
       const target = targets[i]
@@ -249,4 +259,17 @@
       targetParent.insertBefore(w3wComponent, targetSibling)
     }
   }
+
+  function init() {
+    if (isFullWooCommerce) {
+      addBillingComponent();
+      addShippingComponent();
+    } else {
+      addByCustomSelector();
+    }
+  }
+
+  $( document.body ).on( 'init_checkout', init);
+  // $( document.body ).on( 'update_checkout', init);
+  $( document.body ).on( 'updated_checkout', init);
 })( jQuery );
