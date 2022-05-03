@@ -19,19 +19,52 @@ import './commands'
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
+Cypress.Commands.add('attachIntercepts', () => {
+  cy.intercept(/api.what3words.com\/v3\/autosuggest/i).as('autosuggest')
+    .intercept('POST', /wp-login.php/i).as('login-request')
+    .intercept(/wp-admin\/plugin-install.php/i).as('plugin-install-page')
+    .intercept(/wp-admin\/admin-ajax.php/i).as('ajax')
+    .intercept(/wp-admin\/plugins.php/i).as('plugins-page')
+})
+
 Cypress.Commands.add('login', (username: string, password: string) => {
-  cy.intercept('POST', /wp-login.php/i).as('login-request')
-    .visit('/wp-login.php')
-    .focused().type(username)
-    .get('input#user_pass').type(password)
-    .get('input#wp-submit').click()
+  cy.visit('/wp-login.php')
+    .wait(300)
+    .get('#user_login').focus().clear().type(username)
+    .get('input#user_pass').focus().clear().type(password)
+    .get('input#wp-submit').click({ force: true })
     .wait('@login-request')
 })
 
+Cypress.Commands.add('installPlugin', (plugin_name: string, plugin_slug: string) => {
+  cy.visit('/wp-admin/plugin-install.php')
+    .get('#search-plugins').type(plugin_name)
+    .wait('@ajax')
+    .get(`a[data-slug="${plugin_slug}"]`).click()
+    .wait('@ajax')
+});
+
+Cypress.Commands.add('uninstallPlugin', (plugin_slug: string) => {
+  cy.visit('/wp-admin/plugins.php')
+    .get(`#deactivate-${plugin_slug}`)
+    .then(obj => {
+      if (obj) cy.wrap(obj).click({ force: true });
+    })
+    .get(`#delete-${plugin_slug}`)
+    .then(obj => {
+      if (obj) {
+        cy.wrap(obj).click({ force: true })
+          .get('input[value="Yes, delete these files"]')
+            .then(confirm => {
+              if (confirm) cy.wrap(confirm).click({ force: true })
+            })
+      }
+    })
+    .get(`#delete-${plugin_slug}`).should('not.exist')
+});
+
 Cypress.Commands.add('activatePlugin', (plugin_name: string, root_php_file?: string) => {
-  cy.intercept(/wp-admin\/plugins.php/i).as('plugins-page')
-  cy.get('#menu-plugins').click()
-    .wait('@plugins-page')
+  cy.visit('/wp-admin/plugins.php')
     .get(`[data-plugin="${plugin_name}/${root_php_file || plugin_name}.php"] .activate > a`).click()
     .get(`[data-plugin="${plugin_name}/${root_php_file || plugin_name}.php"] .deactivate > a`)
       .should('exist')
@@ -40,10 +73,8 @@ Cypress.Commands.add('activatePlugin', (plugin_name: string, root_php_file?: str
 })
 
 Cypress.Commands.add('deactivatePlugin', (plugin_name: string, root_php_file?: string) => {
-  cy.intercept(/wp-admin\/plugins.php/i).as('plugins-page')
-  cy.get('#menu-plugins').click()
-    .wait('@plugins-page')
-    .get(`[data-plugin="${plugin_name}/${root_php_file || plugin_name}.php"] .deactivate > a`).click()
+  cy.visit('/wp-admin/plugins.php')
+    .get(`[data-plugin="${plugin_name}/${root_php_file || plugin_name}.php"] .deactivate > a`).click({ force: true })
     .get(`[data-plugin="${plugin_name}/${root_php_file || plugin_name}.php"] .activate > a`)
       .should('exist')
       .should('be.visible')
