@@ -173,7 +173,3 @@ workflows:
     jobs:
       - test:
           context: org-global
-          filters:
-            branches:
-              only:
-                - TT-3715
