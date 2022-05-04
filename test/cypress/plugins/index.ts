@@ -46,6 +46,8 @@ module.exports = (on, config) => {
         DB.table('wp_options')
           .where('option_name', 'active_plugins')
           .update({ option_value: 'a:1:{i:0;s:27:"woocommerce/woocommerce.php";}' }),
+        DB.table('wp_woocommerce_sessions')
+          .delete(),
       ])
     }
   })
