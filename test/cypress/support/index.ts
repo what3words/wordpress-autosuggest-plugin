@@ -146,7 +146,7 @@ Cypress.Commands.add('completeCheckoutForm', (
       .wait('@autosuggest')
       .get(isBilling ? '#w3w-billing' : '#w3w-shipping')
       .closest('what3words-autosuggest')
-      .find('[data-testid=suggestion-0]').click()
+      .find('[data-testid=suggestion-0]').scrollIntoView().click()
   } else {
     if (address) {
       cy.get(`${fieldPrefix}address_1`).scrollIntoView().focus().clear().type(address)
@@ -155,7 +155,7 @@ Cypress.Commands.add('completeCheckoutForm', (
         .wait('@autosuggest')
         .get(`${fieldPrefix}address_1`)
         .closest('what3words-autosuggest')
-        .find('[data-testid=suggestion-0]').click()
+        .find('[data-testid=suggestion-0]').scrollIntoView().click()
     }
   }
 
