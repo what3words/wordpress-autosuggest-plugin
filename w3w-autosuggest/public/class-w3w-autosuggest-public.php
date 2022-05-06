@@ -115,6 +115,9 @@ class W3W_Autosuggest_Public {
     // Determine if WordPress is running with WooCommerce enabled
     // https://woocommerce.com/document/query-whether-woocommerce-is-activated/
     $exposed_settings['woocommerce_activated'] = class_exists( 'woocommerce' );
+    // Determine if current page is the WooCommerce checkout page
+    // https://njengah.com/is-checkout-page-woocommerce/
+    $exposed_settings['woocommerce_checkout'] = is_checkout();
     if ( isset( $settings['woocommerce_enabled'] ) )
       $exposed_settings['woocommerce_enabled'] = $settings['woocommerce_enabled'];
     if ( isset( $settings['enable_placeholder'] ) )
@@ -258,6 +261,22 @@ class W3W_Autosuggest_Public {
       ];
 
     }
+    // The following doesn't work as it gets reset when WC updates the form in the DOM.
+    // else {
+
+    //   if ( $settings['enable_label'] ) {
+
+    //     $selector = preg_replace('/[.#]{1}(.*)/i', '${1}', $settings['selector']);
+    //     if ( isset( $fields['billing'][$selector] ) ) {
+
+    //       $fields['billing'][$selector]['label'] = __( $label, 'what3words' );
+
+    //       print_r ( $fields['billing'][$selector] );
+
+    //     }
+
+    //   }
+    // }
 
     if ( $settings['save_nearest_place'] ) {
 

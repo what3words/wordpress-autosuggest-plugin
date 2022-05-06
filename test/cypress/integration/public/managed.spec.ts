@@ -103,7 +103,7 @@ describe('Managed fields', () => {
           .get('a.checkout-button').click()
       )
 
-      it('Then the autosuggest functionality is added to the existing field', () => {
+      it.only('Then the autosuggest functionality is added to the existing field', () => {
         cy.get('#billing_address_1_field what3words-autosuggest').should('exist')
       })
 
