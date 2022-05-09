@@ -1,4 +1,6 @@
 
+let components = [];
+
 (function( $ ) {
   'use strict';
 
@@ -96,31 +98,38 @@
     return
   }
 
-  let components = []
-
-  $( document ).on('ready', () => {
-    if (woocommerce_enabled) {
-      components = woocommerceEnabled()
-    } else {
-      components = customSelector()
-    }
-  });
-
-  $( document.body ).on( 'init_checkout', () => {
-    if (woocommerce_enabled) {
-      woocommerceEnabled(components)
-    } else {
-      customSelector(components)
-    }
-  } );
-  
-  $( document.body ).on( 'updated_checkout', () => {
-    if (woocommerce_enabled) {
-      woocommerceEnabled(components)
-    } else {
-      customSelector(components)
-    }
-  } );
+  if (woocommerce_checkout) {
+    $( document.body ).on( 'init_checkout', async () => {
+      console.log('init_checkout', components)
+      if (woocommerce_enabled) {
+        components = await woocommerceEnabled()
+      } else {
+        components = customSelector()
+      }
+      console.log('done init_checkout', components)
+    } );
+    
+    $( document.body ).on( 'updated_checkout', async () => {
+      console.log('updated_checkout')
+      if (woocommerce_enabled) {
+        await woocommerceEnabled(components)
+      } else {
+        customSelector(components)
+      }
+      console.log('done updated_checkout')
+      console.log('events', $.data(document.body, 'events'))
+    } );
+  } else {
+    $( document ).on('ready', async () => {
+      console.log('ready', components)
+      if (woocommerce_enabled) {
+        components = await woocommerceEnabled()
+      } else {
+        components = customSelector()
+      }
+      console.log('done ready', components)
+    });
+  }
 
   function customSelector(components = []) {
     if (components.length > 0) {
@@ -153,19 +162,29 @@
 
   function woocommerceEnabled(components = []) {
     if (woocommerce_enabled && !woocommerce_checkout) return
-
-    return Object.entries(fields)
+    
+    return Promise.all(Object.entries(fields)
       .map(([, { selector }], index) => {
-        const targets = document.querySelectorAll(selector)
-        const [component] = components[index] ? [components[index]] : attachComponentToTargets(targets)
-        attachLabelToComponents([component])
-        attachEventListeners(W3W_AUTOSUGGEST_SETTINGS, component, fields)
-        return component;
-      })
+        
+        return new Promise(res => {
+          setTimeout(() => {
+            const targets = $( selector )
+            const ignore = targets[0].parentNode.getAttribute('class') === 'what3words-autosuggest-input-wrapper'
+            console.log(
+              targets[0].parentNode.getAttribute('class'),
+              $( targets[0] ).parent(),
+            )
+            if (ignore) return
+
+            const [component] = attachComponentToTargets(targets)
+            attachEventListeners(W3W_AUTOSUGGEST_SETTINGS, component, fields)
+            res(component)
+          }, 500)
+        })
+      }))
   }
 
   function attachEventListeners(settings, component, fields) {
-    console.log('comp', component);
     const selected_suggestion_handler = function (e) {
       const nearest_place_val = e.detail.suggestion.nearestPlace
       const words = e.detail.suggestion.words
@@ -253,10 +272,13 @@
       }
     };
 
-    component.removeEventListener('selected_suggestion', selected_suggestion_handler)
-    component.removeEventListener('coordinates_changed', coordinates_changed_handler)
-    component.addEventListener('selected_suggestion', selected_suggestion_handler)
-    component.addEventListener('coordinates_changed', coordinates_changed_handler)
+    
+    if (component) {
+      component.removeEventListener('selected_suggestion', selected_suggestion_handler)
+      component.removeEventListener('coordinates_changed', coordinates_changed_handler)
+      component.addEventListener('selected_suggestion', selected_suggestion_handler)
+      component.addEventListener('coordinates_changed', coordinates_changed_handler)
+    }
   }
 
   function attachLabelToComponents(components = []) {
@@ -267,7 +289,6 @@
       const target = component.closest('input')
       if (target) {
         const target_label = document.querySelector(`label[for="${target.id}"]`) || document.createElement('label')
-        console.log(target_label)
         target_label.setAttribute('for', target.id)
         target_label.innerHTML = label
         if (!target_label.parentElement) document.insertBefore(target, target_label)
@@ -277,15 +298,16 @@
 
   function attachComponentToTargets(targets) {
     const components = [];
-  
+
     for (let i = 0; i < targets.length; i++) {
       const target = targets[i]
       const component = generateAutosuggestComponent(W3W_AUTOSUGGEST_SETTINGS)
-      const parent = target.parentElement
-      const sibling = target.nextSibling
-
-      component.appendChild(target);
-      parent.insertBefore(component, sibling);
+      const [parent] = $( target ).parent()
+      const sibling = target.nextSibling || target.previousSibling
+      
+      $( component ).append(target);
+      if (sibling) $( parent ).insertBefore(component, sibling)
+      else $( parent ).prepend(component)
       components.push(component)
     }
 
