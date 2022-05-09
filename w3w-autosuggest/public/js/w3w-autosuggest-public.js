@@ -142,7 +142,7 @@
         const nearest_place = W3W_AUTOSUGGEST_SETTINGS.save_nearest_place
           ? generateHiddenInput(name)
           : null
-        target.parentElement.appendChild(nearest_place)
+        target.parentElement.append(nearest_place)
       }
 
       attachEventListeners(W3W_AUTOSUGGEST_SETTINGS, component, woocommerce_checkout ? fields : default_fields);
@@ -152,6 +152,8 @@
   }
 
   function woocommerceEnabled(components = []) {
+    if (woocommerce_enabled && !woocommerce_checkout) return
+
     return Object.entries(fields)
       .map(([, { selector }], index) => {
         const targets = document.querySelectorAll(selector)
@@ -163,6 +165,7 @@
   }
 
   function attachEventListeners(settings, component, fields) {
+    console.log('comp', component);
     const selected_suggestion_handler = function (e) {
       const nearest_place_val = e.detail.suggestion.nearestPlace
       const words = e.detail.suggestion.words
@@ -177,11 +180,11 @@
       if (!woocommerce_enabled || (woocommerce_enabled && same_shipping)) {
         Object.entries(fields).forEach(([, { nearest_place_selector }]) => {
           const nearest_place = document.querySelector(nearest_place_selector)
-          console.log('np', fields, nearest_place_selector, nearest_place)
           if (nearest_place) {
             nearest_place.value = nearest_place_val;
           }
         });
+
         if (woocommerce_enabled) {
           const target = component.querySelector('input')
           const counterpart_selector = `#${target.id === 'w3w-billing'
@@ -191,17 +194,20 @@
           const duplicate_to = document.querySelector(counterpart_selector)
           if (duplicate_to) duplicate_to.value = `///${words}`
         }
+
         return;
       }
 
       if (woocommerce_enabled) {
         const target = component.querySelector('input')
         const id = target.id || null
+
         if (id) {
           const [, { nearest_place_selector }] = Object.entries(fields).find(([, field]) => field.selector === `#${id}`)
           const nearest_place = document.querySelector(nearest_place_selector)
           if (nearest_place) nearest_place.value = nearest_place
         }
+
         return;
       }
     };
@@ -246,6 +252,7 @@
         return;
       }
     };
+
     component.removeEventListener('selected_suggestion', selected_suggestion_handler)
     component.removeEventListener('coordinates_changed', coordinates_changed_handler)
     component.addEventListener('selected_suggestion', selected_suggestion_handler)
@@ -255,14 +262,14 @@
   function attachLabelToComponents(components = []) {
     if (!enable_label) return
     if (woocommerce_enabled) return
-    // if (!woocommerce_enabled && woocommerce_checkout) return
 
     components.forEach((component) => {
-      const target = component.querySelector('input')
+      const target = component.closest('input')
       if (target) {
         const target_label = document.querySelector(`label[for="${target.id}"]`) || document.createElement('label')
+        console.log(target_label)
         target_label.setAttribute('for', target.id)
-        target_label.textContent = label;
+        target_label.innerHTML = label
         if (!target_label.parentElement) document.insertBefore(target, target_label)
       }
     })
