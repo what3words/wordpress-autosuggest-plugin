@@ -31,6 +31,148 @@ let components = [];
 	 * Although scripts in the WordPress core, Plugins and Themes may be
 	 * practising this, we should strive to set a better example in our own work.
 	 */
+  
+  const {
+    /**
+     * The API key provided for the plugin
+     * @var {string} api_key
+     */
+    api_key,
+    /**
+     * Boolean flag indicating if the form should override the label
+     * @var {boolean} enable_label
+     */
+    enable_label,
+    /**
+     * The label text to override for the component
+     * @var {string} label
+     */
+    label,
+    /**
+     * Boolean flag indicating if the target input placeholder should overridden 
+     * @var {boolean} enable_placeholder
+     */
+    enable_placeholder,
+    /**
+     * The placeholder text to override for the target input
+     * @var {string} placeholder
+     */
+    placeholder,
+    /**
+     * Boolean flag indicating if the autosuggest results should be clipped by country 
+     * @var {boolean} enable_clip_to_country
+     */
+    enable_clip_to_country,
+    /**
+     * The countries to clip to suggestion results to
+     * @var {string} clip_to_country
+     */
+    clip_to_country,
+    /**
+     * Boolean flag indicating if the autosuggest results should be clipped within a polygon 
+     * @var {boolean} enable_clip_to_polygon
+     */
+    enable_clip_to_polygon,
+    /**
+     * The polygon to clip suggestion results to
+     * @var {string} clip_to_polygon
+     */
+    clip_to_polygon,
+    /**
+     * Boolean flag indicating if the autosuggest results should be clipped to a bounding box
+     * @var {boolean} enable_clip_to_bounding_box
+     */
+    enable_clip_to_bounding_box,
+    /**
+     * The North-East latitude of the bounding box to clip suggestion results to
+     * @var {string} clip_to_bounding_box_ne_lat
+     */
+    clip_to_bounding_box_ne_lat,
+    /**
+     * The North-East longitude of the bounding box to clip suggestion results to
+     * @var {string} clip_to_bounding_box_ne_lng
+     */
+    clip_to_bounding_box_ne_lng,
+    /**
+     * The South-West latitude of the bounding box to clip suggestion results to
+     * @var {string} clip_to_bounding_box_sw_lat
+     */
+    clip_to_bounding_box_sw_lat,
+    /**
+     * The South-West longitude of the bounding box to clip suggestion results to
+     * @var {string} clip_to_bounding_box_sw_lng
+     */
+    clip_to_bounding_box_sw_lng,
+    /**
+     * Boolean flag indicating if the autosuggest results should be clipped to a circle
+     * @var {boolean} enable_clip_to_circle
+     */
+    enable_clip_to_circle,
+    /**
+     * The latitude of the circle center to clip suggestion results to
+     * @var {string} clip_to_circle_lat
+     */
+    clip_to_circle_lat,
+    /**
+     * The longitude of the circle center to clip suggestion results to
+     * @var {string} clip_to_circle_lng
+     */
+    clip_to_circle_lng,
+    /**
+     * The radius of the circle to clip suggestion results to
+     * @var {string} clip_to_circle_radius
+     */
+    clip_to_circle_radius,
+    /**
+     * Boolean flag indicating if the form coordinates should also be collected
+     * @var {boolean} return_coordinates
+     */
+    return_coordinates,
+    /**
+     * Boolean flag indicating if the form should save the selected 3wa nearest place
+     * @var {boolean} save_nearest_place
+     */
+    save_nearest_place,
+    /**
+     * The CSS selector to target to extend with autosuggest functionality
+     * @var {string} selector
+     */
+    selector,
+    /**
+     * Boolean flag indicating if WooCommerce plugin is installed
+     * @var {boolean} woocommerce_activated
+     */
+    woocommerce_activated,
+    /**
+     * Boolean flag indicating if WooCommerce managed field is selected
+     * @var {boolean} woocommerce_enabled
+     */
+    woocommerce_enabled,
+    /**
+     * Boolean flag indicating if the current page is the WooCommerce checkout page
+     */
+    woocommerce_checkout,
+    /**
+     * The current version of the w3w WordPress plugin
+     * @var {string} version
+     */
+    version,
+    /**
+     * The current version of PHP
+     * @var {string} php_version
+     */
+    php_version,
+    /**
+     * The current version of WordPress
+     * @var {string} wp_version
+     */
+    wp_version,
+    /**
+     * The current version of woocommerce (if installed and enabled)
+     * @var {string} [wc_version]
+     */
+    wc_version,
+  } = W3W_AUTOSUGGEST_SETTINGS;
 
   const fields = {
     billing: {
@@ -49,50 +191,17 @@ let components = [];
 
   const default_fields = {
     default: {
-      selector: W3W_AUTOSUGGEST_SETTINGS.selector,
+      selector,
       nearest_place_selector: '#what3words_3wa_nearest_place',
       lat_selector: '#what3words_3wa_lat',
       lng_selector: '#what3words_3wa_lng',
     }
   }
-  
-  const {
-    /**
-     * Boolean flag indicating if the form should override the label
-     * @var {boolean} enable_label
-     */
-    enable_label,
-    /**
-     * The label text to override for the component
-     * @var {string} label
-     */
-    label,
-    /**
-     * The CSS selector to target to extend with autosuggest functionality
-     * @var {string} selector
-     */
-    selector,
-    /**
-     * Boolean flag indicating if the form coordinates should also be collected
-     * @var {boolean} return_coordinates
-     */
-    return_coordinates,
-    /**
-     * Boolean flag indicating if WooCommerce plugin is installed
-     * @var {boolean} woocommerce_activated
-     */
-    woocommerce_activated,
-    /**
-     * Boolean flag indicating if WooCommerce managed field is selected
-     * @var {boolean} woocommerce_enabled
-     */
-    woocommerce_enabled,
-    /**
-     * Boolean flag indicating if the current page is the WooCommerce checkout page
-     */
-    woocommerce_checkout,
-  } = W3W_AUTOSUGGEST_SETTINGS;
 
+  if (!api_key) {
+    console.error(new Error('No what3words API key set!'))
+    return
+  }
   if (woocommerce_enabled && !woocommerce_activated) {
     console.error(new Error('WooCommerce is not installed!'))
     return
@@ -100,34 +209,27 @@ let components = [];
 
   if (woocommerce_checkout) {
     $( document.body ).on( 'init_checkout', async () => {
-      console.log('init_checkout', components)
       if (woocommerce_enabled) {
         components = await woocommerceEnabled()
       } else {
         components = customSelector()
       }
-      console.log('done init_checkout', components)
     } );
     
     $( document.body ).on( 'updated_checkout', async () => {
-      console.log('updated_checkout')
       if (woocommerce_enabled) {
-        await woocommerceEnabled(components)
+        await woocommerceEnabled()
       } else {
         customSelector(components)
       }
-      console.log('done updated_checkout')
-      console.log('events', $.data(document.body, 'events'))
     } );
   } else {
     $( document ).on('ready', async () => {
-      console.log('ready', components)
       if (woocommerce_enabled) {
         components = await woocommerceEnabled()
       } else {
         components = customSelector()
       }
-      console.log('done ready', components)
     });
   }
 
@@ -135,7 +237,7 @@ let components = [];
     if (components.length > 0) {
       attachLabelToComponents(components)
       components.forEach(component => {
-        attachEventListeners(W3W_AUTOSUGGEST_SETTINGS, component, woocommerce_checkout ? fields : default_fields)
+        attachEventListeners(component, woocommerce_checkout ? fields : default_fields)
       })
       return components
     }
@@ -148,43 +250,36 @@ let components = [];
     targets.forEach(target => {
       if (!woocommerce_checkout) {
         const name = 'what3words_3wa_nearest_place';
-        const nearest_place = W3W_AUTOSUGGEST_SETTINGS.save_nearest_place
-          ? generateHiddenInput(name)
-          : null
+        const nearest_place = save_nearest_place ? generateHiddenInput(name) : null
         target.parentElement.append(nearest_place)
       }
 
-      attachEventListeners(W3W_AUTOSUGGEST_SETTINGS, component, woocommerce_checkout ? fields : default_fields);
+      attachEventListeners(component, woocommerce_checkout ? fields : default_fields);
     })
 
     return _components
   }
 
-  function woocommerceEnabled(components = []) {
+  function woocommerceEnabled() {
     if (woocommerce_enabled && !woocommerce_checkout) return
     
     return Promise.all(Object.entries(fields)
-      .map(([, { selector }], index) => {
-        
+      .map(([, { selector }]) => {
         return new Promise(res => {
           setTimeout(() => {
             const targets = $( selector )
             const ignore = targets[0].parentNode.getAttribute('class') === 'what3words-autosuggest-input-wrapper'
-            console.log(
-              targets[0].parentNode.getAttribute('class'),
-              $( targets[0] ).parent(),
-            )
             if (ignore) return
 
             const [component] = attachComponentToTargets(targets)
-            attachEventListeners(W3W_AUTOSUGGEST_SETTINGS, component, fields)
+            attachEventListeners(component, fields)
             res(component)
           }, 500)
         })
       }))
   }
 
-  function attachEventListeners(settings, component, fields) {
+  function attachEventListeners(component, fields) {
     const selected_suggestion_handler = function (e) {
       const nearest_place_val = e.detail.suggestion.nearestPlace
       const words = e.detail.suggestion.words
@@ -192,7 +287,7 @@ let components = [];
         ? !document.querySelector('#ship-to-different-address-checkbox').checked
         : true
 
-      if (!settings.save_nearest_place) return;
+      if (!save_nearest_place) return;
       if (woocommerce_enabled && !woocommerce_checkout) return;
 
       // If not woocommerce managed fields then should set value in all related fields
@@ -301,9 +396,13 @@ let components = [];
 
     for (let i = 0; i < targets.length; i++) {
       const target = targets[i]
-      const component = generateAutosuggestComponent(W3W_AUTOSUGGEST_SETTINGS)
+      const component = generateAutosuggestComponent()
       const [parent] = $( target ).parent()
       const sibling = target.nextSibling || target.previousSibling
+
+      if (enable_placeholder) {
+        target.setAttribute('placeholder', placeholder)
+      }
       
       $( component ).append(target);
       if (sibling) $( parent ).insertBefore(component, sibling)
@@ -323,29 +422,26 @@ let components = [];
     return input;
   }
 
-  function generateAutosuggestComponent(settings) {
+  function generateAutosuggestComponent() {
     const w3wComponent = document.createElement('what3words-autosuggest')
 
     w3wComponent.setAttribute('variant', 'inherit')
     w3wComponent.setAttribute('headers', JSON.stringify({
       'X-W3W-Plugin':
-        `what3words-Wordpress/${settings.version} (` + [
-          `PHP/${settings.php_version}`,
-          `WordPress/${settings.wp_version}`,
-          `WooCommerce/${settings.wc_version}`
+        `what3words-Wordpress/${version} (` + [
+          `PHP/${php_version}`,
+          `WordPress/${wp_version}`,
+          `WooCommerce/${wc_version}`
         ].join(' ') + ')'
     }))
-    w3wComponent.setAttribute('api_key', settings.api_key)
+    w3wComponent.setAttribute('api_key', api_key)
     w3wComponent.setAttribute('return_coordinates', true)
 
-    if (settings.enable_placeholder) {
-      target.setAttribute('placeholder', settings.placeholder)
+    if (enable_clip_to_country) {
+      w3wComponent.setAttribute('clip_to_country', clip_to_country)
     }
-    if (settings.enable_clip_to_country) {
-      w3wComponent.setAttribute('clip_to_country', settings.clip_to_country)
-    }
-    if (settings.enable_clip_to_polygon) {
-      const polygon = settings.clip_to_polygon.trim()
+    if (enable_clip_to_polygon) {
+      const polygon = clip_to_polygon.trim()
         .split('],')
         .map(coords => {
           const [lng, lat] = coords.trim()
@@ -358,20 +454,20 @@ let components = [];
         .join(',')
       w3wComponent.setAttribute('clip_to_polygon', polygon)
     }
-    if (settings.enable_clip_to_bounding_box) {
+    if (enable_clip_to_bounding_box) {
       const bounding_box = [
-        settings.clip_to_bounding_box_ne_lat,
-        settings.clip_to_bounding_box_ne_lng,
-        settings.clip_to_bounding_box_sw_lat,
-        settings.clip_to_bounding_box_sw_lng,
+        clip_to_bounding_box_ne_lat,
+        clip_to_bounding_box_ne_lng,
+        clip_to_bounding_box_sw_lat,
+        clip_to_bounding_box_sw_lng,
       ].join(',')
       w3wComponent.setAttribute('clip_to_bounding_box', bounding_box)
     }
-    if (settings.enable_clip_to_circle) {
+    if (enable_clip_to_circle) {
       const circle = [
-        settings.clip_to_circle_lat,
-        settings.clip_to_circle_lng,
-        settings.clip_to_circle_radius,
+        clip_to_circle_lat,
+        clip_to_circle_lng,
+        clip_to_circle_radius,
       ].join(',')
       w3wComponent.setAttribute('clip_to_circle', circle)
     }
