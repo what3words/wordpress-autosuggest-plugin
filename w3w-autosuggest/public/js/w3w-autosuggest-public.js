@@ -414,7 +414,7 @@ let components = [];
   }
 
   function generateHiddenInput(name) {
-    const input = document.querySelector(`#${name}`) || document.createElement('input')
+    const input = document.getElementById(name) || document.createElement('input')
     input.type = 'hidden'
     input.name = name
     input.id = name

@@ -103,41 +103,44 @@ describe('Managed fields', () => {
           .get('a.checkout-button').click()
       )
 
-      it.only('Then the autosuggest functionality is added to the existing field', () => {
+      it('Then the autosuggest functionality is added to the existing field', () => {
         cy.get('#billing_address_1_field what3words-autosuggest').should('exist')
       })
 
-      describe('And the customer uses the same address for billing and shipping, and completes billing information only', () => {
-        beforeEach(() => {
-          const [first, last] = CH.name().split(' ')
-          const city = CH.city()
-          const postcode = 'W2 5EU'
-          const phone = CH.phone()
-          const hint = 'filled.count.soa'
-
-          cy.completeCheckoutForm({ first, last, city, postcode, phone, hint }, true, false)
-        })
-
-        it('Then the nearest place and lat/lng info are stored in hidden fields', () => {
-          cy.get('#billing_nearest_place').should('have.value', 'Bayswater, London')
-          cy.get('#billing_w3w_lat').should('have.value', '51.520847')
-          cy.get('#billing_w3w_lng').should('have.value', '-0.195521')
-          cy.get('#shipping_nearest_place').should('have.value', 'Bayswater, London')
-          cy.get('#shipping_w3w_lat').should('have.value', '51.520847')
-          cy.get('#shipping_w3w_lng').should('have.value', '-0.195521')
-        })
-
-        describe('When the customer submits their order', () => {
+      describe(
+        'And the customer uses the same address for billing and shipping, and completes billing information only',
+        () => {
           beforeEach(() => {
-            cy.placeOrder()
+            const [first, last] = CH.name().split(' ')
+            const city = CH.city()
+            const postcode = 'W2 5EU'
+            const phone = CH.phone()
+            const hint = 'filled.count.soa'
+
+            cy.completeCheckoutForm({ first, last, city, postcode, phone, hint }, true, false)
           })
 
-          it('Then the autosuggest value is displayed on the order review customer page', () => {
-            cy.get('address').first().contains(/\/\/\/(?:[A-Z]+\.){2}[A-Z]+/i)
-            cy.get('address').last().contains(/\/\/\/(?:[A-Z]+\.){2}[A-Z]+/i)
+          it('Then the nearest place and lat/lng info are stored in hidden fields', () => {
+            cy.get('#billing_nearest_place').should('have.value', 'Bayswater, London')
+            cy.get('#billing_w3w_lat').should('have.value', '51.520847')
+            cy.get('#billing_w3w_lng').should('have.value', '-0.195521')
+            cy.get('#shipping_nearest_place').should('have.value', 'Bayswater, London')
+            cy.get('#shipping_w3w_lat').should('have.value', '51.520847')
+            cy.get('#shipping_w3w_lng').should('have.value', '-0.195521')
           })
-        })
-      })
+
+          describe('When the customer submits their order', () => {
+            beforeEach(() => {
+              cy.placeOrder()
+            })
+
+            it('Then the autosuggest value is displayed on the order review customer page', () => {
+              cy.get('address').first().contains(/\/\/\/(?:[A-Z]+\.){2}[A-Z]+/i)
+              cy.get('address').last().contains(/\/\/\/(?:[A-Z]+\.){2}[A-Z]+/i)
+            })
+          })
+        }
+      )
 
       describe('And the customer completes billing and shipping information separately', () => {
         beforeEach(() => {

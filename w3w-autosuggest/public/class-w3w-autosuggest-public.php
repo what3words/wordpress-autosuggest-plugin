@@ -261,22 +261,6 @@ class W3W_Autosuggest_Public {
       ];
 
     }
-    // The following doesn't work as it gets reset when WC updates the form in the DOM.
-    // else {
-
-    //   if ( $settings['enable_label'] ) {
-
-    //     $selector = preg_replace('/[.#]{1}(.*)/i', '${1}', $settings['selector']);
-    //     if ( isset( $fields['billing'][$selector] ) ) {
-
-    //       $fields['billing'][$selector]['label'] = __( $label, 'what3words' );
-
-    //       print_r ( $fields['billing'][$selector] );
-
-    //     }
-
-    //   }
-    // }
 
     if ( $settings['save_nearest_place'] ) {
 
