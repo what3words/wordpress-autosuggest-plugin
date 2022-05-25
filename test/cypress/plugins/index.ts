@@ -1,6 +1,7 @@
 /// <reference type="cypress"
 const knex = require('knex')
 const Cypress = require('cypress')
+const { default: cucumber } = require('cypress-cucumber-preprocessor');
 
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
@@ -45,7 +46,13 @@ module.exports = (on, config) => {
         DB.table('wp_options')
           .where('option_name', 'active_plugins')
           .update({ option_value: 'a:1:{i:0;s:27:"woocommerce/woocommerce.php";}' }),
+        DB.table('wp_woocommerce_sessions')
+          .delete(),
       ])
     }
   })
+
+  on('file:preprocessor', cucumber({
+    typescript: require.resolve('typescript'),
+  }));
 }

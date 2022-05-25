@@ -1,5 +1,8 @@
 describe('Admin > Settings', () => {
-  beforeEach(() => cy.login(Cypress.env('ADMIN_USERNAME'), Cypress.env('ADMIN_PASSWORD')))
+  beforeEach(() =>
+    cy.attachIntercepts()
+      .login(Cypress.env('ADMIN_USERNAME'), Cypress.env('ADMIN_PASSWORD'))
+  )
 
   describe('Given a WP user with permissions', () => {
 

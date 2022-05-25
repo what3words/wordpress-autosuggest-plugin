@@ -3,7 +3,7 @@ Contributors: what3words
 Tags: what3words, 3 word address, three word address, searchbox, search, address, validation, autosuggest, w3w
 Requires at least: 4.7
 Tested up to: 5.9
-Stable tag: 4.0.2
+Stable tag: 4.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,12 +145,17 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 
 == Changelog ==
 
+= 4.0.3 =
+* Released 2022.05.03
+* Update to improve integration on checkout page with Fluid Checkout and other plugins.
+* Bump autosuggest component library version to v4.0.6
+
 = 4.0.2 =
-* Released 2022.03.xx
+* Released 2022.04.21
 * Fix bug where metadata wasn't sent to WooCommerce if applying autosuggest to an existing field.
 
 = 4.0.1 =
-* Released 2022.03.xx
+* Released 2022.03.25
 * Security vulnerability fixed for `get_option` exposing sensitive information.
 * Loading the w3w autosuggest script asynchronously
 
@@ -254,12 +259,16 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 
 == Upgrade Notice ==
 
+= 4.0.3 =
+* Released 2022.05.03
+Improved integration with Fluid Checkout plugin for WooCommerce.
+
 = 4.0.2 =
-* Released 2022.03.xx
+* Released 2022.04.21
 Fix bug where metadata wasn't sent to WooCommerce if applying autosuggest to an existing field.
 
 = 4.0.1 =
-* Released 2022.03.xx
+* Released 2022.03.25
 Performance improvements and security vulnerability patch
 
 = 4.0 =

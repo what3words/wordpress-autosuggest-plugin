@@ -10,5 +10,6 @@
     "DB_USER": "root",
     "DB_PASS": "wordpress",
     "DB_DATABASE": "wordpress"
-  }
+  },
+  "testFiles": "**/*.{feature,spec.*}"
 }

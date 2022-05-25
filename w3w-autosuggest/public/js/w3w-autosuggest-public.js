@@ -1,4 +1,6 @@
 
+let components = [];
+
 (function( $ ) {
   'use strict';
 
@@ -29,51 +31,417 @@
 	 * Although scripts in the WordPress core, Plugins and Themes may be
 	 * practising this, we should strive to set a better example in our own work.
 	 */
+  
+  const {
+    /**
+     * The API key provided for the plugin
+     * @var {string} api_key
+     */
+    api_key,
+    /**
+     * Boolean flag indicating if the form should override the label
+     * @var {boolean} enable_label
+     */
+    enable_label,
+    /**
+     * The label text to override for the component
+     * @var {string} label
+     */
+    label,
+    /**
+     * Boolean flag indicating if the target input placeholder should overridden 
+     * @var {boolean} enable_placeholder
+     */
+    enable_placeholder,
+    /**
+     * The placeholder text to override for the target input
+     * @var {string} placeholder
+     */
+    placeholder,
+    /**
+     * Boolean flag indicating if the autosuggest results should be clipped by country 
+     * @var {boolean} enable_clip_to_country
+     */
+    enable_clip_to_country,
+    /**
+     * The countries to clip to suggestion results to
+     * @var {string} clip_to_country
+     */
+    clip_to_country,
+    /**
+     * Boolean flag indicating if the autosuggest results should be clipped within a polygon 
+     * @var {boolean} enable_clip_to_polygon
+     */
+    enable_clip_to_polygon,
+    /**
+     * The polygon to clip suggestion results to
+     * @var {string} clip_to_polygon
+     */
+    clip_to_polygon,
+    /**
+     * Boolean flag indicating if the autosuggest results should be clipped to a bounding box
+     * @var {boolean} enable_clip_to_bounding_box
+     */
+    enable_clip_to_bounding_box,
+    /**
+     * The North-East latitude of the bounding box to clip suggestion results to
+     * @var {string} clip_to_bounding_box_ne_lat
+     */
+    clip_to_bounding_box_ne_lat,
+    /**
+     * The North-East longitude of the bounding box to clip suggestion results to
+     * @var {string} clip_to_bounding_box_ne_lng
+     */
+    clip_to_bounding_box_ne_lng,
+    /**
+     * The South-West latitude of the bounding box to clip suggestion results to
+     * @var {string} clip_to_bounding_box_sw_lat
+     */
+    clip_to_bounding_box_sw_lat,
+    /**
+     * The South-West longitude of the bounding box to clip suggestion results to
+     * @var {string} clip_to_bounding_box_sw_lng
+     */
+    clip_to_bounding_box_sw_lng,
+    /**
+     * Boolean flag indicating if the autosuggest results should be clipped to a circle
+     * @var {boolean} enable_clip_to_circle
+     */
+    enable_clip_to_circle,
+    /**
+     * The latitude of the circle center to clip suggestion results to
+     * @var {string} clip_to_circle_lat
+     */
+    clip_to_circle_lat,
+    /**
+     * The longitude of the circle center to clip suggestion results to
+     * @var {string} clip_to_circle_lng
+     */
+    clip_to_circle_lng,
+    /**
+     * The radius of the circle to clip suggestion results to
+     * @var {string} clip_to_circle_radius
+     */
+    clip_to_circle_radius,
+    /**
+     * Boolean flag indicating if the form coordinates should also be collected
+     * @var {boolean} return_coordinates
+     */
+    return_coordinates,
+    /**
+     * Boolean flag indicating if the form should save the selected 3wa nearest place
+     * @var {boolean} save_nearest_place
+     */
+    save_nearest_place,
+    /**
+     * The CSS selector to target to extend with autosuggest functionality
+     * @var {string} selector
+     */
+    selector,
+    /**
+     * Boolean flag indicating if WooCommerce plugin is installed
+     * @var {boolean} woocommerce_activated
+     */
+    woocommerce_activated,
+    /**
+     * Boolean flag indicating if WooCommerce managed field is selected
+     * @var {boolean} woocommerce_enabled
+     */
+    woocommerce_enabled,
+    /**
+     * Boolean flag indicating if the current page is the WooCommerce checkout page
+     */
+    woocommerce_checkout,
+    /**
+     * The current version of the w3w WordPress plugin
+     * @var {string} version
+     */
+    version,
+    /**
+     * The current version of PHP
+     * @var {string} php_version
+     */
+    php_version,
+    /**
+     * The current version of WordPress
+     * @var {string} wp_version
+     */
+    wp_version,
+    /**
+     * The current version of woocommerce (if installed and enabled)
+     * @var {string} [wc_version]
+     */
+    wc_version,
+  } = W3W_AUTOSUGGEST_SETTINGS;
 
-  const isFullWooCommerce = W3W_AUTOSUGGEST_SETTINGS.woocommerce_enabled
-  const isPartialWooCommerce = !isFullWooCommerce && W3W_AUTOSUGGEST_SETTINGS.woocommerce_activated
+  const fields = {
+    billing: {
+      selector: '#w3w-billing',
+      nearest_place_selector: '#billing_nearest_place',
+      lat_selector: '#billing_w3w_lat',
+      lng_selector: '#billing_w3w_lng',
+    },
+    shipping: {
+      selector: '#w3w-shipping',
+      nearest_place_selector: '#shipping_nearest_place',
+      lat_selector: '#shipping_w3w_lat',
+      lng_selector: '#shipping_w3w_lng',
+    },
+  }
 
-  function createAutosuggestComponent(target, targetParent, targetSibling) {
+  const default_fields = {
+    default: {
+      selector,
+      nearest_place_selector: '#what3words_3wa_nearest_place',
+      lat_selector: '#what3words_3wa_lat',
+      lng_selector: '#what3words_3wa_lng',
+    }
+  }
+
+  if (!api_key) {
+    console.error(new Error('No what3words API key set!'))
+    return
+  }
+  if (woocommerce_enabled && !woocommerce_activated) {
+    console.error(new Error('WooCommerce is not installed!'))
+    return
+  }
+
+  if (woocommerce_checkout) {
+    $( document.body ).on( 'init_checkout', async () => {
+      if (woocommerce_enabled) {
+        components = await woocommerceEnabled()
+      } else {
+        components = customSelector()
+      }
+    } );
+    
+    $( document.body ).on( 'updated_checkout', async () => {
+      if (woocommerce_enabled) {
+        await woocommerceEnabled()
+      } else {
+        customSelector(components)
+      }
+    } );
+  } else {
+    $( document ).on('ready', async () => {
+      if (woocommerce_enabled) {
+        components = await woocommerceEnabled()
+      } else {
+        components = customSelector()
+      }
+    });
+  }
+
+  function customSelector(components = []) {
+    if (components.length > 0) {
+      attachLabelToComponents(components)
+      components.forEach(component => {
+        attachEventListeners(component, woocommerce_checkout ? fields : default_fields)
+      })
+      return components
+    }
+
+    const targets = document.querySelectorAll(selector)
+    const _components = attachComponentToTargets(targets);
+    const [component] = _components
+    attachLabelToComponents(_components)
+    
+    targets.forEach(target => {
+      if (!woocommerce_checkout) {
+        const name = 'what3words_3wa_nearest_place';
+        const nearest_place = save_nearest_place ? generateHiddenInput(name) : null
+        target.parentElement.append(nearest_place)
+      }
+
+      attachEventListeners(component, woocommerce_checkout ? fields : default_fields);
+    })
+
+    return _components
+  }
+
+  function woocommerceEnabled() {
+    if (woocommerce_enabled && !woocommerce_checkout) return
+    
+    return Promise.all(Object.entries(fields)
+      .map(([, { selector }]) => {
+        return new Promise(res => {
+          setTimeout(() => {
+            const targets = $( selector )
+            const ignore = targets[0].parentNode.getAttribute('class') === 'what3words-autosuggest-input-wrapper'
+            if (ignore) return
+
+            const [component] = attachComponentToTargets(targets)
+            attachEventListeners(component, fields)
+            res(component)
+          }, 500)
+        })
+      }))
+  }
+
+  function attachEventListeners(component, fields) {
+    const selected_suggestion_handler = function (e) {
+      const nearest_place_val = e.detail.suggestion.nearestPlace
+      const words = e.detail.suggestion.words
+      const same_shipping = document.querySelector('#ship-to-different-address-checkbox')
+        ? !document.querySelector('#ship-to-different-address-checkbox').checked
+        : true
+
+      if (!save_nearest_place) return;
+      if (woocommerce_enabled && !woocommerce_checkout) return;
+
+      // If not woocommerce managed fields then should set value in all related fields
+      if (!woocommerce_enabled || (woocommerce_enabled && same_shipping)) {
+        Object.entries(fields).forEach(([, { nearest_place_selector }]) => {
+          const nearest_place = document.querySelector(nearest_place_selector)
+          if (nearest_place) {
+            nearest_place.value = nearest_place_val;
+          }
+        });
+
+        if (woocommerce_enabled) {
+          const target = component.querySelector('input')
+          const counterpart_selector = `#${target.id === 'w3w-billing'
+            ? target.id.replace('billing', 'shipping')
+            : target.id.replace('shipping', 'billing')
+          }`
+          const duplicate_to = document.querySelector(counterpart_selector)
+          if (duplicate_to) duplicate_to.value = `///${words}`
+        }
+
+        return;
+      }
+
+      if (woocommerce_enabled) {
+        const target = component.querySelector('input')
+        const id = target.id || null
+
+        if (id) {
+          const [, { nearest_place_selector }] = Object.entries(fields).find(([, field]) => field.selector === `#${id}`)
+          const nearest_place = document.querySelector(nearest_place_selector)
+          if (nearest_place) nearest_place.value = nearest_place
+        }
+
+        return;
+      }
+    };
+    const coordinates_changed_handler = function(e) {
+      const coordinates = e.detail.coordinates
+      const same_shipping = document.querySelector('#ship-to-different-address-checkbox')
+        ? !document.querySelector('#ship-to-different-address-checkbox').checked
+        : true
+
+      if (!return_coordinates) return;
+      if (woocommerce_enabled && !woocommerce_checkout) return;
+
+      // If not woocommerce managed fields then should set value in all related fields
+      if (!woocommerce_enabled || (woocommerce_enabled && same_shipping)) {
+        Object.entries(fields).forEach(([, { lat_selector, lng_selector }]) => {
+          const lat = document.querySelector(lat_selector)
+          const lng = document.querySelector(lng_selector)
+
+          if (lat && lng) {
+            lat.value = coordinates.lat;
+            lng.value = coordinates.lng;
+          }
+        });
+        return;
+      }
+
+      if (woocommerce_enabled) {
+        const target = component.querySelector('input')
+        const id = target.id || null
+
+        if (id) {
+          const [, { lat_selector, lng_selector }] =
+            Object.entries(fields).find(([, field]) => field.selector === `#${id}`)
+          const lat = document.querySelector(lat_selector)
+          const lng = document.querySelector(lng_selector)
+
+          if (lat && lng) {
+            lat.value = coordinates.lat
+            lng.value = coordinates.lng
+          }
+        }
+        return;
+      }
+    };
+
+    
+    if (component) {
+      component.removeEventListener('selected_suggestion', selected_suggestion_handler)
+      component.removeEventListener('coordinates_changed', coordinates_changed_handler)
+      component.addEventListener('selected_suggestion', selected_suggestion_handler)
+      component.addEventListener('coordinates_changed', coordinates_changed_handler)
+    }
+  }
+
+  function attachLabelToComponents(components = []) {
+    if (!enable_label) return
+    if (woocommerce_enabled) return
+
+    components.forEach((component) => {
+      const target = component.closest('input')
+      if (target) {
+        const target_label = document.querySelector(`label[for="${target.id}"]`) || document.createElement('label')
+        target_label.setAttribute('for', target.id)
+        target_label.innerHTML = label
+        if (!target_label.parentElement) document.insertBefore(target, target_label)
+      }
+    })
+  }
+
+  function attachComponentToTargets(targets) {
+    const components = [];
+
+    for (let i = 0; i < targets.length; i++) {
+      const target = targets[i]
+      const component = generateAutosuggestComponent()
+      const [parent] = $( target ).parent()
+      const sibling = target.nextSibling || target.previousSibling
+
+      if (enable_placeholder) {
+        target.setAttribute('placeholder', placeholder)
+      }
+      
+      $( component ).append(target);
+      if (sibling) $( parent ).insertBefore(component, sibling)
+      else $( parent ).prepend(component)
+      components.push(component)
+    }
+
+    return components;
+  }
+
+  function generateHiddenInput(name) {
+    const input = document.getElementById(name) || document.createElement('input')
+    input.type = 'hidden'
+    input.name = name
+    input.id = name
+    input.setAttribute('data-testid', name)
+    return input;
+  }
+
+  function generateAutosuggestComponent() {
     const w3wComponent = document.createElement('what3words-autosuggest')
 
     w3wComponent.setAttribute('variant', 'inherit')
     w3wComponent.setAttribute('headers', JSON.stringify({
       'X-W3W-Plugin':
-        `what3words-Wordpress/${W3W_AUTOSUGGEST_SETTINGS.version} (` + [
-          `PHP/${W3W_AUTOSUGGEST_SETTINGS.php_version}`,
-          `WordPress/${W3W_AUTOSUGGEST_SETTINGS.wp_version}`,
-          `WooCommerce/${W3W_AUTOSUGGEST_SETTINGS.wc_version}`
+        `what3words-Wordpress/${version} (` + [
+          `PHP/${php_version}`,
+          `WordPress/${wp_version}`,
+          `WooCommerce/${wc_version}`
         ].join(' ') + ')'
     }))
-    w3wComponent.setAttribute('api_key', W3W_AUTOSUGGEST_SETTINGS.api_key)
+    w3wComponent.setAttribute('api_key', api_key)
     w3wComponent.setAttribute('return_coordinates', true)
 
-    if (!isFullWooCommerce) {
-      if (W3W_AUTOSUGGEST_SETTINGS.enable_placeholder) {
-        target.setAttribute('placeholder', W3W_AUTOSUGGEST_SETTINGS.placeholder)
-      }
-      if (W3W_AUTOSUGGEST_SETTINGS.enable_label) {
-        const label = document.createElement('label')
-        label.setAttribute('for', target.id || 'w3w_autosuggest_field')
-        label.innerHTML = W3W_AUTOSUGGEST_SETTINGS.label
-        targetParent.insertBefore(label, targetSibling)
-      }
-      if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place && !isPartialWooCommerce) {
-        const nearestPlaceInput = document.createElement('input')
-        nearestPlaceInput.setAttribute('type', 'hidden')
-        nearestPlaceInput.setAttribute('name', `${target.name || 'what3words_3wa'}_nearest_place`)
-        targetParent.insertBefore(nearestPlaceInput, targetSibling)
-        w3wComponent.addEventListener('selected_suggestion', function (e) {
-          const nearestPlace = e.detail.suggestion.nearestPlace
-          nearestPlaceInput.value = nearestPlace
-        })
-      }
+    if (enable_clip_to_country) {
+      w3wComponent.setAttribute('clip_to_country', clip_to_country)
     }
-    if (W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_country) {
-      w3wComponent.setAttribute('clip_to_country', W3W_AUTOSUGGEST_SETTINGS.clip_to_country)
-    }
-    if (W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_polygon) {
-      const polygon = W3W_AUTOSUGGEST_SETTINGS.clip_to_polygon.trim()
+    if (enable_clip_to_polygon) {
+      const polygon = clip_to_polygon.trim()
         .split('],')
         .map(coords => {
           const [lng, lat] = coords.trim()
@@ -86,167 +454,24 @@
         .join(',')
       w3wComponent.setAttribute('clip_to_polygon', polygon)
     }
-    if (W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_bounding_box) {
+    if (enable_clip_to_bounding_box) {
       const bounding_box = [
-        W3W_AUTOSUGGEST_SETTINGS.clip_to_bounding_box_ne_lat,
-        W3W_AUTOSUGGEST_SETTINGS.clip_to_bounding_box_ne_lng,
-        W3W_AUTOSUGGEST_SETTINGS.clip_to_bounding_box_sw_lat,
-        W3W_AUTOSUGGEST_SETTINGS.clip_to_bounding_box_sw_lng,
+        clip_to_bounding_box_ne_lat,
+        clip_to_bounding_box_ne_lng,
+        clip_to_bounding_box_sw_lat,
+        clip_to_bounding_box_sw_lng,
       ].join(',')
       w3wComponent.setAttribute('clip_to_bounding_box', bounding_box)
     }
-    if (W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_circle) {
+    if (enable_clip_to_circle) {
       const circle = [
-        W3W_AUTOSUGGEST_SETTINGS.clip_to_circle_lat,
-        W3W_AUTOSUGGEST_SETTINGS.clip_to_circle_lng,
-        W3W_AUTOSUGGEST_SETTINGS.clip_to_circle_radius,
+        clip_to_circle_lat,
+        clip_to_circle_lng,
+        clip_to_circle_radius,
       ].join(',')
       w3wComponent.setAttribute('clip_to_circle', circle)
     }
 
-    if (isPartialWooCommerce) {
-      const isBilling = document.querySelector('.woocommerce-billing-fields').contains(target)
-      const sameAddress = document.querySelector('#ship-to-different-address-checkbox').checked
-      const country = isBilling ? $('#billing_country') : $('#shipping_country')
-
-      if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place) {
-        w3wComponent.addEventListener('selected_suggestion', function(e) {
-          const nearestPlace = e.detail.suggestion.nearestPlace
-          if (sameAddress) {
-            $('#billing_nearest_place').attr('value', nearestPlace)
-            $('#shipping_nearest_place').attr('value', nearestPlace)
-          } else {
-            $(isBilling ? '#billing_nearest_place' : '#shipping_nearest_place').attr('value', nearestPlace)
-          }
-        })
-      }
-
-      if (W3W_AUTOSUGGEST_SETTINGS.return_coordinates) {
-        w3wComponent.addEventListener('coordinates_changed', function(e) {
-          const coordinates = e.detail.coordinates
-          if (sameAddress) {
-            $('#billing_w3w_lat').attr('value', coordinates.lat)
-            $('#billing_w3w_lng').attr('value', coordinates.lng)
-            $('#shipping_w3w_lat').attr('value', coordinates.lat)
-            $('#shipping_w3w_lng').attr('value', coordinates.lng)
-
-          } else {
-            $(isBilling ? '#billing_w3w_lat' : '#shipping_w3w_lat').attr('value', coordinates.lat)
-            $(isBilling ? '#billing_w3w_lng' : '#shipping_w3w_lng').attr('value', coordinates.lng)
-          }
-        })
-      }
-
-      if (
-        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_country &&
-        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_circle &&
-        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_bounding_box &&
-        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_polygon
-      ) {
-        country.on('change', function(e) {
-          w3wComponent.setAttribute('clip_to_country', e.target.value)
-        })
-        country.trigger('change')
-      }
-    }
-
     return w3wComponent
-  }
-
-  if (isFullWooCommerce) {
-    const billingCountry = $('#billing_country')
-    const shippingCountry = $('#shipping_country')
-    const billingTarget = document.querySelector('#w3w-billing')
-    const shippingTarget = document.querySelector('#w3w-shipping')
-
-    if (billingCountry && billingTarget) {
-      const billingTargetSibling = billingTarget.nextSibling
-      const billingTargetParent = billingTarget.parentElement
-      const billingW3wComponent = createAutosuggestComponent(billingTarget, billingTargetParent, billingTargetSibling)
-      billingW3wComponent.setAttribute('name', 'billing_w3w')
-
-      if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place) {
-        billingW3wComponent.addEventListener('selected_suggestion', function(e) {
-          const nearestPlace = e.detail.suggestion.nearestPlace
-          $('#billing_nearest_place').attr('value', nearestPlace)
-        })
-      }
-
-      if (W3W_AUTOSUGGEST_SETTINGS.return_coordinates) {
-        billingW3wComponent.addEventListener('coordinates_changed', function(e) {
-          const coordinates = e.detail.coordinates
-          $('#billing_w3w_lat').attr('value', coordinates.lat)
-          $('#billing_w3w_lng').attr('value', coordinates.lng)
-        })
-      }
-
-      billingW3wComponent.appendChild(billingTarget)
-      billingTargetParent.insertBefore(billingW3wComponent, billingTargetSibling)
-
-      if (
-        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_country &&
-        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_circle &&
-        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_bounding_box &&
-        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_polygon
-      ) {
-        billingCountry.on('change', function(e) {
-          $('#w3w-billing').closest('what3words-autosuggest').attr('clip_to_country', e.target.value)
-        })
-        billingCountry.trigger('change')
-      }
-    }
-
-    if (shippingCountry && shippingTarget) {
-      const shippingTargetSibling = shippingTarget.nextSibling
-      const shippingTargetParent = shippingTarget.parentElement
-      const shippingW3wComponent = createAutosuggestComponent(
-        shippingTarget,
-        shippingTargetParent,
-        shippingTargetSibling,
-      )
-      shippingW3wComponent.setAttribute('name', 'shipping_w3w')
-
-      if (W3W_AUTOSUGGEST_SETTINGS.save_nearest_place) {
-        shippingW3wComponent.addEventListener('selected_suggestion', function(e) {
-          const nearestPlace = e.detail.suggestion.nearestPlace
-          $('#shipping_nearest_place').attr('value', nearestPlace)
-        })
-      }
-
-      if (W3W_AUTOSUGGEST_SETTINGS.return_coordinates) {
-        shippingW3wComponent.addEventListener('coordinates_changed', function(e) {
-          const coordinates = e.detail.coordinates
-          $('#shipping_w3w_lat').attr('value', coordinates.lat)
-          $('#shipping_w3w_lng').attr('value', coordinates.lng)
-        })
-      }
-
-      shippingW3wComponent.appendChild(shippingTarget)
-      shippingTargetParent.insertBefore(shippingW3wComponent, shippingTargetSibling)
-
-      if (
-        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_country &&
-        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_circle &&
-        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_bounding_box &&
-        !W3W_AUTOSUGGEST_SETTINGS.enable_clip_to_polygon
-      ) {
-        shippingCountry.on('change', function(e) {
-          $('#w3w-shipping').closest('what3words-autosuggest').attr('clip_to_country', e.target.value)
-        })
-        shippingCountry.trigger('change')
-      }
-    }
-  } else {
-    const targets = document.querySelectorAll(W3W_AUTOSUGGEST_SETTINGS.selector)
-
-    for (let i = 0; i < targets.length; i++) {
-      const target = targets[i]
-      const targetSibling = target.nextSibling
-      const targetParent = target.parentElement
-      const w3wComponent = createAutosuggestComponent(target, targetParent, targetSibling)
-
-      w3wComponent.appendChild(target)
-      targetParent.insertBefore(w3wComponent, targetSibling)
-    }
   }
 })( jQuery );
