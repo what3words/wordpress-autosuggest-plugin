@@ -3,7 +3,7 @@ version: "3.8"
 services:
 
   wordpress:
-    image: 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:0.1.2
+    image: wordpress:5.9.0-php7.4-apache #449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:0.1.2
     container_name: w3w-wp
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:80"]
