@@ -107,14 +107,14 @@ class W3W_Autosuggest_Public {
     global $woocommerce;
 
     $settings = get_option( W3W_SETTINGS_NAME );
+    // Determine if WordPress is running with WooCommerce enabled
+    // https://woocommerce.com/document/query-whether-woocommerce-is-activated/
     $has_woocommerce = class_exists( 'woocommerce' );
     $exposed_settings['version'] = $settings['version'];
     $exposed_settings['php_version'] = phpversion();
     $exposed_settings['wp_version'] = $wp_version;
     $exposed_settings['wc_version'] = isset( $woocommerce ) ? $woocommerce->version : 'N/A';
     $exposed_settings['api_key'] = $settings['api_key'];
-    // Determine if WordPress is running with WooCommerce enabled
-    // https://woocommerce.com/document/query-whether-woocommerce-is-activated/
     $exposed_settings['woocommerce_activated'] = $has_woocommerce;
     // Determine if current page is the WooCommerce checkout page
     // https://njengah.com/is-checkout-page-woocommerce/
