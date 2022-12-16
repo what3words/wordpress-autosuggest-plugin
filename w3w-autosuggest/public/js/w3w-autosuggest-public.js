@@ -1,37 +1,8 @@
-
 let components = [];
 
-(function( $ ) {
+(function ($) {
   'use strict';
 
-	/**
-	 * All of the code for your public-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
-	 */
-  
   const {
     /**
      * The API key provided for the plugin
@@ -49,7 +20,7 @@ let components = [];
      */
     label,
     /**
-     * Boolean flag indicating if the target input placeholder should overridden 
+     * Boolean flag indicating if the target input placeholder should overridden
      * @var {boolean} enable_placeholder
      */
     enable_placeholder,
@@ -59,7 +30,7 @@ let components = [];
      */
     placeholder,
     /**
-     * Boolean flag indicating if the autosuggest results should be clipped by country 
+     * Boolean flag indicating if the autosuggest results should be clipped by country
      * @var {boolean} enable_clip_to_country
      */
     enable_clip_to_country,
@@ -69,7 +40,7 @@ let components = [];
      */
     clip_to_country,
     /**
-     * Boolean flag indicating if the autosuggest results should be clipped within a polygon 
+     * Boolean flag indicating if the autosuggest results should be clipped within a polygon
      * @var {boolean} enable_clip_to_polygon
      */
     enable_clip_to_polygon,
@@ -187,7 +158,7 @@ let components = [];
       lat_selector: '#shipping_w3w_lat',
       lng_selector: '#shipping_w3w_lng',
     },
-  }
+  };
 
   const default_fields = {
     default: {
@@ -195,97 +166,111 @@ let components = [];
       nearest_place_selector: '#what3words_3wa_nearest_place',
       lat_selector: '#what3words_3wa_lat',
       lng_selector: '#what3words_3wa_lng',
-    }
-  }
+    },
+  };
 
   if (!api_key) {
-    console.error(new Error('No what3words API key set!'))
-    return
+    console.error(new Error('No what3words API key set!'));
+    return;
   }
   if (woocommerce_enabled && !woocommerce_activated) {
-    console.error(new Error('WooCommerce is not installed!'))
-    return
+    console.error(new Error('WooCommerce is not installed!'));
+    return;
   }
 
   if (woocommerce_checkout) {
-    $( document.body ).on( 'init_checkout', async () => {
+    $(document.body).on('init_checkout', async () => {
       if (woocommerce_enabled) {
-        components = await woocommerceEnabled()
+        components = await woocommerceEnabled();
       } else {
-        components = customSelector()
+        components = customSelector();
       }
-    } );
-    
-    $( document.body ).on( 'updated_checkout', async () => {
+    });
+
+    $(document.body).on('updated_checkout', () => {
       if (woocommerce_enabled) {
-        await woocommerceEnabled()
+        woocommerceEnabled();
       } else {
-        customSelector(components)
+        customSelector(components);
       }
-    } );
+    });
   } else {
-    $( document ).on('ready', async () => {
+    $(document).on('ready', async () => {
       if (woocommerce_enabled) {
-        components = await woocommerceEnabled()
+        components = await woocommerceEnabled();
       } else {
-        components = customSelector()
+        components = customSelector();
       }
     });
   }
 
   function customSelector(components = []) {
     if (components.length > 0) {
-      attachLabelToComponents(components)
-      components.forEach(component => {
-        attachEventListeners(component, woocommerce_checkout ? fields : default_fields)
-      })
-      return components
+      attachLabelToComponents(components);
+      components.forEach((component) => {
+        attachEventListeners(
+          component,
+          woocommerce_checkout ? fields : default_fields
+        );
+      });
+      return components;
     }
 
-    const targets = document.querySelectorAll(selector)
+    const targets = document.querySelectorAll(selector);
     const _components = attachComponentToTargets(targets);
-    const [component] = _components
-    attachLabelToComponents(_components)
-    
-    targets.forEach(target => {
+    const [component] = _components;
+    attachLabelToComponents(_components);
+
+    targets.forEach((target) => {
       if (!woocommerce_checkout) {
         const name = 'what3words_3wa_nearest_place';
-        const nearest_place = save_nearest_place ? generateHiddenInput(name) : null
-        target.parentElement.append(nearest_place)
+        const nearest_place = save_nearest_place
+          ? generateHiddenInput(name)
+          : null;
+        target.parentElement.append(nearest_place);
       }
 
-      attachEventListeners(component, woocommerce_checkout ? fields : default_fields);
-    })
+      attachEventListeners(
+        component,
+        woocommerce_checkout ? fields : default_fields
+      );
+    });
 
-    return _components
+    return _components;
   }
 
   function woocommerceEnabled() {
-    if (woocommerce_enabled && !woocommerce_checkout) return
-    
-    return Promise.all(Object.entries(fields)
-      .map(([, { selector }]) => {
-        return new Promise(res => {
+    if (woocommerce_enabled && !woocommerce_checkout) {
+      return;
+    }
+    return Promise.all(
+      Object.entries(fields).map(([, { selector }]) => {
+        return new Promise((res) => {
           setTimeout(() => {
-            const targets = $( selector )
-            const ignore = targets[0].parentNode.getAttribute('class') === 'what3words-autosuggest-input-wrapper'
-            if (ignore) return
+            const targets = document.querySelectorAll(selector);
+            const ignore =
+              targets[0].parentNode.getAttribute('class') ===
+              'what3words-autosuggest-input-wrapper';
+            if (ignore) return;
 
-            const [component] = attachComponentToTargets(targets)
-            attachEventListeners(component, fields)
-            res(component)
-          }, 500)
-        })
-      }))
+            const [component] = attachComponentToTargets(targets);
+            attachEventListeners(component, fields);
+            res(component);
+          }, 500);
+        });
+      })
+    );
   }
 
   function attachEventListeners(component, fields) {
     const selected_suggestion_handler = function (e) {
-      const nearest_place_val = e.detail.suggestion.nearestPlace
-      const words = e.detail.suggestion.words
-      const same_shipping = document.querySelector('#ship-to-different-address-checkbox')
+      const nearest_place_val = e.detail.suggestion.nearestPlace;
+      const words = e.detail.suggestion.words;
+      const same_shipping = document.querySelector(
+        '#ship-to-different-address-checkbox'
+      )
         ? !document.querySelector('#ship-to-different-address-checkbox').checked
-        : true
+        : true;
 
       if (!save_nearest_place) return;
       if (woocommerce_enabled && !woocommerce_checkout) return;
@@ -293,43 +278,48 @@ let components = [];
       // If not woocommerce managed fields then should set value in all related fields
       if (!woocommerce_enabled || (woocommerce_enabled && same_shipping)) {
         Object.entries(fields).forEach(([, { nearest_place_selector }]) => {
-          const nearest_place = document.querySelector(nearest_place_selector)
+          const nearest_place = document.querySelector(nearest_place_selector);
           if (nearest_place) {
             nearest_place.value = nearest_place_val;
           }
         });
 
         if (woocommerce_enabled) {
-          const target = component.querySelector('input')
-          const counterpart_selector = `#${target.id === 'w3w-billing'
-            ? target.id.replace('billing', 'shipping')
-            : target.id.replace('shipping', 'billing')
-          }`
-          const duplicate_to = document.querySelector(counterpart_selector)
-          if (duplicate_to) duplicate_to.value = `///${words}`
+          const target = component.querySelector('input');
+          const counterpart_selector = `#${
+            target.id === 'w3w-billing'
+              ? target.id.replace('billing', 'shipping')
+              : target.id.replace('shipping', 'billing')
+          }`;
+          const duplicate_to = document.querySelector(counterpart_selector);
+          if (duplicate_to) duplicate_to.value = `///${words}`;
         }
 
         return;
       }
 
       if (woocommerce_enabled) {
-        const target = component.querySelector('input')
-        const id = target.id || null
+        const target = component.querySelector('input');
+        const id = target.id || null;
 
         if (id) {
-          const [, { nearest_place_selector }] = Object.entries(fields).find(([, field]) => field.selector === `#${id}`)
-          const nearest_place = document.querySelector(nearest_place_selector)
-          if (nearest_place) nearest_place.value = nearest_place
+          const [, { nearest_place_selector }] = Object.entries(fields).find(
+            ([, field]) => field.selector === `#${id}`
+          );
+          const nearest_place = document.querySelector(nearest_place_selector);
+          if (nearest_place) nearest_place.value = nearest_place;
         }
 
         return;
       }
     };
-    const coordinates_changed_handler = function(e) {
-      const coordinates = e.detail.coordinates
-      const same_shipping = document.querySelector('#ship-to-different-address-checkbox')
+    const coordinates_changed_handler = function (e) {
+      const coordinates = e.detail.coordinates;
+      const same_shipping = document.querySelector(
+        '#ship-to-different-address-checkbox'
+      )
         ? !document.querySelector('#ship-to-different-address-checkbox').checked
-        : true
+        : true;
 
       if (!return_coordinates) return;
       if (woocommerce_enabled && !woocommerce_checkout) return;
@@ -337,8 +327,8 @@ let components = [];
       // If not woocommerce managed fields then should set value in all related fields
       if (!woocommerce_enabled || (woocommerce_enabled && same_shipping)) {
         Object.entries(fields).forEach(([, { lat_selector, lng_selector }]) => {
-          const lat = document.querySelector(lat_selector)
-          const lng = document.querySelector(lng_selector)
+          const lat = document.querySelector(lat_selector);
+          const lng = document.querySelector(lng_selector);
 
           if (lat && lng) {
             lat.value = coordinates.lat;
@@ -349,110 +339,133 @@ let components = [];
       }
 
       if (woocommerce_enabled) {
-        const target = component.querySelector('input')
-        const id = target.id || null
+        const target = component.querySelector('input');
+        const id = target.id || null;
 
         if (id) {
-          const [, { lat_selector, lng_selector }] =
-            Object.entries(fields).find(([, field]) => field.selector === `#${id}`)
-          const lat = document.querySelector(lat_selector)
-          const lng = document.querySelector(lng_selector)
+          const [, { lat_selector, lng_selector }] = Object.entries(
+            fields
+          ).find(([, field]) => field.selector === `#${id}`);
+          const lat = document.querySelector(lat_selector);
+          const lng = document.querySelector(lng_selector);
 
           if (lat && lng) {
-            lat.value = coordinates.lat
-            lng.value = coordinates.lng
+            lat.value = coordinates.lat;
+            lng.value = coordinates.lng;
           }
         }
         return;
       }
     };
 
-    
     if (component) {
-      component.removeEventListener('selected_suggestion', selected_suggestion_handler)
-      component.removeEventListener('coordinates_changed', coordinates_changed_handler)
-      component.addEventListener('selected_suggestion', selected_suggestion_handler)
-      component.addEventListener('coordinates_changed', coordinates_changed_handler)
+      component.removeEventListener(
+        'selected_suggestion',
+        selected_suggestion_handler
+      );
+      component.removeEventListener(
+        'coordinates_changed',
+        coordinates_changed_handler
+      );
+      component.addEventListener(
+        'selected_suggestion',
+        selected_suggestion_handler
+      );
+      component.addEventListener(
+        'coordinates_changed',
+        coordinates_changed_handler
+      );
     }
   }
 
   function attachLabelToComponents(components = []) {
-    if (!enable_label) return
-    if (woocommerce_enabled) return
+    if (!enable_label) return;
+    if (woocommerce_enabled) return;
 
     components.forEach((component) => {
-      const target = component.closest('input')
+      const target = component.closest('input');
       if (target) {
-        const target_label = document.querySelector(`label[for="${target.id}"]`) || document.createElement('label')
-        target_label.setAttribute('for', target.id)
-        target_label.innerHTML = label
-        if (!target_label.parentElement) document.insertBefore(target, target_label)
+        const target_label =
+          document.querySelector(`label[for="${target.id}"]`) ||
+          document.createElement('label');
+        target_label.setAttribute('for', target.id);
+        target_label.innerHTML = label;
+        if (!target_label.parentElement)
+          document.insertBefore(target, target_label);
       }
-    })
+    });
   }
 
   function attachComponentToTargets(targets) {
     const components = [];
-
     for (let i = 0; i < targets.length; i++) {
-      const target = targets[i]
-      const component = generateAutosuggestComponent()
-      const [parent] = $( target ).parent()
-      const sibling = target.nextSibling || target.previousSibling
-
+      const target = targets[i];
+      const parent = target.parentNode;
+      const component = generateAutosuggestComponent();
+      const sibling = target.nextSibling || target.previousSibling;
       if (enable_placeholder) {
-        target.setAttribute('placeholder', placeholder)
+        target.setAttribute('placeholder', placeholder);
       }
-      
-      $( component ).append(target);
-      if (sibling) $( parent ).insertBefore(component, sibling)
-      else $( parent ).prepend(component)
-      components.push(component)
+      component.append(target);
+      if (sibling && sibling.tagName !== 'LABEL') {
+        parent.insertBefore(component, sibling);
+      } else {
+        parent.append(component);
+      }
+      components.push(component);
     }
 
     return components;
   }
 
   function generateHiddenInput(name) {
-    const input = document.getElementById(name) || document.createElement('input')
-    input.type = 'hidden'
-    input.name = name
-    input.id = name
-    input.setAttribute('data-testid', name)
+    const input =
+      document.getElementById(name) || document.createElement('input');
+    input.type = 'hidden';
+    input.name = name;
+    input.id = name;
+    input.setAttribute('data-testid', name);
     return input;
   }
 
   function generateAutosuggestComponent() {
-    const w3wComponent = document.createElement('what3words-autosuggest')
+    const w3wComponent = document.createElement('what3words-autosuggest');
 
-    w3wComponent.setAttribute('variant', 'inherit')
-    w3wComponent.setAttribute('headers', JSON.stringify({
-      'X-W3W-Plugin':
-        `what3words-Wordpress/${version} (` + [
-          `PHP/${php_version}`,
-          `WordPress/${wp_version}`,
-          `WooCommerce/${wc_version}`
-        ].join(' ') + ')'
-    }))
-    w3wComponent.setAttribute('api_key', api_key)
-    w3wComponent.setAttribute('return_coordinates', true)
+    w3wComponent.setAttribute('variant', 'inherit');
+    w3wComponent.setAttribute(
+      'headers',
+      JSON.stringify({
+        'X-W3W-Plugin':
+          `what3words-Wordpress/${version} (` +
+          [
+            `PHP/${php_version}`,
+            `WordPress/${wp_version}`,
+            `WooCommerce/${wc_version}`,
+          ].join(' ') +
+          ')',
+      })
+    );
+    w3wComponent.setAttribute('api_key', api_key);
+    w3wComponent.setAttribute('return_coordinates', true);
 
     if (enable_clip_to_country) {
-      w3wComponent.setAttribute('clip_to_country', clip_to_country)
+      w3wComponent.setAttribute('clip_to_country', clip_to_country);
     }
     if (enable_clip_to_polygon) {
-      const polygon = clip_to_polygon.trim()
+      const polygon = clip_to_polygon
+        .trim()
         .split('],')
-        .map(coords => {
-          const [lng, lat] = coords.trim()
+        .map((coords) => {
+          const [lng, lat] = coords
+            .trim()
             .replace('[', '')
             .replace(']', '')
             .replace(/\s/g, '')
-            .split(',')
-          return `${lat.trim()},${lng.trim()}`
+            .split(',');
+          return `${lat.trim()},${lng.trim()}`;
         })
-        .join(',')
-      w3wComponent.setAttribute('clip_to_polygon', polygon)
+        .join(',');
+      w3wComponent.setAttribute('clip_to_polygon', polygon);
     }
     if (enable_clip_to_bounding_box) {
       const bounding_box = [
@@ -460,18 +473,18 @@ let components = [];
         clip_to_bounding_box_ne_lng,
         clip_to_bounding_box_sw_lat,
         clip_to_bounding_box_sw_lng,
-      ].join(',')
-      w3wComponent.setAttribute('clip_to_bounding_box', bounding_box)
+      ].join(',');
+      w3wComponent.setAttribute('clip_to_bounding_box', bounding_box);
     }
     if (enable_clip_to_circle) {
       const circle = [
         clip_to_circle_lat,
         clip_to_circle_lng,
         clip_to_circle_radius,
-      ].join(',')
-      w3wComponent.setAttribute('clip_to_circle', circle)
+      ].join(',');
+      w3wComponent.setAttribute('clip_to_circle', circle);
     }
 
-    return w3wComponent
+    return w3wComponent;
   }
-})( jQuery );
+})(jQuery);
