@@ -248,6 +248,7 @@ let components = [];
         return new Promise((res) => {
           setTimeout(() => {
             const targets = document.querySelectorAll(selector);
+            if (targets.length === 0) return;
             const ignore =
               targets[0].parentNode.getAttribute('class') ===
               'what3words-autosuggest-input-wrapper';
