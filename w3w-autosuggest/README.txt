@@ -2,8 +2,8 @@
 Contributors: what3words
 Tags: what3words, 3 word address, three word address, searchbox, search, address, validation, autosuggest, w3w
 Requires at least: 4.7
-Tested up to: 5.9
-Stable tag: 4.0.4
+Tested up to: 6.1
+Stable tag: 4.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,10 +40,10 @@ We recommend using the plugin when you want to capture a precise location from a
 
 = WordPress Installation (recommended) =
 
-You can install the what3words Address Field plugin through the WordPress plugins page in your WordPress admin panel. 
+You can install the what3words Address Field plugin through the WordPress plugins page in your WordPress admin panel.
 
 1. Navigate to the _Plugins > Add New_ page
-2. Search for "what3words" 
+2. Search for "what3words"
 3. Click the _Install Now_ button.
 4. Once installed, you can activate the plugin on the _Plugins_ page.
 
@@ -145,6 +145,11 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 
 == Changelog ==
 
+= 4.0.5 =
+* Released 2023.01.4
+* Fixed a bug where the autosuggest web-component was not being mounted correctly
+* JS script now uses native javascript selectors instead of JQuery
+
 = 4.0.4 =
 * Released 2022.05.31
 * Fixed critical error which surfaced when WooCommerce plugin is not installed
@@ -226,7 +231,7 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 * Released 2020.05.26
 * Updated the plugin to use new web component and V3 of the what3words API. Note that this release simplifies the plugin setup and removes some settings.
 * Updated links to what3words documentation and developer site
-* Settings available are now: 
+* Settings available are now:
 * API key
 * CSS selector to specify which inputs should be upgraded to the auto suggest component
 * Placeholder text shown on inputs
