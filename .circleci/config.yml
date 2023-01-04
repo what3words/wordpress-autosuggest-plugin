@@ -177,3 +177,17 @@ workflows:
     jobs:
       - test:
           context: org-global
+      - tag:
+          context: org-global
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
+      - publish:
+          context: org-global
+          requires:
+            - tag
+          filters:
+            branches:
+              only: master
