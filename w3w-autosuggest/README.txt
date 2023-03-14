@@ -3,7 +3,7 @@ Contributors: what3words
 Tags: what3words, 3 word address, three word address, searchbox, search, address, validation, autosuggest, w3w
 Requires at least: 4.7
 Tested up to: 5.9
-Stable tag: 4.0.4
+Stable tag: 4.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -144,6 +144,14 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 
 
 == Changelog ==
+
+= 4.0.6 =
+* Released 2023.03.xx
+* Display what3words address on order emails
+
+= 4.0.5 =
+* Released 2023.01.04
+* Autosuggest not being rendered correctly on certain checkout pages
 
 = 4.0.4 =
 * Released 2022.05.31

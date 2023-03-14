@@ -187,6 +187,7 @@ class W3W_Autosuggest {
     $wc_billing_action_name = 'woocommerce_admin_order_data_after_billing_address';
     $wc_shipping_action_name = 'woocommerce_admin_order_data_after_shipping_address';
     $order_data_filter = 'woocommerce_admin_order_preview_get_order_details';
+    $wc_email_customer_details = 'woocommerce_email_customer_details_fields';
 
     $this->loader->add_action( 'admin_menu', $plugin_admin, 'options_page' );
     $this->loader->add_action( 'admin_notices', $plugin_admin, 'admin_notices' );
@@ -196,6 +197,7 @@ class W3W_Autosuggest {
     $this->loader->add_filter( $plugin_action_name, $plugin_admin, 'plugin_action_links', 10, 4 );
     $this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'plugin_row_meta', 10, 2 );
     $this->loader->add_filter( $order_data_filter, $plugin_admin, 'set_order_data', 10, 2 );
+    $this->loader->add_filter( $wc_email_customer_details, $plugin_admin, 'add_w3w_address_to_email', 10, 3 );
 
 	}
 
