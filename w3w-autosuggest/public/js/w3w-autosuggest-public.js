@@ -222,11 +222,9 @@ let components = [];
     attachLabelToComponents(_components);
 
     targets.forEach((target) => {
-      if (!woocommerce_checkout) {
+      if (!woocommerce_checkout && save_nearest_place) {
         const name = 'what3words_3wa_nearest_place';
-        const nearest_place = save_nearest_place
-          ? generateHiddenInput(name)
-          : null;
+        const nearest_place = generateHiddenInput(name);
         target.parentElement.append(nearest_place);
       }
 
@@ -401,18 +399,13 @@ let components = [];
     const components = [];
     for (let i = 0; i < targets.length; i++) {
       const target = targets[i];
-      const parent = target.parentNode;
       const component = generateAutosuggestComponent();
-      const sibling = target.nextSibling || target.previousSibling;
+
       if (enable_placeholder) {
         target.setAttribute('placeholder', placeholder);
       }
-      component.append(target);
-      if (sibling && sibling.tagName !== 'LABEL') {
-        parent.insertBefore(component, sibling);
-      } else {
-        parent.append(component);
-      }
+
+      $(target).wrap(component);
       components.push(component);
     }
 
