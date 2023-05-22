@@ -181,7 +181,43 @@ let components = [];
   if (woocommerce_checkout) {
     $(document.body).on('init_checkout', async () => {
       if (woocommerce_enabled) {
-        components = await woocommerceEnabled();
+        components = await woocommerceEnabled()
+          .then((_components) => {
+            const country = $( '#billing_country option:selected' ).first().val()
+            const same_shipping = document.querySelector('#ship-to-different-address-checkbox')
+              ? !document.querySelector('#ship-to-different-address-checkbox').checked
+              : true
+            _components[0].setAttribute('clip_to_country', country);
+            if (same_shipping) _components[1].setAttribute('clip_to_country', country);
+
+            $( '#billing_country' ).on( 'change' , () => {
+              const country = $( '#billing_country option:selected' ).first().val()
+              const same_shipping = document.querySelector('#ship-to-different-address-checkbox')
+                ? !document.querySelector('#ship-to-different-address-checkbox').checked
+                : true
+              _components[0].setAttribute('clip_to_country', country);
+              if (same_shipping) _components[1].setAttribute('clip_to_country', country);
+            });
+        
+            $( '#shipping_country' ).on( 'change' , () => {
+              const country = $( '#shipping_country option:selected' ).first().val()
+              _components[1].setAttribute('clip_to_country', country);
+            });
+
+            $( '#ship-to-different-address-checkbox' ).on( 'change', () => {
+              const same_shipping = document.querySelector('#ship-to-different-address-checkbox')
+                ? !document.querySelector('#ship-to-different-address-checkbox').checked
+                : true
+              if (same_shipping) {
+                _components[1].setAttribute('clip_to_country', _components[0].getAttribute('clip_to_country'));
+              } else {
+                const country = $( '#shipping_country option:selected' ).first().val()
+                _components[1].setAttribute('clip_to_country', country);
+              }
+            });
+
+            return _components
+          });
       } else {
         components = customSelector();
       }
@@ -218,23 +254,18 @@ let components = [];
 
     const targets = document.querySelectorAll(selector);
     const _components = attachComponentToTargets(targets);
-    const [component] = _components;
-    attachLabelToComponents(_components);
-
-    targets.forEach((target) => {
-      if (!woocommerce_checkout) {
+    const [component] = _components
+    attachLabelToComponents(_components)
+    
+    targets.forEach((target, index) => {
+      if (!woocommerce_checkout && save_nearest_place) {
         const name = 'what3words_3wa_nearest_place';
-        const nearest_place = save_nearest_place
-          ? generateHiddenInput(name)
-          : null;
-        target.parentElement.append(nearest_place);
+        const nearest_place = generateHiddenInput(name);
+        target.parentElement.append(nearest_place)
       }
 
-      attachEventListeners(
-        component,
-        woocommerce_checkout ? fields : default_fields
-      );
-    });
+      attachEventListeners(_components[index], woocommerce_checkout ? fields : default_fields);
+    })
 
     return _components;
   }
@@ -247,14 +278,14 @@ let components = [];
       Object.entries(fields).map(([, { selector }]) => {
         return new Promise((res) => {
           setTimeout(() => {
-            const targets = document.querySelectorAll(selector);
-            if (targets.length === 0) return;
+            const [target] = document.querySelectorAll(selector);
+            if (!target) return;
             const ignore =
-              targets[0].parentNode.getAttribute('class') ===
+              target.parentNode.getAttribute('class') ===
               'what3words-autosuggest-input-wrapper';
             if (ignore) return;
-
-            const [component] = attachComponentToTargets(targets);
+              
+            const [component] = attachComponentToTargets([target]);
             attachEventListeners(component, fields);
             res(component);
           }, 500);
@@ -401,19 +432,14 @@ let components = [];
     const components = [];
     for (let i = 0; i < targets.length; i++) {
       const target = targets[i];
-      const parent = target.parentNode;
       const component = generateAutosuggestComponent();
-      const sibling = target.nextSibling || target.previousSibling;
+
       if (enable_placeholder) {
         target.setAttribute('placeholder', placeholder);
       }
-      component.append(target);
-      if (sibling && sibling.tagName !== 'LABEL') {
-        parent.insertBefore(component, sibling);
-      } else {
-        parent.append(component);
-      }
-      components.push(component);
+
+      $(target).wrap(component);
+      components.push(document.getElementById(target.id).closest('what3words-autosuggest'));
     }
 
     return components;

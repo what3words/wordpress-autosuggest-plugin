@@ -205,6 +205,30 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
       require plugin_dir_path( __FILE__ ) . 'partials/add-address-to-order-page.php';
 
     }
+    
+    /**
+     * Add the 3wa to the customer details for the order email
+     * 
+     * @since 4.0.6
+     */
+    public function add_w3w_address_to_email( $array, $sent_to_admin, $order ) {
+
+      $order_id = $order->get_id();
+      $settings = get_option( $this->settings_name );
+      $label = $settings['enable_label'] ? $settings['label'] : 'what3words Address';
+      $words = get_post_meta( $order_id, '_shipping_w3w', true );
+      $nearest_place = get_post_meta( $order_id, '_shipping_nearest_place', true );
+
+      $value = $words;
+      if ( isset( $nearest_place ) ) $value .= ' (' . $nearest_place . ')';
+
+      $array = [
+        [ 'label' => $label, 'value' => $value ],
+      ];
+
+      return $array;
+
+    }
 
     public function set_order_data( $data, $order ) {
       

@@ -3,7 +3,7 @@ Contributors: what3words
 Tags: what3words, 3 word address, three word address, searchbox, search, address, validation, autosuggest, w3w
 Requires at least: 4.7
 Tested up to: 6.1
-Stable tag: 4.0.5
+Stable tag: 4.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,8 +145,12 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 
 == Changelog ==
 
+= 4.0.6 =
+* Released 2023.05.15
+* Fixed a bug that displays null when input selector used and save nearest place is not selected
+
 = 4.0.5 =
-* Released 2023.01.4
+* Released 2023.01.04
 * Fixed a bug where the autosuggest web-component was not being mounted correctly
 * JS script now uses native javascript selectors instead of JQuery
 
@@ -267,6 +271,9 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 * Initial release
 
 == Upgrade Notice ==
+
+= 4.0.6 =
+Fixed non-critical bug which caused null to be rendered to the DOM in some instances
 
 = 4.0.4 =
 Fixed critical error which surfaced when WooCommerce plugin is not installed
