@@ -278,14 +278,14 @@ let components = [];
       Object.entries(fields).map(([, { selector }]) => {
         return new Promise((res) => {
           setTimeout(() => {
-            const targets = document.querySelectorAll(selector);
-            if (targets.length === 0) return;
+            const [target] = document.querySelectorAll(selector);
+            if (!target) return;
             const ignore =
-              targets[0].parentNode.getAttribute('class') ===
+              target.parentNode.getAttribute('class') ===
               'what3words-autosuggest-input-wrapper';
             if (ignore) return;
-
-            const [component] = attachComponentToTargets(targets);
+              
+            const [component] = attachComponentToTargets([target]);
             attachEventListeners(component, fields);
             res(component);
           }, 500);
@@ -439,7 +439,7 @@ let components = [];
       }
 
       $(target).wrap(component);
-      components.push(component);
+      components.push(document.getElementById(target.id).closest('what3words-autosuggest'));
     }
 
     return components;
