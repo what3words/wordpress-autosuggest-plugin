@@ -214,6 +214,7 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
     public function add_w3w_address_to_email( $array, $sent_to_admin, $order ) {
 
       $order_id = $order->get_id();
+      $settings = get_option( $this->settings_name );
       $label = $settings['enable_label'] ? $settings['label'] : 'w3w Address';
       $words = get_post_meta( $order_id, '_shipping_w3w', true );
 

@@ -49,19 +49,19 @@ commands:
       - add_ssh_keys:
           fingerprints: << parameters.fingerprint >>
   setup_environment:
-    description: "Export pipeline number as env var"
+    description: 'Export pipeline number as env var'
     parameters:
       version_path:
         type: string
         default: ./
     steps:
       - run:
-          name: "Export build time env vars"
+          name: 'Export build time env vars'
           command: |
             echo "export PIPELINE_NUM=<< pipeline.number >>" >> $BASH_ENV
             echo "export VERSION=$(cat << parameters.version_path >> | grep '\"Version\":' | sed -e 's/ \* Version:           //')" >> $BASH_ENV
   jobstatus:
-    description: "Send customised status messages to Slack"
+    description: 'Send customised status messages to Slack'
     steps:
       - slack/status:
           failure_message: ':red_circle: ${CIRCLE_JOB} job of pipeline ${PIPELINE_NUM} for ${CIRCLE_TAG:-$CIRCLE_BRANCH} by ${CIRCLE_USERNAME} has failed'
@@ -80,7 +80,7 @@ commands:
             git config --global user.name << parameters.author >>
             ssh-keyscan github.com >> ~/.ssh/known_hosts
   git_tag:
-    description: "Tag the project"
+    description: 'Tag the project'
     parameters:
       tag:
         type: string
@@ -94,7 +94,7 @@ commands:
             git tag -f << parameters.tag >>
           when: << parameters.when >>
   git_push_tags:
-    description: "Push tags to remote repository"
+    description: 'Push tags to remote repository'
     steps:
       - run:
           name: git push tags
@@ -131,6 +131,10 @@ jobs:
           command: |
             cd ~/project/test
             npx cypress run --record
+      - store_artifacts:
+          path: ~/project/test/cypress/videos
+          destination: videos
+
   publish:
     executor: publish-executor
     steps:
@@ -159,7 +163,7 @@ jobs:
     steps:
       - checkout
       - add_fingerprint:
-          fingerprint: "3a:f1:b4:f8:ea:43:76:68:8e:c0:f6:6c:09:d3:e9:14"
+          fingerprint: '3a:f1:b4:f8:ea:43:76:68:8e:c0:f6:6c:09:d3:e9:14'
       - setup_environment
       - git_config:
           email: circleci@what3words.com
@@ -173,3 +177,17 @@ workflows:
     jobs:
       - test:
           context: org-global
+      - tag:
+          context: org-global
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
+      - publish:
+          context: org-global
+          requires:
+            - tag
+          filters:
+            branches:
+              only: master
