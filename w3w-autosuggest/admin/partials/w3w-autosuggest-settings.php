@@ -3,7 +3,7 @@
     <div class="row g-0">
       <div class="col-12 fs-3 mb-3">Settings</div>
       <form class="needs-validation" id="settings" method="POST" action="<?php echo $this->settings_url; ?>">
-        <input type="hidden" name="settings_form">
+        <input type="hidden" name="settings_form" value="1">
         <!--- Field --->
         <div class="col-12 ps-1 mb-3 form-check d-flex align-items-center">
           <input

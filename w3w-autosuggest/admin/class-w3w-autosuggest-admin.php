@@ -259,12 +259,18 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
 
       $settings = get_option( $this->settings_name );
 
-      if ( isset( $_POST ) && $_POST ) {
-        
+      
+      if ( isset( $_POST ) ) {
+
+        if ( isset( $_POST['api_key_form'] ) ) {
+          $settings['api_key'] = $_POST['api_key'];
+        }
+
         if ( isset( $_POST['settings_form'] ) ) {
           $settings['return_coordinates'] = false;
           $settings['save_nearest_place'] = false;
           $settings['enable_label'] = false;
+          $settings['enable_placeholder'] = false;
         }
 
         if ( isset( $_POST['advanced_form'] ) ) {
@@ -279,13 +285,30 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
           if ( $key === 'woocommerce_enabled' ) $settings[$key] = $val === 'on' ? true : false;
           else if ( $key === 'return_coordinates' && $val === 'on' ) $settings[$key] = true;
           else if ( $key === 'save_nearest_place' && $val === 'on' ) $settings[$key] = true;
-          else if ( $key === 'enable_label' && $val === 'on' ) $settings[$key] = true;
-          else if ( $key === 'enable_placeholder' ) $settings[$key] = $val === 'on' ? true : false;
-          else if ( $key === 'enable_clip_to_country' ) $settings[$key] = $val === 'on' ? true : false;
-          else if ( $key === 'enable_clip_to_circle' ) $settings[$key] = $val === 'on' ? true : false;
-          else if ( $key === 'enable_clip_to_bounding_box' ) $settings[$key] = $val === 'on' ? true : false;
-          else if ( $key === 'enable_clip_to_polygon' ) $settings[$key] = $val === 'on' ? true : false;
-          else $settings[$key] = $val;
+          else if ( $key === 'enable_label' && $val === 'on' ) {
+            $settings[$key] = true;
+            $settings['label'] = $_POST['label'];
+          }
+          else if ( $key === 'enable_placeholder' ) {
+            $settings[$key] = $val === 'on' ? true : false;
+            $settings['placeholder'] = $_POST['placeholder'];
+          }
+          else if ( $key === 'enable_clip_to_country' ) {
+            $settings[$key] = $val === 'on' ? true : false;
+            $settings['clip_to_country'] = $_POST['clip_to_country'];
+          }
+          else if ( $key === 'enable_clip_to_circle' ) {
+            $settings[$key] = $val === 'on' ? true : false;
+            $settings['clip_to_circle'] = $_POST['clip_to_circle'];
+          }
+          else if ( $key === 'enable_clip_to_bounding_box' ) {
+            $settings[$key] = $val === 'on' ? true : false;
+            $settings['clip_to_bounding_box'] = $_POST['clip_to_bounding_box'];
+          }
+          else if ( $key === 'enable_clip_to_polygon' ) {
+            $settings[$key] = $val === 'on' ? true : false;
+            $settings['clip_to_polygon'] = $_POST['clip_to_polygon'];
+          }
         }
 
         update_option( $this->settings_name, $settings );
