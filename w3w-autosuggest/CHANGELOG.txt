@@ -1,3 +1,16 @@
+= 4.0.6 =
+* Released 2023.05.15
+* Fixed a bug that displays null when input selector used and save nearest place is not selected
+
+= 4.0.5 =
+* Released 2023.01.04
+* Fixed a bug where the autosuggest web-component was not being mounted correctly
+* JS script now uses native javascript selectors instead of JQuery
+
+= 4.0.4 =
+* Released 2022.05.31
+* Fixed critical error which surfaced when WooCommerce plugin is not installed
+
 = 4.0.3 =
 * Released 2022.05.03
 * Update to improve integration on checkout page with Fluid Checkout and other plugins.
