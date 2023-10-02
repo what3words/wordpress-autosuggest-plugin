@@ -311,7 +311,13 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
           }
         }
 
-        update_option( $this->settings_name, $settings );
+        if (
+          isset( $_POST['api_key_form'] ) ||
+          isset( $_POST['settings_form'] ) ||
+          isset( $_POST['advanced_form']
+        ) {
+          update_option( $this->settings_name, $settings );
+        }
 
       }
 
