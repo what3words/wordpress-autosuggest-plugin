@@ -188,7 +188,7 @@ let components = [];
               ? !document.querySelector('#ship-to-different-address-checkbox').checked
               : true
             _components[0].setAttribute('clip_to_country', country);
-            if (same_shipping) _components[1].setAttribute('clip_to_country', country);
+            if (same_shipping && country) _components[1].setAttribute('clip_to_country', country);
 
             $( '#billing_country' ).on( 'change' , () => {
               const country = $( '#billing_country option:selected' ).first().val()
@@ -196,23 +196,24 @@ let components = [];
                 ? !document.querySelector('#ship-to-different-address-checkbox').checked
                 : true
               _components[0].setAttribute('clip_to_country', country);
-              if (same_shipping) _components[1].setAttribute('clip_to_country', country);
+              if (same_shipping && country) _components[1].setAttribute('clip_to_country', country);
             });
         
             $( '#shipping_country' ).on( 'change' , () => {
               const country = $( '#shipping_country option:selected' ).first().val()
-              _components[1].setAttribute('clip_to_country', country);
+              if (country) _components[1].setAttribute('clip_to_country', country);
             });
 
             $( '#ship-to-different-address-checkbox' ).on( 'change', () => {
               const same_shipping = document.querySelector('#ship-to-different-address-checkbox')
                 ? !document.querySelector('#ship-to-different-address-checkbox').checked
                 : true
+              const country_clip_1 = _components[0].getAttribute('clip_to_country');
+              const country_clip_2 = $( '#shipping_country option:selected' ).first().val();
               if (same_shipping) {
-                _components[1].setAttribute('clip_to_country', _components[0].getAttribute('clip_to_country'));
+                if (country_clip_1) _components[1].setAttribute('clip_to_country', country_clip_1);
               } else {
-                const country = $( '#shipping_country option:selected' ).first().val()
-                _components[1].setAttribute('clip_to_country', country);
+                if (country_clip_2) _components[1].setAttribute('clip_to_country', country_clip_2);
               }
             });
 
