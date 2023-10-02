@@ -86,6 +86,32 @@ describe('Managed fields', () => {
         })
       })
     })
+
+    // Skipping this test as the assertion does not validate what we would like as the country dropdown value overrides
+    // the clip to country settings and so this test is redundant. Need to find a way to stop this default value being
+    // set on page load.
+    describe.skip('And the component is configured with clip to country', () => {
+      beforeEach(() => {
+        cy.toggleAdvancedSettings()
+          .toggleClipToCountry()
+          .getElementByDataTestId('clip_to_country').focus().type('FR')
+          .saveAdvanced()
+      })
+
+      describe('When a customer gets to checkout', () => {
+        beforeEach(() =>
+          cy.visit('/shop')
+            .get('a.button').click()
+            .visit('/cart')
+            .get('a.checkout-button').click()
+        )
+
+        it('Then the component should load with clip to country configured', () => {
+          cy.get('#w3w-billing_field what3words-autosuggest').should('have.attr', 'clip_to_country', 'GB')
+          cy.get('#w3w-shipping_field what3words-autosuggest').should('have.attr', 'clip_to_country', 'GB')
+        })
+      })
+    })
   })
 
   describe('Given WooCommerce is enabled and autosuggest is added to existing billing field', () => {

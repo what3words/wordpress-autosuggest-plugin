@@ -145,6 +145,11 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 
 == Changelog ==
 
+= 4.0.7 =
+* Released 2023.10.02
+* Patched a security vulnerability that captured all $_POST values and stored them in the DB
+* Fixed a bug that did not allow clip to country to be deselected
+
 = 4.0.6 =
 * Released 2023.05.15
 * Fixed a bug that displays null when input selector used and save nearest place is not selected

@@ -59,7 +59,7 @@ $settings = get_option( $this->settings_name );
               </div>
               <?php } ?>
               <form method="POST" action="<?php echo $this->settings_url; ?>">
-                <input type="hidden" name="api_key_form">
+                <input type="hidden" name="api_key_form" value="1">
                 <div class="col-12 mb-3">
                   <div class="row g-1">
                     <div class="col-12">

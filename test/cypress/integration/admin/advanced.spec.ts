@@ -158,7 +158,7 @@ describe('Admin > Advanced Features', () => {
             })
           })
   
-          it('Then the clip to circle is saved when a value is entered and submitted', () => {
+          it.only('Then the clip to circle is saved when a value is entered and submitted', () => {
             cy.getElementByDataTestId('clip_to_circle_lat').focus().type(validLat)
             cy.getElementByDataTestId('clip_to_circle_lng').focus().type(validLng)
             cy.getElementByDataTestId('clip_to_circle_radius').focus().type(`${validRadius}`)

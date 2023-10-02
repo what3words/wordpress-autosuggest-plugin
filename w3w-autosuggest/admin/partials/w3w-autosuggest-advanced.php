@@ -17,7 +17,7 @@
             method="POST"
             action="<?php echo $this->settings_url; ?>"
             data-testid="advanced_form">
-            <input type="hidden" name="advanced_form">
+            <input type="hidden" name="advanced_form" value="1">
             <!--- Field --->
             <div class="col-12 mb-3 pb-3 ps-1 border-bottom">
               <label class="fw-normal d-flex flex-row mb-3" for="enable_placeholder">
