@@ -476,7 +476,7 @@ let components = [];
     w3wComponent.setAttribute('api_key', api_key);
     w3wComponent.setAttribute('return_coordinates', true);
 
-    if (enable_clip_to_country) {
+    if (enable_clip_to_country && clip_to_country) {
       w3wComponent.setAttribute('clip_to_country', clip_to_country);
     }
     if (enable_clip_to_polygon) {
