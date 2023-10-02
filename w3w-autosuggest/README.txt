@@ -148,7 +148,6 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 = 4.0.7 =
 * Released 2023.10.02
 * Patched a security vulnerability that captured all $_POST values and stored them in the DB
-* Updated the what3words javascript components library to v4.2.0
 * Fixed a bug that did not allow clip to country to be deselected
 
 = 4.0.6 =

@@ -66,9 +66,11 @@ if ( !defined( 'W3W_SETTINGS_NAME' ) ) {
 
 /**
  * Defines the JS-library to point to (includes the version of the JS-library)
+ * Testing found that this version cannot be upgraded past 4.0.6 without making a tests fail in CI.
+ * @see test/cypress/integration/public/managed.spec.ts:84
  */
 if ( !defined( 'W3W_JS_LIB_CDN_URL' ) ) {
-  define ( 'W3W_JS_LIB_CDN_URL', 'https://cdn.what3words.com/javascript-components@4.2.0/dist/what3words' );
+  define ( 'W3W_JS_LIB_CDN_URL', 'https://cdn.what3words.com/javascript-components@4.0.6/dist/what3words' );
 }
 
 /**
