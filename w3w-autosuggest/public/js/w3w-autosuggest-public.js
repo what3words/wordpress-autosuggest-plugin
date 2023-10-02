@@ -258,7 +258,7 @@ let components = [];
     const [component] = _components;
     attachLabelToComponents(_components);
 
-    targets.forEach((target) => {
+    targets.forEach((target, index) => {
       if (!woocommerce_checkout && save_nearest_place) {
         const name = 'what3words_3wa_nearest_place';
         const nearest_place = generateHiddenInput(name);

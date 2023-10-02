@@ -290,6 +290,7 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
 
         foreach ( $_POST as $key => $val ) {
           if ( $key === 'woocommerce_enabled' ) $settings[$key] = $val === 'on' ? true : false;
+          if ( $key === 'selector' ) $settings[$key] = $val;
           else if ( $key === 'return_coordinates' && $val === 'on' ) $settings[$key] = true;
           else if ( $key === 'save_nearest_place' && $val === 'on' ) $settings[$key] = true;
           else if ( $key === 'enable_label' && $val === 'on' ) {
@@ -307,10 +308,17 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
           else if ( $key === 'enable_clip_to_circle' ) {
             $settings[$key] = $val === 'on' ? true : false;
             $settings['clip_to_circle'] = $_POST['clip_to_circle'];
+            $settings['clip_to_circle_lat'] = $_POST['clip_to_circle_lat'];
+            $settings['clip_to_circle_lng'] = $_POST['clip_to_circle_lng'];
+            $settings['clip_to_circle_radius'] = $_POST['clip_to_circle_radius'];
           }
           else if ( $key === 'enable_clip_to_bounding_box' ) {
             $settings[$key] = $val === 'on' ? true : false;
             $settings['clip_to_bounding_box'] = $_POST['clip_to_bounding_box'];
+            $settings['clip_to_bounding_box_sw_lat'] = $_POST['clip_to_bounding_box_sw_lat'];
+            $settings['clip_to_bounding_box_sw_lng'] = $_POST['clip_to_bounding_box_sw_lng'];
+            $settings['clip_to_bounding_box_ne_lat'] = $_POST['clip_to_bounding_box_ne_lat'];
+            $settings['clip_to_bounding_box_ne_lng'] = $_POST['clip_to_bounding_box_ne_lng'];
           }
           else if ( $key === 'enable_clip_to_polygon' ) {
             $settings[$key] = $val === 'on' ? true : false;

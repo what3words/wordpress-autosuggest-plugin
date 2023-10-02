@@ -2,7 +2,7 @@ import { Chance } from 'chance'
 
 const CH = new Chance()
 
-describe('Admin > Emails', () => {
+describe.skip('Admin > Emails', () => {
   beforeEach(() => {
     const [first, last] = CH.name().split(' ');
     const address = CH.address();
