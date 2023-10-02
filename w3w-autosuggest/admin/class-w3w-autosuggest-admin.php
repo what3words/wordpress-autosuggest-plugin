@@ -260,7 +260,14 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
       $settings = get_option( $this->settings_name );
 
       
-      if ( isset( $_POST ) ) {
+      if (
+        isset( $_POST ) &&
+        (
+          isset( $_POST['api_key_form'] ) ||
+          isset( $_POST['settings_form'] ) ||
+          isset( $_POST['advanced_form'] )
+        )
+      ) {
 
         if ( isset( $_POST['api_key_form'] ) ) {
           $settings['api_key'] = $_POST['api_key'];
@@ -311,13 +318,7 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
           }
         }
 
-        if (
-          isset( $_POST['api_key_form'] ) ||
-          isset( $_POST['settings_form'] ) ||
-          isset( $_POST['advanced_form'] )
-        ) {
-          update_option( $this->settings_name, $settings );
-        }
+        update_option( $this->settings_name, $settings );
 
       }
 
