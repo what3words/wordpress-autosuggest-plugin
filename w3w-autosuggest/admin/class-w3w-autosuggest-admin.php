@@ -215,15 +215,11 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
 
       $order_id = $order->get_id();
       $settings = get_option( $this->settings_name );
-      $label = $settings['enable_label'] ? $settings['label'] : 'what3words Address';
+      $label = $settings['enable_label'] ? $settings['label'] : 'w3w Address';
       $words = get_post_meta( $order_id, '_shipping_w3w', true );
-      $nearest_place = get_post_meta( $order_id, '_shipping_nearest_place', true );
-
-      $value = $words;
-      if ( isset( $nearest_place ) ) $value .= ' (' . $nearest_place . ')';
 
       $array = [
-        [ 'label' => $label, 'value' => $value ],
+        [ 'label' => $label, 'value' => $words ],
       ];
 
       return $array;

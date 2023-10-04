@@ -153,9 +153,11 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 = 4.0.6 =
 * Released 2023.05.15
 * Fixed a bug that displays null when input selector used and save nearest place is not selected
+* Display what3words address on order emails
 
 = 4.0.5 =
 * Released 2023.01.04
+* Autosuggest not being rendered correctly on certain checkout pages
 * Fixed a bug where the autosuggest web-component was not being mounted correctly
 * JS script now uses native javascript selectors instead of JQuery
 
