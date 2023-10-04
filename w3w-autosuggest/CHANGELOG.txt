@@ -1,3 +1,7 @@
+= 4.0.8 =
+* Released 2023.10.04
+* Fixed a bug that did not populate clip to country correctly with certain themes
+
 = 4.0.7 =
 * Released 2023.10.02
 * Patched a security vulnerability that captured all $_POST values and stored them in the DB
