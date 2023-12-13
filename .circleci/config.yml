@@ -159,7 +159,7 @@ jobs:
             svn ci -m "Tagging release version ${VERSION}" --username ${SVN_USERNAME} --password ${SVN_PASSWORD}
 
   tag:
-    executor: test-executor
+    executor: publish-executor
     steps:
       - checkout
       - add_fingerprint:
