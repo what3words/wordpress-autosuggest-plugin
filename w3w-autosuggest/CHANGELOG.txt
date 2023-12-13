@@ -1,3 +1,9 @@
+= 4.0.9 =
+* Released 2023.12.13
+* Updated plugin description
+* Updated screenshots
+* Added video on description
+
 = 4.0.8 =
 * Released 2023.10.04
 * Fixed a bug that did not populate clip to country correctly with certain themes
