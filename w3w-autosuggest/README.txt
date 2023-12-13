@@ -75,7 +75,7 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 == Changelog ==
 
 = 4.0.9 =
-* Released 2023.12.12
+* Released 2023.12.13
 * Updated plugin description
 * Updated screenshots
 * Added video on description
