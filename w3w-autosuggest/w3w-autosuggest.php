@@ -69,7 +69,7 @@ if ( !defined( 'W3W_SETTINGS_NAME' ) ) {
  * @see test/cypress/integration/public/managed.spec.ts:84
  */
 if ( !defined( 'W3W_JS_LIB_CDN_URL' ) ) {
-  define ( 'W3W_JS_LIB_CDN_URL', 'https://cdn.what3words.com/javascript-components@4.2.1/dist/what3words' );
+  define ( 'W3W_JS_LIB_CDN_URL', 'https://cdn.what3words.com/javascript-components@4.2.2/dist/what3words' );
 }
 
 /**
