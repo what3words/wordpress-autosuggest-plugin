@@ -1,4 +1,5 @@
 ![what3words Address Field](/assets/banner-772x250.png)
+
 # what3words Autosuggest Plugin
 
 The what3words Autosuggest helps you capture what3words addresses at checkout, using an address validation field. By giving a what3words address, your customers can accurately pinpoint their desired delivery destination.
@@ -19,18 +20,17 @@ Your customers will have the option of providing the what3words address for thei
 
 This plugin allows you to easily add capturing and validating a what3words address to a form on your WordPress powered site. Powered by our [Autosuggest Component](https://developer.what3words.com/components), the what3words address field returns suggestions based on full or partial what3words addresses, helping users with the following types of input error:
 
-* typing errors
-* spelling errors
-* misremembered words (e.g. singular vs plural) or words in the wrong order.
+- typing errors
+- spelling errors
+- misremembered words (e.g. singular vs plural) or words in the wrong order.
 
 We recommend using the plugin when you want to capture a precise location from a user, such as a customer's front door or specific entrance of a larger building.
 
-
 ## Contents
 
-* [Installation](docs/install.md)
-* [Configuration](docs/configuration.md)
-* [FAQ](docs/faq.md)
+- [Installation](docs/install.md)
+- [Configuration](docs/configuration.md)
+- [FAQ](docs/faq.md)
 
 ### More about what3words
 
@@ -40,11 +40,9 @@ Find our full [developer documentation](https://developer.what3words.com).
 
 Learn more about our [Privacy Policy](https://what3words.com/privacy) or [Terms & Conditions](https://what3words.com/terms).
 
-
 ### Credit
 
 This project was extended from the [WordPress Plugin Boilerplate](docs/boilerplate.md) and its source can be found [here](https://github.com/DevinVinson/WordPress-Plugin-Boilerplate).
-
 
 ## Contributing to the project
 
@@ -58,10 +56,9 @@ In order to contribute to this project you should follow the guide to modifying 
 
 3. Commit your changes to a suitably named branch and open a PR with the relevant details of your changes included. If you are working from a JIRA ticket you should try to include the name of the JIRA ticket in your commit in square braces, e.g. _"[TT-1234] My PR which resolves issues X"_
 
-__TODO__
+**TODO**
 
 4. Once your PR has been reviewed and merged the CI pipeline should automatically deploy your changes to the WordPress plugin version control repository (SVN).
-
 
 ### Testing changes
 
