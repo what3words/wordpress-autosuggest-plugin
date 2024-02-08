@@ -16,7 +16,7 @@
  * Plugin Name:       what3words Address Field
  * Plugin URI:        https://github.com/what3words/wordpress-autosuggest-plugin
  * Description:       Official plugin to allow customers to enter and validate a what3words address on your checkout for accurate deliveries
- * Version:           4.0.9
+ * Version:           4.0.10
  * Author:            what3words
  * Author URI:        https://what3words.com
  * License:           GPL-2.0+
@@ -55,7 +55,7 @@ if ( !defined( 'W3W_AUTOSUGGEST_PLUGIN_BASENAME' ) ) {
  * Current plugin version.
  */
 if ( !defined( 'W3W_PLUGIN_VERSION' ) ) {
-  define( 'W3W_PLUGIN_VERSION', '4.0.9' );
+  define( 'W3W_PLUGIN_VERSION', '4.0.10' );
 }
 /**
  * Plugin settings name
@@ -66,11 +66,10 @@ if ( !defined( 'W3W_SETTINGS_NAME' ) ) {
 
 /**
  * Defines the JS-library to point to (includes the version of the JS-library)
- * Testing found that this version cannot be upgraded past 4.0.6 without making a tests fail in CI.
  * @see test/cypress/integration/public/managed.spec.ts:84
  */
 if ( !defined( 'W3W_JS_LIB_CDN_URL' ) ) {
-  define ( 'W3W_JS_LIB_CDN_URL', 'https://cdn.what3words.com/javascript-components@4.0.6/dist/what3words' );
+  define ( 'W3W_JS_LIB_CDN_URL', 'https://cdn.what3words.com/javascript-components@4.2.2/dist/what3words' );
 }
 
 /**
