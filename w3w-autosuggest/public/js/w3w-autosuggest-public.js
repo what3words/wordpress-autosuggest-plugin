@@ -263,7 +263,6 @@ let components = [];
 
     const targets = document.querySelectorAll(selector);
     const _components = attachComponentToTargets(targets);
-    const [component] = _components;
     attachLabelToComponents(_components);
 
     targets.forEach((target, index) => {
@@ -482,7 +481,7 @@ let components = [];
       })
     );
     w3wComponent.setAttribute('api_key', api_key);
-    w3wComponent.setAttribute('return_coordinates', true);
+    w3wComponent.setAttribute('return_coordinates', return_coordinates);
 
     if (enable_clip_to_country && clip_to_country) {
       w3wComponent.setAttribute('clip_to_country', clip_to_country);
