@@ -3,7 +3,7 @@ Contributors: what3words
 Tags: what3words, 3 word address, three word address, searchbox, search, address, validation, autosuggest, w3w
 Requires at least: 4.7
 Tested up to: 6.4
-Stable tag: 4.0.10
+Stable tag: 4.0.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,6 +73,10 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 4. Pass on what3words addresses to our delivery partners DHL, DPD, Evri and Yodel
 
 == Changelog ==
+
+= 4.0.11 =
+* Release 2024.05.16
+* Fixed a bug that overrides return_coordinates value (always set to true)
 
 = 4.0.10 =
 * Release 2024.02.08
