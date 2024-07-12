@@ -144,7 +144,6 @@ Cypress.Commands.add('completeCheckoutForm', (
     const selector = isBilling ? '#w3w-billing' : '#w3w-shipping';
     cy.get(selector).scrollIntoView();
     cy.get(selector).focus();
-    cy.get(selector).click({ force: true });
     cy.get(selector).clear();
     cy.get(selector).type(hint)
       .wait('@autosuggest')
