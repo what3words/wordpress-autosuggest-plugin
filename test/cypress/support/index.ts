@@ -142,8 +142,8 @@ Cypress.Commands.add('completeCheckoutForm', (
   if (hasSeparate3waField) {
     cy.get(`${fieldPrefix}address_1`).focus().clear().type(address)
     const selector = isBilling ? '#w3w-billing' : '#w3w-shipping';
-    cy.get(selector).scrollIntoView();
-    cy.get(selector).focus();
+    cy.get(selector).scrollIntoView({ offset: { top: 100, left: 0 } });
+    cy.get(selector).click();
     cy.get(selector).clear();
     cy.get(selector).type(hint)
       .wait('@autosuggest')
