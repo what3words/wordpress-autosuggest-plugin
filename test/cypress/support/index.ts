@@ -141,13 +141,14 @@ Cypress.Commands.add('completeCheckoutForm', (
 
   if (hasSeparate3waField) {
     cy.get(`${fieldPrefix}address_1`).focus().clear().type(address)
-
-    cy.get(isBilling ? '#w3w-billing' : '#w3w-shipping').scrollIntoView();
-    cy.get(isBilling ? '#w3w-billing' : '#w3w-shipping').click();
-    cy.get(isBilling ? '#w3w-billing' : '#w3w-shipping').clear();
-    cy.get(isBilling ? '#w3w-billing' : '#w3w-shipping').type(hint)
+    const selector = isBilling ? '#w3w-billing' : '#w3w-shipping';
+    cy.get(selector).scrollIntoView();
+    cy.get(selector).focus();
+    cy.get(selector).click({ force: true });
+    cy.get(selector).clear();
+    cy.get(selector).type(hint)
       .wait('@autosuggest')
-      .get(isBilling ? '#w3w-billing' : '#w3w-shipping')
+      .get(selector)
       .closest('what3words-autosuggest')
       .find('[data-testid=suggestion-0]').scrollIntoView().click({ force: true })
   } else {
