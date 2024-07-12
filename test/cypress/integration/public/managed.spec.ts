@@ -26,7 +26,7 @@ describe('Managed fields', () => {
     describe('When a customer gets to checkout', () => {
       beforeEach(() =>
         cy.visit('/shop')
-          .get('a.button').click()
+          .get('a.add_to_cart_button').click()
           .visit('/cart')
           .get('a.checkout-button').click()
       )
