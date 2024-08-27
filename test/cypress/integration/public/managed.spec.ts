@@ -23,6 +23,11 @@ describe('Managed fields', () => {
   })
 
   describe('Given WooCommerce is enabled', () => {
+    beforeEach(() => {
+      cy.selectManagedInput()
+        .getElementByDataTestId('enable_w3w_managed')
+        .should('be.checked');
+    });
     describe('When a customer gets to checkout', () => {
       beforeEach(() =>
         cy.visit('/shop')
