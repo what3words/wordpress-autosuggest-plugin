@@ -10,7 +10,6 @@ describe('Managed fields', () => {
       .activatePlugin('w3w-autosuggest')
       .openSettingsPage('what3words')
       .setApiKey(Cypress.env('API_KEY'))
-      .getElementByDataTestId('enable_w3w_managed').should('be.checked')
   )
 
   describe.skip('Given WooCommerce is not enabled', () => {

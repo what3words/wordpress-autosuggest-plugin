@@ -204,9 +204,7 @@ Cypress.Commands.add(
   ) => {
     const fieldPrefix = isBilling ? '#billing_' : '#shipping_';
     const selectPrefix = isBilling ? '#select2-billing_' : '#select2-shipping_';
-    cy.intercept(/api.what3words.com\/v3\/autosuggest/i)
-      .as('autosuggest')
-      .get(`${fieldPrefix}first_name`)
+    cy.get(`${fieldPrefix}first_name`)
       .focus()
       .clear()
       .type(first)
@@ -227,35 +225,30 @@ Cypress.Commands.add(
       .get('li')
       .contains('United Kingdom')
       .click();
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
     if (hasSeparate3waField) {
+      cy.get('what3words-autosuggest').should('not.be.undefined');
       cy.get(`${fieldPrefix}address_1`).focus().clear().type(address);
       cy.get(isBilling ? '#w3w-billing' : '#w3w-shipping', { timeout: 10000 })
+        .scrollIntoView()
         .click({ force: true })
         .clear()
         .type(hint)
         .wait('@autosuggest');
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(1000);
       cy.get(isBilling ? '#w3w-billing' : '#w3w-shipping', { timeout: 10000 })
         .closest('what3words-autosuggest')
+        .scrollIntoView()
         .find('[data-testid="suggestion-0"]')
         .click({ force: true });
     } else {
       if (address) {
-        cy.get(`${fieldPrefix}address_1`)
-          .click({ force: true })
-          .clear()
-          .type(address);
+        cy.get(`${fieldPrefix}address_1`).focus().clear().type(address);
       } else {
         cy.get(`${fieldPrefix}address_1`)
+          .scrollIntoView()
           .click({ force: true })
           .clear()
           .type(hint)
           .wait('@autosuggest');
-        // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.wait(1000);
         cy.get(`${fieldPrefix}address_1`)
           .closest('what3words-autosuggest')
           .find('[data-testid="suggestion-0"]')
