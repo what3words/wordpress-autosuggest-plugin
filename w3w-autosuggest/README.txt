@@ -75,7 +75,7 @@ Have any questions? Want to learn more about how the what3words Address Field pl
 == Changelog ==
 
 = 4.0.13 =
-* Release 2024.08.27
+* Release 2024.08.28
 * Updated autosuggest component from version 4.8.0 to 4.9.0
 
 = 4.0.12 =
