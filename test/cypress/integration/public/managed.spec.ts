@@ -10,6 +10,7 @@ describe('Managed fields', () => {
       .activatePlugin('w3w-autosuggest')
       .openSettingsPage('what3words')
       .setApiKey(Cypress.env('API_KEY'))
+      .getElementByDataTestId('enable_w3w_managed').should('be.checked')
   )
 
   describe.skip('Given WooCommerce is not enabled', () => {
@@ -22,11 +23,6 @@ describe('Managed fields', () => {
   })
 
   describe('Given WooCommerce is enabled', () => {
-    beforeEach(() => {
-      cy.selectManagedInput()
-        .getElementByDataTestId('enable_w3w_managed')
-        .should('be.checked');
-    });
     describe('When a customer gets to checkout', () => {
       beforeEach(() =>
         cy.visit('/shop')
