@@ -27,9 +27,9 @@ jobs:
       - name: Copy to trunk
         run: |
           cp -r ./w3w-autosuggest/* ~/svn/trunk
-      - name: Create a release from ${VERSION}
+      - name: Create a release from ${{ github.ref_name }}
         run: |
-          svn cp ~/svn/trunk ~/svn/tags/release-${VERSION} --trust-server-cert --non-interactive
+          svn cp "~/svn/trunk/" "~/svn/tags/release-${VERSION}/" --trust-server-cert --non-interactive
       - name: Commit changes to SVN
         run: |
           pushd ~/svn
