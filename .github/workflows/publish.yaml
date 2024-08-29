@@ -22,12 +22,11 @@ jobs:
       - name: Copy to trunk
         run: |
           cp -r ./w3w-autosuggest/* ~/svn/trunk
-      # - name: Copy to tag
-      #   run: |
-      #     svn cp ~/svn/trunk ~/svn/tags/release-$GITHUB_REF_NAME --trust-server-cert --non-interactive
-      - name: Debug
+      - name: Create a release from ${{ github.ref_name }}
         run: |
-          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
-          echo "Tag name from github.ref_name: ${{  github.ref_name }}"
-          ls .
-          pwd
+          svn cp ~/svn/trunk ~/svn/tags/release-${{ github.ref_name }} --trust-server-cert --non-interactive
+      - name: Commit changes to SVN
+        run: |
+          pushd ~/svn
+          svn ci -m "${VERSION} release" --username "${{ vars.WP_SVN_USERNAME }}" --password "${{ secrets.WP_SVN_PASSWORD }}" --trust-server-cert --non-interactive
+          popd
