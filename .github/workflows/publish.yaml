@@ -1,12 +1,7 @@
 name: Tagged release
 
 on:
-  pull_request:
-    branches:
-      - TT-9616
   push:
-    branches:
-      - TT-9616
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 jobs:
@@ -18,9 +13,21 @@ jobs:
         run: |
           sudo apt-get install subversion -y
       - uses: actions/checkout@v4
-      - run: |
-          ls .
-          pwd
       - name: Checkout from Wordpress SVN
         run: |
-          svn co https://plugins.svn.wordpress.org:443/3-word-address-validation-field ./svn --trust-server-cert --non-interactive
+          svn co https://plugins.svn.wordpress.org:443/3-word-address-validation-field ~/svn --trust-server-cert --non-interactive
+      - name: Copy to assets
+        run: |
+          cp -r ./assets/* ~/svn/assets
+      - name: Copy to trunk
+        run: |
+          cp -r ./w3w-autosuggest/* ~/svn/trunk
+      # - name: Copy to tag
+      #   run: |
+      #     svn cp ~/svn/trunk ~/svn/tags/release-$GITHUB_REF_NAME --trust-server-cert --non-interactive
+      - name: Debug
+        run: |
+          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+          echo "Tag name from github.ref_name: ${{  github.ref_name }}"
+          ls .
+          pwd
