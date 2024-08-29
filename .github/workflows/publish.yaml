@@ -17,4 +17,4 @@ jobs:
       - run: |
           sudo apt-get install subversion -y
       - run: |
-          svn --version
+          svn co https://plugins.svn.wordpress.org:443/3-word-address-validation-field /svn --trust-server-cert --non-interactive
