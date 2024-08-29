@@ -2,14 +2,17 @@ name: Tagged release
 
 on:
   pull_request:
-    branches: [ 'TT-9616' ]
+    branches:
+      - TT-9616
   push:
-    branches: [ 'TT-9616' ]
-    tags: [ 'v[0-9]+.[0-9]+.[0-9]+' ]
+    branches:
+      - TT-9616
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 jobs:
   publish:
     name: Publish to SVN
-    runs-on: gha-internal-amd64
+    runs-on: ubuntu-latest
     steps:
       - run: |
           sudo apt-get install subversion -y
