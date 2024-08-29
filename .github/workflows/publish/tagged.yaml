@@ -2,8 +2,10 @@ name: Tagged release
 
 on:
   push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+    # tags:
+      # - 'v[0-9]+.[0-9]+.[0-9]+'
+    branches:
+      - TT-9616
 jobs:
   publish:
     name: Publish to SVN
