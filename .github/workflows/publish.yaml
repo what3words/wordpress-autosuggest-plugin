@@ -13,6 +13,11 @@ jobs:
         run: |
           sudo apt-get install subversion -y
       - uses: actions/checkout@v4
+      - name: Setup version env
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          echo Version: $VERSION
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
       - name: Checkout from Wordpress SVN
         run: |
           svn co https://plugins.svn.wordpress.org:443/3-word-address-validation-field ~/svn --trust-server-cert --non-interactive
@@ -22,9 +27,9 @@ jobs:
       - name: Copy to trunk
         run: |
           cp -r ./w3w-autosuggest/* ~/svn/trunk
-      - name: Create a release from ${{ github.ref_name }}
+      - name: Create a release from ${VERSION}
         run: |
-          svn cp ~/svn/trunk ~/svn/tags/release-${{ github.ref_name }} --trust-server-cert --non-interactive
+          svn cp ~/svn/trunk ~/svn/tags/release-${VERSION} --trust-server-cert --non-interactive
       - name: Commit changes to SVN
         run: |
           pushd ~/svn
