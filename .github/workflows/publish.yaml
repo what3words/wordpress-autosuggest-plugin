@@ -14,7 +14,13 @@ jobs:
     name: Publish to SVN
     runs-on: ubuntu-latest
     steps:
-      - run: |
+      - name: Install SVN
+        run: |
           sudo apt-get install subversion -y
+      - uses: actions/checkout@v4
       - run: |
-          svn co https://plugins.svn.wordpress.org:443/3-word-address-validation-field /svn --trust-server-cert --non-interactive
+          ls .
+          pwd
+      - name: Checkout from Wordpress SVN
+        run: |
+          svn co https://plugins.svn.wordpress.org:443/3-word-address-validation-field ./svn --trust-server-cert --non-interactive
