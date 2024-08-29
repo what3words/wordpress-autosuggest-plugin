@@ -28,10 +28,14 @@ jobs:
         run: |
           cp -r ./w3w-autosuggest/* ~/svn/trunk
           ls ~/
-      - name: Create a release from trunk for ${{ github.ref_name }}
+      - name: Commit trunk
         run: |
-          cp -r ~/svn/trunk/* ~/svn/tags/release-${VERSION}
-          svn add ~/svn/tags/release-${VERSION}
+          pushd ~/svn
+          svn ci -m "Updating trunk with release ${VERSION}" --username "${{ vars.WP_SVN_USERNAME }}" --password "${{ secrets.WP_SVN_PASSWORD }}" --trust-server-cert --non-interactive
+          popd
+      - name: Create a release from ${{ github.ref_name }}
+        run: |
+          svn cp ~/svn/trunk ~/svn/tags/release-${VERSION} --trust-server-cert --non-interactive
       - name: Commit changes to SVN
         run: |
           pushd ~/svn
