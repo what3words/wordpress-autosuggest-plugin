@@ -1,11 +1,11 @@
 name: Tagged release
 
 on:
+  pull_request:
+    branches: [ 'TT-9616' ]
   push:
-    branches:
-      - TT-9616
-    # tags:
-      # - 'v[0-9]+.[0-9]+.[0-9]+'
+    branches: [ 'TT-9616' ]
+    tags: [ 'v[0-9]+.[0-9]+.[0-9]+' ]
 jobs:
   publish:
     name: Publish to SVN
