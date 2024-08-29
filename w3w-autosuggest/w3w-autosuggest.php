@@ -55,7 +55,7 @@ if ( !defined( 'W3W_AUTOSUGGEST_PLUGIN_BASENAME' ) ) {
  * Current plugin version.
  */
 if ( !defined( 'W3W_PLUGIN_VERSION' ) ) {
-  define( 'W3W_PLUGIN_VERSION', '4.0.10' );
+  define( 'W3W_PLUGIN_VERSION', '4.0.13' );
 }
 /**
  * Plugin settings name
@@ -69,7 +69,7 @@ if ( !defined( 'W3W_SETTINGS_NAME' ) ) {
  * @see test/cypress/integration/public/managed.spec.ts:84
  */
 if ( !defined( 'W3W_JS_LIB_CDN_URL' ) ) {
-  define ( 'W3W_JS_LIB_CDN_URL', 'https://cdn.what3words.com/javascript-components@4.8.0/dist/what3words' );
+  define ( 'W3W_JS_LIB_CDN_URL', 'https://cdn.what3words.com/javascript-components@4.9.0/dist/what3words' );
 }
 
 /**
