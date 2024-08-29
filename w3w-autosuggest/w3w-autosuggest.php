@@ -16,7 +16,7 @@
  * Plugin Name:       what3words Address Field
  * Plugin URI:        https://github.com/what3words/wordpress-autosuggest-plugin
  * Description:       Official plugin to allow customers to enter and validate a what3words address on your checkout for accurate deliveries
- * Version:           4.0.12
+ * Version:           4.0.13
  * Author:            what3words
  * Author URI:        https://what3words.com
  * License:           GPL-2.0+
@@ -41,80 +41,82 @@ along with what3words Address Field. If not, see https://what3words.com.
 */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
+if (!defined('WPINC')) {
+  die;
 }
 
 /**
  * Plugin base name
  */
-if ( !defined( 'W3W_AUTOSUGGEST_PLUGIN_BASENAME' ) ) {
-  define( 'W3W_AUTOSUGGEST_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+if (!defined('W3W_AUTOSUGGEST_PLUGIN_BASENAME')) {
+  define('W3W_AUTOSUGGEST_PLUGIN_BASENAME', plugin_basename(__FILE__));
 }
 /**
  * Current plugin version.
  */
-if ( !defined( 'W3W_PLUGIN_VERSION' ) ) {
-  define( 'W3W_PLUGIN_VERSION', '4.0.13' );
+if (!defined('W3W_PLUGIN_VERSION')) {
+  define('W3W_PLUGIN_VERSION', '4.0.13');
 }
 /**
  * Plugin settings name
  */
-if ( !defined( 'W3W_SETTINGS_NAME' ) ) {
-  define( 'W3W_SETTINGS_NAME', 'w3w_autosuggest_settings' );
+if (!defined('W3W_SETTINGS_NAME')) {
+  define('W3W_SETTINGS_NAME', 'w3w_autosuggest_settings');
 }
 
 /**
  * Defines the JS-library to point to (includes the version of the JS-library)
  * @see test/cypress/integration/public/managed.spec.ts:84
  */
-if ( !defined( 'W3W_JS_LIB_CDN_URL' ) ) {
-  define ( 'W3W_JS_LIB_CDN_URL', 'https://cdn.what3words.com/javascript-components@4.9.0/dist/what3words' );
+if (!defined('W3W_JS_LIB_CDN_URL')) {
+  define('W3W_JS_LIB_CDN_URL', 'https://cdn.what3words.com/javascript-components@4.9.0/dist/what3words');
 }
 
 /**
  * Defines the internationalisation domain
  */
-if ( !defined( 'W3W_I18N_DOMAIN' ) ) {
-  define ( 'W3W_I18N_DOMAIN', 'what3words' );
+if (!defined('W3W_I18N_DOMAIN')) {
+  define('W3W_I18N_DOMAIN', 'what3words');
 }
 
 /**
  * The URL to the settings page for the w3w_autosuggest
  */
-if ( !defined('W3W_SETTINGS_URL' ) ) {
-  DEFINE( 'W3W_SETTINGS_URL', esc_html( admin_url( 'admin.php?page=what3words' ) ) );
+if (!defined('W3W_SETTINGS_URL')) {
+  DEFINE('W3W_SETTINGS_URL', esc_html(admin_url('admin.php?page=what3words')));
 }
 
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-w3w-autosuggest-activator.php
  */
-if ( !function_exists( 'activate_w3w_autosuggest' ) ) {
-  function activate_w3w_autosuggest() {
-    require_once plugin_dir_path( __FILE__ ) . 'includes/class-w3w-autosuggest-activator.php';
-    W3W_Autosuggest_Activator::activate( W3W_PLUGIN_VERSION, W3W_SETTINGS_NAME );
+if (!function_exists('activate_w3w_autosuggest')) {
+  function activate_w3w_autosuggest()
+  {
+    require_once plugin_dir_path(__FILE__) . 'includes/class-w3w-autosuggest-activator.php';
+    W3W_Autosuggest_Activator::activate(W3W_PLUGIN_VERSION, W3W_SETTINGS_NAME);
   }
-  register_activation_hook( __FILE__, 'activate_w3w_autosuggest' );
+  register_activation_hook(__FILE__, 'activate_w3w_autosuggest');
 }
 
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-w3w-autosuggest-deactivator.php
  */
-if ( !function_exists( 'deactivate_w3w_autosuggest' ) ) {
-  function deactivate_w3w_autosuggest() {
-    require_once plugin_dir_path( __FILE__ ) . 'includes/class-w3w-autosuggest-deactivator.php';
+if (!function_exists('deactivate_w3w_autosuggest')) {
+  function deactivate_w3w_autosuggest()
+  {
+    require_once plugin_dir_path(__FILE__) . 'includes/class-w3w-autosuggest-deactivator.php';
     W3W_Autosuggest_Deactivator::deactivate();
   }
-  register_deactivation_hook( __FILE__, 'deactivate_w3w_autosuggest' );
+  register_deactivation_hook(__FILE__, 'deactivate_w3w_autosuggest');
 }
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-w3w-autosuggest.php';
+require plugin_dir_path(__FILE__) . 'includes/class-w3w-autosuggest.php';
 
 /**
  * Begins execution of the plugin.
@@ -125,11 +127,12 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-w3w-autosuggest.php';
  *
  * @since    4.0.0
  */
-function run_w3w_autosuggest() {
+function run_w3w_autosuggest()
+{
 
   $plugin_name = 'w3w-autosuggest';
 
-	$plugin = new W3W_Autosuggest(
+  $plugin = new W3W_Autosuggest(
     $plugin_name,
     W3W_PLUGIN_VERSION,
     W3W_AUTOSUGGEST_PLUGIN_BASENAME,
@@ -138,7 +141,7 @@ function run_w3w_autosuggest() {
     W3W_I18N_DOMAIN,
     W3W_SETTINGS_URL
   );
-	$plugin->run();
+  $plugin->run();
 
 }
 run_w3w_autosuggest();
