@@ -22,8 +22,10 @@ jobs:
           skip-logout: true
       - run: |
           echo "$USER"
+          echo "$PASS"
         env:
           USER: ${{ steps.login-ecr.outputs[secrets.USERNAME_KEY] }}
+          PASS: ${{ steps.login-ecr.outputs[secrets.PASSWORD_KEY] }}
     outputs:
       registry: ${{ steps.login-ecr.outputs.registry }}
       docker_username: ${{ steps.login-ecr.outputs[secrets.USERNAME_KEY] }}
