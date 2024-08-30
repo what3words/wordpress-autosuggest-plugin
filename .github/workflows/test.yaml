@@ -10,6 +10,8 @@ jobs:
       id-token: write
       contents: read
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -19,8 +21,6 @@ jobs:
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
       - run: docker compose -f ./docker-compose.test.yaml up -d
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
