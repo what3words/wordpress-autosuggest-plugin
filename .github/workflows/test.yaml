@@ -20,6 +20,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
         with:
           skip-logout: true
+          mask-password: false
       - run: |
           echo "$USER"
           echo "$PASS"
