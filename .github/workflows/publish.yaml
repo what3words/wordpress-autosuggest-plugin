@@ -1,0 +1,50 @@
+name: Tagged release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+jobs:
+  publish:
+    name: Publish to SVN
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SVN
+        run: |
+          sudo apt-get install subversion -y
+      - uses: actions/checkout@v4
+      - name: Setup version env
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          echo Version: $VERSION
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Checkout from Wordpress SVN
+        run: |
+          svn co https://plugins.svn.wordpress.org:443/3-word-address-validation-field "$HOME/svn" --trust-server-cert --non-interactive
+      - name: Validate release
+        run: |
+          if [ -d "$HOME/svn/tags/release-$VERSION" ]; then
+            echo "$VERSION is already released.";
+            exit 1;
+          else
+            echo "$VERSION is not yet released.";
+          fi
+      - name: Copy to assets
+        run: |
+          cp -r ./assets/* "$HOME/svn/assets"
+      - name: Copy to trunk
+        run: |
+          cp -r ./w3w-autosuggest/* "$HOME/svn/trunk"
+      - name: Commit trunk
+        run: |
+          pushd "$HOME/svn"
+          svn ci -m "Updating trunk with release $VERSION" --username "${{ vars.WP_SVN_USERNAME }}" --password "${{ secrets.WP_SVN_PASSWORD }}" --trust-server-cert --non-interactive
+          popd
+      - name: Create a release from ${{ github.ref_name }}
+        run: |
+          svn cp "$HOME/svn/trunk" "$HOME/svn/tags/release-$VERSION" --trust-server-cert --non-interactive
+      - name: Commit changes to SVN
+        run: |
+          pushd "$HOME/svn"
+          svn ci -m "$VERSION release" --username "${{ vars.WP_SVN_USERNAME }}" --password "${{ secrets.WP_SVN_PASSWORD }}" --trust-server-cert --non-interactive
+          popd
