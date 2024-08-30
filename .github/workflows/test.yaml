@@ -3,11 +3,12 @@ name: Pull request
 on:
   pull_request:
 jobs:
-  ecr:
-    name: Login to ECR
+  test:
+    name: Run cypress tests
     runs-on: ubuntu-latest
     permissions:
       id-token: write
+      contents: read
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -16,45 +17,8 @@ jobs:
           aws-region: eu-west-2
           mask-aws-account-id: "true"
       - name: Login to Amazon ECR
-        id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
-        with:
-          skip-logout: true
-          mask-password: false
-      - run: |
-          echo "$USER"
-          echo "$PASS"
-        env:
-          USER: ${{ steps.login-ecr.outputs[secrets.USERNAME_KEY] }}
-          PASS: ${{ steps.login-ecr.outputs[secrets.PASSWORD_KEY] }}
-    outputs:
-      registry: ${{ steps.login-ecr.outputs.registry }}
-      docker_username: ${{ steps.login-ecr.outputs[secrets.USERNAME_KEY] }}
-      docker_password: ${{ steps.login-ecr.outputs[secrets.PASSWORD_KEY] }}
-  test:
-    name: Run cypress tests
-    runs-on: ubuntu-latest
-    needs:
-      - ecr
-    services:
-      wp-testing:
-        image: ${{ needs.ecr.outputs.registry }}/wordpress-testing-site:0.1.2
-        credentials:
-          username: ${{ needs.ecr.outputs.docker_username }}
-          password: ${{ needs.ecr.outputs.docker_password }}
-        ports:
-          - "80:80"
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_DATABASE: wordpress
-          MYSQL_USER: wordpress
-          MYSQL_PASSWORD: password
-          MYSQL_ROOT_PASSWORD: password
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-    steps:
+      - run: docker compose -f ./docker-compose.test.yaml up -d
       - name: Checkout
         uses: actions/checkout@v4
       - name: Cypress run
