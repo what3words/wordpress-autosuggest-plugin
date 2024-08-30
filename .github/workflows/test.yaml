@@ -32,3 +32,8 @@ jobs:
         with:
           working-directory: ./test
           browser: chrome
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Recordings
+          path: ${{ github.workspace }}/test/cypress/videos/public/*
