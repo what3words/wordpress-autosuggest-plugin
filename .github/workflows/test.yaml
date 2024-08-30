@@ -18,6 +18,12 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
+        with:
+          skip-logout: true
+      - run: |
+          echo "$USER"
+        env:
+          USER: ${{ steps.login-ecr.outputs[secrets.USERNAME_KEY] }}
     outputs:
       registry: ${{ steps.login-ecr.outputs.registry }}
       docker_username: ${{ steps.login-ecr.outputs[secrets.USERNAME_KEY] }}
