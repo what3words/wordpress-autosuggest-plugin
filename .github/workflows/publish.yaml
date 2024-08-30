@@ -18,6 +18,9 @@ jobs:
           VERSION=${GITHUB_REF_NAME#v}
           echo Version: $VERSION
           echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Checkout from Wordpress SVN
+        run: |
+          svn co https://plugins.svn.wordpress.org:443/3-word-address-validation-field "$HOME/svn" --trust-server-cert --non-interactive
       - name: Validate release
         run: |
           echo "Directory: $HOME/svn/tags/release-$VERSION"
@@ -27,9 +30,6 @@ jobs:
           else
             echo "$VERSION is not yet released.";
           fi
-      # - name: Checkout from Wordpress SVN
-      #   run: |
-      #     svn co https://plugins.svn.wordpress.org:443/3-word-address-validation-field "$HOME/svn" --trust-server-cert --non-interactive
       # - name: Copy to assets
       #   run: |
       #     cp -r ./assets/* "$HOME/svn/assets"
