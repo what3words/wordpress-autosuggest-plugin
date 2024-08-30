@@ -20,8 +20,10 @@ jobs:
           mask-aws-account-id: "true"
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
-      - run: docker compose -f ./docker-compose.test.yaml up -d
+      - run: |
+            docker compose -f ./docker-compose.test.yaml up -d
+            cd ./test
       - name: Cypress run
         uses: cypress-io/github-action@v6
-        with:
+        with:          
           browser: chrome
