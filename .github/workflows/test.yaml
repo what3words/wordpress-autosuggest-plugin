@@ -32,12 +32,20 @@ jobs:
       - run: npm install --prefix ./test
       - name: Cypress run
         uses: cypress-io/github-action@v6
-        continue-on-error: true
         with:
           working-directory: ./test
           browser: chrome
-      - name: Upload artifacts
+      - name: Upload screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Screenshots
+          path: ./test/cypress/screenshots/**/*.png
+          if-no-files-found: ignore
+      - name: Upload videos
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: Recordings
           path: ./test/cypress/videos/**/*.mp4
+          if-no-files-found: ignore
