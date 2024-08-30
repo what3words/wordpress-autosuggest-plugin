@@ -20,7 +20,7 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
       - name: Validate release
         run: |
-          if [ -d ~/svn/tags/release-${VERSION} ]; then echo "${VERSION} is already released."; exit(1); fi
+          if [ -d ~/svn/tags/release-${VERSION} ]; then echo "${VERSION} is already released."; exit 1; fi
       - name: Checkout from Wordpress SVN
         run: |
           svn co https://plugins.svn.wordpress.org:443/3-word-address-validation-field ~/svn --trust-server-cert --non-interactive
