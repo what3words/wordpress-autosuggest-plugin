@@ -1,3 +1,7 @@
+= 4.0.14 =
+* Release 2024.09.03
+* Updated the notes on save coordinates option in settings page
+
 = 4.0.13 =
 * Release 2024.08.28
 * Updated autosuggest component from version 4.8.0 to 4.9.0
