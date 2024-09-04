@@ -81,7 +81,7 @@
               Save coordinates
               <div class="fw-light fst-italic small">
                 This will save the GPS coordinates of the what3words address and display them in the Order Details page.<br />
-                NOTE: This will make additional calls to the what3words API using the <span class="fw-bold">convert-to-coordinates</span> function.
+                <span class="fw-bold">NOTE:</span> This feature won't work if you're on a free plan or have exceeded your quota. Check the console and network panel for errors. No coordinates will be saved. Please review our <a href="https://accounts.what3words.com/select-plan">plans</a> for higher allowances.
               </div>
             </div>
           </label>

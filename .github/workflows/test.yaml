@@ -49,3 +49,7 @@ jobs:
           name: Recordings
           path: ./test/cypress/videos/**/*.mp4
           if-no-files-found: ignore
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
