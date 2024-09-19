@@ -290,9 +290,9 @@ let components = [];
             if (!target) return;
             const ignore =
               target.parentNode.getAttribute('class') ===
-              'what3words-autosuggest-input-wrapper';
+                'what3words-autosuggest-input-wrapper' ||
+              target.parentNode.localName === 'what3words-autosuggest';
             if (ignore) return;
-              
             const [component] = attachComponentToTargets([target]);
             attachEventListeners(component, fields);
             res(component);
