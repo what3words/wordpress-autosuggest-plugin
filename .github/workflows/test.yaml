@@ -35,6 +35,8 @@ jobs:
         with:
           working-directory: ./test
           browser: chrome
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
       - name: Upload screenshots
         if: failure()
         uses: actions/upload-artifact@v4
