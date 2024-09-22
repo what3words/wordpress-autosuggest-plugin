@@ -1,13 +1,10 @@
 import { defineConfig } from 'cypress';
-import dotenv from 'dotenv';
 import knex from 'knex';
 import cucumber from 'cypress-cucumber-preprocessor';
 import { createRequire } from 'module';
 
-// Create a require function within an ESM context
+// Creates a require function within an ESM context
 const require = createRequire(import.meta.url);
-
-// dotenv.config();
 
 const config = {
   e2e: {
