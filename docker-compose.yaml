@@ -1,12 +1,14 @@
-version: "3.8"
+version: '3.8'
 
 services:
-
   wordpress:
-    image: wordpress:5.9.0-php7.4-apache #449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:0.1.2
+    platform: linux/amd64
+    build:
+      dockerfile: Dockerfile
+      context: .
     container_name: w3w-wp
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      test: ['CMD', 'curl', '-f', 'http://localhost:80']
       interval: 10s
       timeout: 10s
       retries: 10
@@ -22,21 +24,22 @@ services:
     volumes:
       - ./w3w-autosuggest:/var/www/html/wp-content/plugins/w3w-autosuggest
     ports:
-      - 80:80
+      - 8080:80
     depends_on:
       mysql:
         condition: service_healthy
 
   mysql:
+    platform: linux/amd64
     image: mysql:5.7
     container_name: w3w-wpdb
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pwordpress"]
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-pwordpress']
       interval: 5s
       timeout: 10s
       retries: 10
       start_period: 30s
-    ports: 
+    ports:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: wordpress
