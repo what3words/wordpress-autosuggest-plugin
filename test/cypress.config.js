@@ -8,7 +8,7 @@ const require = createRequire(import.meta.url);
 
 const config = {
   e2e: {
-    baseUrl: 'http://localhost:80',
+    baseUrl: 'http://localhost:8080',
     setupNodeEvents(on, config) {
       const DB = knex({
         client: 'mysql',

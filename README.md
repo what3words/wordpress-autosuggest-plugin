@@ -65,9 +65,7 @@ In order to contribute to this project you should follow the guide to modifying 
 You can run the Cypress tests with the following.
 
 ```bash
-AWS_PROFILE=dev aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 449290502274.dkr.ecr.eu-west-2.amazonaws.com
-docker pull 449290502274.dkr.ecr.eu-west-2.amazonaws.com/wordpress-testing-site:<VERSION>
-docker compose -f docker-compose.test.yaml up -d
+docker compose up -d
 cd test
 npm t
 ```

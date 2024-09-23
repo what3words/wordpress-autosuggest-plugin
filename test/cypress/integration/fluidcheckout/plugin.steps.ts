@@ -22,7 +22,9 @@ Then('they see autosuggest when they open shipping', () => {
   const postcode = CH.postcode();
   const hint = 'filled.count.s';
 
-  cy.intercept('http://localhost:80/?wc-ajax=update_order_review').as('update');
+  cy.intercept('http://localhost:8080/?wc-ajax=update_order_review').as(
+    'update'
+  );
 
   cy.wait(500);
   cy.get('#shipping_first_name').click().type(fname);
