@@ -21,9 +21,10 @@
  * @subpackage W3W_Autosuggest/admin
  * @author     Your Name <email@example.com>
  */
-if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
-  class W3W_Autosuggest_Admin {
-    
+if (!class_exists('W3W_Autosuggest_Admin')) {
+  class W3W_Autosuggest_Admin
+  {
+
     /**
      * The ID of this plugin.
      *
@@ -32,7 +33,7 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
      * @var      string    $plugin_name    The ID of this plugin.
      */
     private $plugin_name;
-    
+
     /**
      * The version of this plugin.
      *
@@ -41,13 +42,13 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
      * @var      string    $version    The current version of this plugin.
      */
     private $version;
-    
+
     private $settings_name;
-    
+
     private $i18n_domain;
-    
+
     private $settings_url;
-    
+
     /**
      * Initialize the class and set its properties.
      *
@@ -55,15 +56,16 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
      * @param      string    $plugin_name       The name of this plugin.
      * @param      string    $version    The version of this plugin.
      */
-    public function __construct( $plugin_name, $version, $settings_name, $i18n_domain, $settings_url ) {
-      
+    public function __construct($plugin_name, $version, $settings_name, $i18n_domain, $settings_url)
+    {
+
       $this->plugin_name = $plugin_name;
       $this->version = $version;
       $this->settings_name = $settings_name;
       $this->i18n_domain = $i18n_domain;
       $this->settings_url = $settings_url;
-      
-      $this->handle_form_submission( $_POST );
+
+      $this->handle_form_submission($_POST);
 
     }
 
@@ -72,7 +74,8 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
      *
      * @since    4.0.0
      */
-    public function enqueue_styles() {
+    public function enqueue_styles()
+    {
 
       /**
        * This function is provided for demonstration purposes only.
@@ -87,7 +90,7 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
        */
       wp_enqueue_style(
         $this->plugin_name,
-        plugin_dir_url( __FILE__ ) . 'css/w3w-autosuggest-admin.css',
+        plugin_dir_url(__FILE__) . 'css/w3w-autosuggest-admin.css',
         array(),
         $this->version,
         'all'
@@ -100,7 +103,8 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
      *
      * @since    4.0.0
      */
-    public function enqueue_scripts() {
+    public function enqueue_scripts()
+    {
 
       /**
        * This function is provided for demonstration purposes only.
@@ -115,7 +119,7 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
        */
       wp_enqueue_script(
         $this->plugin_name,
-        plugin_dir_url( __FILE__ ) . 'js/w3w-autosuggest-admin.js',
+        plugin_dir_url(__FILE__) . 'js/w3w-autosuggest-admin.js',
         array(),
         $this->version,
         false
@@ -123,38 +127,43 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
 
     }
 
-    public function options_page() {
+    public function options_page()
+    {
 
       $parent_slug = 'what3words';
 
       add_menu_page(
-        __( 'what3words', $this->i18n_domain ),
-        __( 'what3words', $this->i18n_domain ),
+        __('what3words', $this->i18n_domain),
+        __('what3words', $this->i18n_domain),
         'manage_options',
         $parent_slug,
-        array( $this, 'run' ),
+        array($this, 'run'),
         'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI1LjMuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IndoYXQzd29yZHMiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAyMCAyMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMjAgMjA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHBhdGggZD0iTTE2LjksMkgzLjFDMi41LDIsMiwyLjUsMiwzLjF2MTMuN0MyLDE3LjUsMi41LDE4LDMuMSwxOGgxMy43YzAuNiwwLDEuMS0wLjUsMS4xLTEuMVYzLjFDMTgsMi41LDE3LjUsMiwxNi45LDJ6IE01LjgsMTMuNQoJYy0wLjMtMC4xLTAuNS0wLjQtMC40LTAuN2wyLTZjMC4xLTAuMywwLjQtMC41LDAuNy0wLjRjMC4zLDAuMSwwLjUsMC40LDAuNCwwLjdjMCwwLDAsMCwwLDBsLTIsNkM2LjQsMTMuNSw2LjEsMTMuNiw1LjgsMTMuNXoKCSBNOC44LDEzLjVjLTAuMy0wLjEtMC41LTAuNC0wLjQtMC43bDItNmMwLjEtMC4zLDAuNC0wLjUsMC43LTAuNGMwLjMsMC4xLDAuNSwwLjQsMC40LDAuN2MwLDAsMCwwLDAsMGwtMiw2CglDOS40LDEzLjUsOS4xLDEzLjYsOC44LDEzLjVMOC44LDEzLjV6IE0xNC42LDcuMmwtMiw2Yy0wLjEsMC4zLTAuNCwwLjUtMC43LDAuNGMtMC4zLTAuMS0wLjUtMC40LTAuNC0wLjdjMCwwLDAsMCwwLDBsMi02CgljMC4xLTAuMywwLjQtMC41LDAuNy0wLjRDMTQuNSw2LjYsMTQuNyw2LjksMTQuNiw3LjJDMTQuNiw3LjIsMTQuNiw3LjIsMTQuNiw3LjJ6Ii8+Cjwvc3ZnPgo=',
         58
       );
 
     }
 
-    public function admin_notices() {
+    public function admin_notices()
+    {
 
-      $settings = get_option( $this->settings_name );
+      $settings = get_option($this->settings_name);
 
-      if ( !isset( $settings['api_key'] ) || !$settings['api_key'] )
+      if (!isset($settings['api_key']) || !$settings['api_key'])
 
-      require_once plugin_dir_path( __FILE__ ) . '/partials/add-admin-notice.php';
+        require_once plugin_dir_path(__FILE__) . '/partials/add-admin-notice.php';
 
     }
 
-    public function plugin_action_links( $actions, $plugin_file, $plugin_data, $context ) {
+    public function plugin_action_links($actions, $plugin_file, $plugin_data, $context)
+    {
 
       $settings = sprintf(
-        '<a href="%s">%s</a>', $this->settings_url, __( 'Settings', $this->i18n_domain )
+        '<a href="%s">%s</a>',
+        $this->settings_url,
+        __('Settings', $this->i18n_domain)
       );
-      array_unshift( $actions, $settings );
+      array_unshift($actions, $settings);
 
       return $actions;
 
@@ -168,17 +177,18 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
      *
      * @return array
      */
-    public function plugin_row_meta( $links, $file ) {
+    public function plugin_row_meta($links, $file)
+    {
 
-      if ( $file === 'w3w-autosuggest/w3w-autosuggest.php' ) {
+      if ($file === 'w3w-autosuggest/w3w-autosuggest.php') {
 
         $row_meta = array(
-          'docs'    => '<a href="' . esc_url( apply_filters( 'w3w_autosuggest_docs_url', 'https://developer.what3words.com/tutorial/javascript-autosuggest-component-v4' ) ) . '" aria-label="' . esc_attr__( 'View Autosuggest documentation', $this->i18n_domain ) . '">' . esc_html__( 'Docs', $this->i18n_domain ) . '</a>',
-          'apidocs' => '<a href="' . esc_url( apply_filters( 'what3words_apidocs_url', 'https://developer.what3words.com/public-api/docs#autosuggest' ) ) . '" aria-label="' . esc_attr__( 'View What3words Autosuggest docs', $this->i18n_domain ) . '">' . esc_html__( 'API docs', $this->i18n_domain ) . '</a>',
-          'support' => '<a href="' . esc_url( apply_filters( 'what3words_support_url', 'https://developer.what3words.com/support' ) ) . '" aria-label="' . esc_attr__( 'Help & Support', $this->i18n_domain ) . '">' . esc_html__( 'Help & Support', $this->i18n_domain ) . '</a>',
+          'docs' => '<a href="' . esc_url(apply_filters('w3w_autosuggest_docs_url', 'https://developer.what3words.com/tutorial/javascript-autosuggest-component-v4')) . '" aria-label="' . esc_attr__('View Autosuggest documentation', $this->i18n_domain) . '">' . esc_html__('Docs', $this->i18n_domain) . '</a>',
+          'apidocs' => '<a href="' . esc_url(apply_filters('what3words_apidocs_url', 'https://developer.what3words.com/public-api/docs#autosuggest')) . '" aria-label="' . esc_attr__('View What3words Autosuggest docs', $this->i18n_domain) . '">' . esc_html__('API docs', $this->i18n_domain) . '</a>',
+          'support' => '<a href="' . esc_url(apply_filters('what3words_support_url', 'https://developer.what3words.com/support')) . '" aria-label="' . esc_attr__('Help & Support', $this->i18n_domain) . '">' . esc_html__('Help & Support', $this->i18n_domain) . '</a>',
         );
-        
-        return array_merge( $links, $row_meta );
+
+        return array_merge($links, $row_meta);
 
       }
 
@@ -192,87 +202,96 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
      * 
      * @since    4.0.0
      */
-    public function add_shipping_address_to_order_page( $order ) {
+    public function add_shipping_address_to_order_page($order)
+    {
 
       $order_id = $order->get_id();
-      $settings = get_option( $this->settings_name );
-      $words = get_post_meta( $order_id, '_shipping_w3w', true );
-      $nearest_place = get_post_meta( $order_id, '_shipping_nearest_place', true );
-      $lat = get_post_meta( $order_id, '_shipping_w3w_lat', true );
-      $lng = get_post_meta( $order_id, '_shipping_w3w_lng', true );
+      $settings = get_option($this->settings_name);
+      $words = get_post_meta($order_id, '_shipping_w3w', true);
+      $nearest_place = get_post_meta($order_id, '_shipping_nearest_place', true);
+      $lat = get_post_meta($order_id, '_shipping_w3w_lat', true);
+      $lng = get_post_meta($order_id, '_shipping_w3w_lng', true);
       $label = $settings['enable_label'] ? $settings['label'] : 'w3w Address';
 
-      require plugin_dir_path( __FILE__ ) . 'partials/add-address-to-order-page.php';
+      require plugin_dir_path(__FILE__) . 'partials/add-address-to-order-page.php';
 
     }
-    
+
     /**
      * Add the 3wa to the customer details for the order email
      * 
      * @since 4.0.6
      */
-    public function add_w3w_address_to_email( $array, $sent_to_admin, $order ) {
+    public function add_w3w_address_to_email($array, $sent_to_admin, $order)
+    {
 
       $order_id = $order->get_id();
-      $settings = get_option( $this->settings_name );
+      $settings = get_option($this->settings_name);
       $label = $settings['enable_label'] ? $settings['label'] : 'w3w Address';
-      $words = get_post_meta( $order_id, '_shipping_w3w', true );
+      $words = get_post_meta($order_id, '_shipping_w3w', true);
 
       $array = [
-        [ 'label' => $label, 'value' => $words ],
+        ['label' => $label, 'value' => $words],
       ];
 
       return $array;
 
     }
 
-    public function set_order_data( $data, $order ) {
+    public function set_order_data($data, $order)
+    {
       $order_id = $order->get_id();
-      $settings = get_option( $this->settings_name );
-      $words = get_post_meta( $order_id, '_shipping_w3w', true );
+      $settings = get_option($this->settings_name);
+      $words = get_post_meta($order_id, '_shipping_w3w', true);
 
-      if ( !!$words ) {
+      if (!!$words) {
         $data['formatted_shipping_address'] .= '<br/>' . $words;
         $data['shipping_address_map_url'] = 'https://what3words.com/' .
-                                            str_replace( '///', '', $words ) .
-                                            '?application=wordpress';
+          str_replace('///', '', $words) .
+          '?application=wordpress';
       }
 
       return $data;
 
     }
 
-    public function run() {
+    public function run()
+    {
 
-      require_once plugin_dir_path( __FILE__ ) . 'partials/w3w-autosuggest-admin-display.php';
+      require_once plugin_dir_path(__FILE__) . 'partials/w3w-autosuggest-admin-display.php';
 
     }
 
-    private function handle_form_submission() {
+    private function handle_form_submission($post)
+    {
 
-      $settings = get_option( $this->settings_name );
+      $settings = get_option($this->settings_name);
+
+      foreach ($post as $key => $val) {
+        $post[$key] = $key === 'clip_to_polygon' ? esc_attr(sanitize_textarea_field($val)) : esc_attr(sanitize_text_field($val));
+      }
 
       if (
-        isset( $_POST ) &&
+        isset($post) &&
         (
-          isset( $_POST['api_key_form'] ) ||
-          isset( $_POST['settings_form'] ) ||
-          isset( $_POST['advanced_form'] )
+          isset($post['api_key_form']) ||
+          isset($post['settings_form']) ||
+          isset($post['advanced_form'])
         )
       ) {
 
-        if ( isset( $_POST['api_key_form'] ) ) {
-          $settings['api_key'] = filter_var($_POST['api_key'], FILTER_SANITIZE_STRING); 
+        if (isset($post['api_key_form'])) {
+          $settings['api_key'] = $post['api_key'];
         }
 
-        if ( isset( $_POST['settings_form'] ) ) {
+        if (isset($post['settings_form'])) {
           $settings['return_coordinates'] = false;
           $settings['save_nearest_place'] = false;
           $settings['enable_label'] = false;
           $settings['enable_placeholder'] = false;
         }
 
-        if ( isset( $_POST['advanced_form'] ) ) {
+        if (isset($post['advanced_form'])) {
           $settings['enable_placeholder'] = false;
           $settings['enable_clip_to_country'] = false;
           $settings['enable_clip_to_circle'] = false;
@@ -280,45 +299,65 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
           $settings['enable_clip_to_polygon'] = false;
         }
 
-        foreach ( $_POST as $key => $val ) {
-          if ( $key === 'woocommerce_enabled' ) $settings[$key] = $val === 'on' ? true : false;
-          if ( $key === 'selector' ) $settings[$key] = filter_var($val, FILTER_SANITIZE_STRING);
-          else if ( $key === 'return_coordinates' && $val === 'on' ) $settings[$key] = true;
-          else if ( $key === 'save_nearest_place' && $val === 'on' ) $settings[$key] = true;
-          else if ( $key === 'enable_label' && $val === 'on' ) {
-            $settings[$key] = true;
-            $settings['label'] = filter_var($_POST['label'], FILTER_SANITIZE_STRING);
-          }
-          else if ( $key === 'enable_placeholder' ) {
-            $settings[$key] = $val === 'on' ? true : false;
-            $settings['placeholder'] = filter_var($_POST['placeholder'], FILTER_SANITIZE_STRING);
-          }
-          else if ( $key === 'enable_clip_to_country' ) {
-            $settings[$key] = $val === 'on' ? true : false;
-            $settings['clip_to_country'] = filter_var($_POST['clip_to_country']);
-          }
-          else if ( $key === 'enable_clip_to_circle' ) {
-            $settings[$key] = $val === 'on' ? true : false;
-            $settings['clip_to_circle'] = filter_var($_POST['clip_to_circle'], FILTER_SANITIZE_STRING);
-            $settings['clip_to_circle_lat'] = filter_var($_POST['clip_to_circle_lat'], FILTER_SANITIZE_STRING);
-            $settings['clip_to_circle_lng'] = filter_var($_POST['clip_to_circle_lng'], FILTER_SANITIZE_STRING);
-            $settings['clip_to_circle_radius'] = filter_var($_POST['clip_to_circle_radius'], FILTER_SANITIZE_STRING);
-          }
-          else if ( $key === 'enable_clip_to_bounding_box' ) {
-            $settings[$key] = $val === 'on' ? true : false;
-            $settings['clip_to_bounding_box'] = filter_var($_POST['clip_to_bounding_box'], FILTER_SANITIZE_STRING);
-            $settings['clip_to_bounding_box_sw_lat'] = filter_var($_POST['clip_to_bounding_box_sw_lat'], FILTER_SANITIZE_STRING);
-            $settings['clip_to_bounding_box_sw_lng'] = filter_var($_POST['clip_to_bounding_box_sw_lng'], FILTER_SANITIZE_STRING);
-            $settings['clip_to_bounding_box_ne_lat'] = filter_var($_POST['clip_to_bounding_box_ne_lat'], FILTER_SANITIZE_STRING);
-            $settings['clip_to_bounding_box_ne_lng'] = filter_var($_POST['clip_to_bounding_box_ne_lng'], FILTER_SANITIZE_STRING);
-          }
-          else if ( $key === 'enable_clip_to_polygon' ) {
-            $settings[$key] = $val === 'on' ? true : false;
-            $settings['clip_to_polygon'] = filter_var($_POST['clip_to_polygon'], FILTER_SANITIZE_STRING);
+        foreach ($post as $key => $val) {
+          switch ($key) {
+            case 'woocommerce_enabled':
+              $settings[$key] = $val === 'on';
+              break;
+            case 'selector':
+              $settings[$key] = $val;
+              break;
+            case 'return_coordinates':
+            case 'save_nearest_place':
+              $settings[$key] = $val === 'on';
+              break;
+            case 'enable_label':
+              $settings[$key] = $val === 'on';
+              if ($settings[$key]) {
+                $settings['label'] = $post['label'];
+              }
+              break;
+            case 'enable_placeholder':
+              $settings[$key] = $val === 'on';
+              if ($settings[$key]) {
+                $settings['placeholder'] = $post['placeholder'];
+              }
+              break;
+            case 'enable_clip_to_country':
+              $settings[$key] = $val === 'on';
+              if ($settings[$key]) {
+                $settings['clip_to_country'] = $post['clip_to_country'];
+              }
+              break;
+            case 'enable_clip_to_circle':
+              $settings[$key] = $val === 'on';
+              if ($settings[$key]) {
+                $settings['clip_to_circle'] = $post['clip_to_circle'];
+                $settings['clip_to_circle_lat'] = $post['clip_to_circle_lat'];
+                $settings['clip_to_circle_lng'] = $post['clip_to_circle_lng'];
+                $settings['clip_to_circle_radius'] = $post['clip_to_circle_radius'];
+              }
+              break;
+            case 'enable_clip_to_bounding_box':
+              $settings[$key] = $val === 'on';
+              if ($settings[$key]) {
+                $settings['clip_to_bounding_box'] = $post['clip_to_bounding_box'];
+                $settings['clip_to_bounding_box_sw_lat'] = $post['clip_to_bounding_box_sw_lat'];
+                $settings['clip_to_bounding_box_sw_lng'] = $post['clip_to_bounding_box_sw_lng'];
+                $settings['clip_to_bounding_box_ne_lat'] = $post['clip_to_bounding_box_ne_lat'];
+                $settings['clip_to_bounding_box_ne_lng'] = $post['clip_to_bounding_box_ne_lng'];
+              }
+              break;
+            case 'enable_clip_to_polygon':
+              $settings[$key] = $val === 'on';
+              if ($settings[$key]) {
+                $settings['clip_to_polygon'] = $post['clip_to_polygon'];
+              }
+              break;
           }
         }
 
-        update_option( $this->settings_name, $settings );
+        update_option($this->settings_name, $settings);
 
       }
 
