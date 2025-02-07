@@ -71,9 +71,10 @@ $settings = get_option( $this->settings_name );
                         class="form-control form-control-lg"
                         id="w3w_api_key"
                         name="api_key"
-                        value="<?php echo $settings['api_key']; ?>"
                         tabindex="1"
-                        data-testid="api_key">
+                        data-testid="api_key"
+                        value="<?php echo $settings['api_key']; ?>"
+                        >
                     </div>
                     <div class="col d-flex align-items-center">
                       <button

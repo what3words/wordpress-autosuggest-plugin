@@ -227,18 +227,15 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
     }
 
     public function set_order_data( $data, $order ) {
-      
       $order_id = $order->get_id();
       $settings = get_option( $this->settings_name );
       $words = get_post_meta( $order_id, '_shipping_w3w', true );
 
       if ( !!$words ) {
-        
         $data['formatted_shipping_address'] .= '<br/>' . $words;
         $data['shipping_address_map_url'] = 'https://what3words.com/' .
                                             str_replace( '///', '', $words ) .
                                             '?application=wordpress';
-      
       }
 
       return $data;
@@ -265,7 +262,7 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
       ) {
 
         if ( isset( $_POST['api_key_form'] ) ) {
-          $settings['api_key'] = sanitize_text_field( $_POST['api_key'] );
+          $settings['api_key'] = filter_var($_POST['api_key'], FILTER_SANITIZE_STRING); 
         }
 
         if ( isset( $_POST['settings_form'] ) ) {
@@ -284,42 +281,40 @@ if ( !class_exists( 'W3W_Autosuggest_Admin' ) ) {
         }
 
         foreach ( $_POST as $key => $val ) {
-          if ( $key === 'woocommerce_enabled' ) {
-            $settings[$key] = ( $val === 'on' );
-          } elseif ( $key === 'selector' ) {
-            // Assuming selector is a string that needs sanitizing.
-            $settings[$key] = sanitize_text_field( $val );
-          } elseif ( $key === 'return_coordinates' && $val === 'on' ) {
+          if ( $key === 'woocommerce_enabled' ) $settings[$key] = $val === 'on' ? true : false;
+          if ( $key === 'selector' ) $settings[$key] = filter_var($val, FILTER_SANITIZE_STRING);
+          else if ( $key === 'return_coordinates' && $val === 'on' ) $settings[$key] = true;
+          else if ( $key === 'save_nearest_place' && $val === 'on' ) $settings[$key] = true;
+          else if ( $key === 'enable_label' && $val === 'on' ) {
             $settings[$key] = true;
-          } elseif ( $key === 'save_nearest_place' && $val === 'on' ) {
-            $settings[$key] = true;
-          } elseif ( $key === 'enable_label' && $val === 'on' ) {
-            $settings[$key] = true;
-            // Sanitize the label value.
-            $settings['label'] = sanitize_text_field( $_POST['label'] );
-          } elseif ( $key === 'enable_placeholder' ) {
-            $settings[$key] = ( $val === 'on' );
-            // Sanitize the placeholder value.
-            $settings['placeholder'] = sanitize_text_field( $_POST['placeholder'] );
-          } elseif ( $key === 'enable_clip_to_country' ) {
-            $settings[$key] = ( $val === 'on' );
-            $settings['clip_to_country'] = sanitize_text_field( $_POST['clip_to_country'] );
-          } elseif ( $key === 'enable_clip_to_circle' ) {
-            $settings[$key] = ( $val === 'on' );
-            $settings['clip_to_circle'] = sanitize_text_field( $_POST['clip_to_circle'] );
-            $settings['clip_to_circle_lat'] = sanitize_text_field( $_POST['clip_to_circle_lat'] );
-            $settings['clip_to_circle_lng'] = sanitize_text_field( $_POST['clip_to_circle_lng'] );
-            $settings['clip_to_circle_radius'] = sanitize_text_field( $_POST['clip_to_circle_radius'] );
-          } elseif ( $key === 'enable_clip_to_bounding_box' ) {
-            $settings[$key] = ( $val === 'on' );
-            $settings['clip_to_bounding_box'] = sanitize_text_field( $_POST['clip_to_bounding_box'] );
-            $settings['clip_to_bounding_box_sw_lat'] = sanitize_text_field( $_POST['clip_to_bounding_box_sw_lat'] );
-            $settings['clip_to_bounding_box_sw_lng'] = sanitize_text_field( $_POST['clip_to_bounding_box_sw_lng'] );
-            $settings['clip_to_bounding_box_ne_lat'] = sanitize_text_field( $_POST['clip_to_bounding_box_ne_lat'] );
-            $settings['clip_to_bounding_box_ne_lng'] = sanitize_text_field( $_POST['clip_to_bounding_box_ne_lng'] );
-          } elseif ( $key === 'enable_clip_to_polygon' ) {
-            $settings[$key] = ( $val === 'on' );
-            $settings['clip_to_polygon'] = sanitize_text_field( $_POST['clip_to_polygon'] );
+            $settings['label'] = filter_var($_POST['label'], FILTER_SANITIZE_STRING);
+          }
+          else if ( $key === 'enable_placeholder' ) {
+            $settings[$key] = $val === 'on' ? true : false;
+            $settings['placeholder'] = filter_var($_POST['placeholder'], FILTER_SANITIZE_STRING);
+          }
+          else if ( $key === 'enable_clip_to_country' ) {
+            $settings[$key] = $val === 'on' ? true : false;
+            $settings['clip_to_country'] = filter_var($_POST['clip_to_country']);
+          }
+          else if ( $key === 'enable_clip_to_circle' ) {
+            $settings[$key] = $val === 'on' ? true : false;
+            $settings['clip_to_circle'] = filter_var($_POST['clip_to_circle'], FILTER_SANITIZE_STRING);
+            $settings['clip_to_circle_lat'] = filter_var($_POST['clip_to_circle_lat'], FILTER_SANITIZE_STRING);
+            $settings['clip_to_circle_lng'] = filter_var($_POST['clip_to_circle_lng'], FILTER_SANITIZE_STRING);
+            $settings['clip_to_circle_radius'] = filter_var($_POST['clip_to_circle_radius'], FILTER_SANITIZE_STRING);
+          }
+          else if ( $key === 'enable_clip_to_bounding_box' ) {
+            $settings[$key] = $val === 'on' ? true : false;
+            $settings['clip_to_bounding_box'] = filter_var($_POST['clip_to_bounding_box'], FILTER_SANITIZE_STRING);
+            $settings['clip_to_bounding_box_sw_lat'] = filter_var($_POST['clip_to_bounding_box_sw_lat'], FILTER_SANITIZE_STRING);
+            $settings['clip_to_bounding_box_sw_lng'] = filter_var($_POST['clip_to_bounding_box_sw_lng'], FILTER_SANITIZE_STRING);
+            $settings['clip_to_bounding_box_ne_lat'] = filter_var($_POST['clip_to_bounding_box_ne_lat'], FILTER_SANITIZE_STRING);
+            $settings['clip_to_bounding_box_ne_lng'] = filter_var($_POST['clip_to_bounding_box_ne_lng'], FILTER_SANITIZE_STRING);
+          }
+          else if ( $key === 'enable_clip_to_polygon' ) {
+            $settings[$key] = $val === 'on' ? true : false;
+            $settings['clip_to_polygon'] = filter_var($_POST['clip_to_polygon'], FILTER_SANITIZE_STRING);
           }
         }
 
