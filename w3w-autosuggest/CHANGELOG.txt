@@ -1,3 +1,7 @@
+= 4.0.16 =
+* Release 2025.02.10
+* Added input text sanitation in plugin settings
+
 = 4.0.15 =
 * Release 2024.09.23
 * Fixed duplicate autosuggest component
