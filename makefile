@@ -9,20 +9,21 @@ check_wp_compatibility:
 	TESTED_VERSION=$$(echo $$PLUGIN_INFO_CLEAN | grep -o '"tested":"[^"]*"' | cut -d '"' -f 4); \
 	LATEST_VERSION=$$(echo $$PLUGIN_INFO_CLEAN | grep -o '"version":"[^"]*"' | cut -d '"' -f 4); \
 	if [ -z "$$TESTED_VERSION" ] || [ "$$TESTED_VERSION" = "null" ]; then \
-		echo "Could not retrieve plugin information for $(PLUGIN) or the plugin has not been tested."; \
+		echo "::error::Could not retrieve plugin information for $(PLUGIN) or the plugin has not been tested."; \
+		exit 1; \
 	elif [ -z "$$LATEST_VERSION" ] || [ "$$LATEST_VERSION" = "null" ]; then \
-		echo "Could not retrieve the latest version for $(PLUGIN)."; \
+		echo "::error::Could not retrieve the latest version for $(PLUGIN)."; \
+		exit 1; \
 	else \
 		echo "Plugin version: $$LATEST_VERSION"; \
 		echo "Tested up to: $$TESTED_VERSION"; \
-		echo "Current WordPress version: $$CURRENT_WP_VERSION"; \
 		if [ "$$(echo $$CURRENT_WP_VERSION | cut -d '.' -f 1)" -gt "$$(echo $$TESTED_VERSION | cut -d '.' -f 1)" ]; then \
-			echo "Warning: The plugin hasn't been tested with the latest WordPress major release."; \
+			echo "::error::The plugin hasn't been tested with the latest WordPress major release."; \
 			exit 1; \
 		elif [ "$$(echo $$CURRENT_WP_VERSION | cut -d '.' -f 2)" -gt "$$(echo $$TESTED_VERSION | cut -d '.' -f 2)" ]; then \
-			echo "Warning: The plugin hasn't been tested with the latest minor release of WordPress."; \
+			echo "::error::The plugin hasn't been tested with the latest minor release of WordPress - $$CURRENT_WP_VERSION"; \
 			exit 1; \
 		else \
-			echo "The plugin is tested with your current version of WordPress."; \
+			echo "::notice::The plugin is tested with your current version of WordPress"; \
 		fi; \
 	fi
