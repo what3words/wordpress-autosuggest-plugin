@@ -1,0 +1,17 @@
+name: Plugin version compatibility check
+
+on:
+  schedule:
+    - cron: '0 0 * * *'    # Scheduled daily at midnight UTC
+  workflow_dispatch:
+
+jobs:
+  version-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run compatibility check
+        run: make check_wp_compatibility
