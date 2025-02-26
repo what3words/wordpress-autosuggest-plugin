@@ -1,5 +1,12 @@
 PLUGIN := 3-word-address-validation-field
 
+# Define the version (this is your single source of truth)
+VERSION := 4.0.16
+
+# Define file paths
+PLUGIN_FILE := w3w-autosuggest/w3w-autosuggest.php
+README_FILE := w3w-autosuggest/README.txt
+
 .PHONY: check_wp_compatibility
 check_wp_compatibility:
 	@echo "Checking plugin: $(PLUGIN)"
@@ -27,3 +34,16 @@ check_wp_compatibility:
 			echo "::notice::The plugin is tested with your current version of WordPress"; \
 		fi; \
 	fi
+
+
+.PHONY: update-version
+update-version:
+	@echo "Updating version to $(VERSION)..."
+	@sed -i '' -e 's/define(.W3W_PLUGIN_VERSION.,\s*.*)/define('\''W3W_PLUGIN_VERSION'\'', '\''$(VERSION)'\'');/' $(PLUGIN_FILE)
+	@sed -i '' -e 's/\* Version:\s*.*/* Version:           $(VERSION)/' $(PLUGIN_FILE)
+	@sed -i '' -e 's/Stable tag: .*/Stable tag: $(VERSION)/' $(README_FILE)
+	@sed -i '' -e 's/"version": "[^"]*"/"version": "$(VERSION)"/' w3w-autosuggest-blocks/package.json
+	@sed -i '' -e 's/"version": "[^"]*"/"version": "$(VERSION)"/' w3w-autosuggest-blocks/src/block.json
+	@echo "Version updated to $(VERSION)"
+
+

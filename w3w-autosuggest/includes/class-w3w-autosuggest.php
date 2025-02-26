@@ -27,7 +27,8 @@
  * @subpackage W3W_Autosuggest/includes
  * @author     Your Name <email@example.com>
  */
-class W3W_Autosuggest {
+class W3W_Autosuggest
+{
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -66,10 +67,10 @@ class W3W_Autosuggest {
 	 */
 	protected $version;
 
-  protected $settings_name;
-  protected $js_lib_cdn_url;
-  protected $i18n_domain;
-  protected $settings_url;
+	protected $settings_name;
+	protected $js_lib_cdn_url;
+	protected $i18n_domain;
+	protected $settings_url;
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -80,28 +81,29 @@ class W3W_Autosuggest {
 	 *
 	 * @since    4.0.0
 	 */
-  public function __construct(
-    $name,
-    $version,
-    $basename,
-    $settings_name,
-    $js_lib_cdn_url,
-    $i18n_domain,
-    $settings_url
-  ) {
+	public function __construct(
+		$name,
+		$version,
+		$basename,
+		$settings_name,
+		$js_lib_cdn_url,
+		$i18n_domain,
+		$settings_url
+	) {
 
-    $this->plugin_name = $name;
+		$this->plugin_name = $name;
 		$this->version = $version;
-    $this->plugin_basename = $basename;
-    $this->settings_name = $settings_name;
-    $this->js_lib_cdn_url = $js_lib_cdn_url;
-    $this->i18n_domain = $i18n_domain;
-    $this->settings_url = $settings_url;
+		$this->plugin_basename = $basename;
+		$this->settings_name = $settings_name;
+		$this->js_lib_cdn_url = $js_lib_cdn_url;
+		$this->i18n_domain = $i18n_domain;
+		$this->settings_url = $settings_url;
 
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->setup_blocks();
 
 	}
 
@@ -121,30 +123,31 @@ class W3W_Autosuggest {
 	 * @since    4.0.0
 	 * @access   private
 	 */
-	private function load_dependencies() {
+	private function load_dependencies()
+	{
 
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-w3w-autosuggest-loader.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-w3w-autosuggest-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-w3w-autosuggest-i18n.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-w3w-autosuggest-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-w3w-autosuggest-admin.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-w3w-autosuggest-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-w3w-autosuggest-public.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-w3w-autosuggest-public.php';
 
 		$this->loader = new W3W_Autosuggest_Loader();
 
@@ -159,12 +162,21 @@ class W3W_Autosuggest {
 	 * @since    4.0.0
 	 * @access   private
 	 */
-	private function set_locale() {
+	private function set_locale()
+	{
 
-		$plugin_i18n = new W3W_Autosuggest_i18n( $this->i18n_domain );
+		$plugin_i18n = new W3W_Autosuggest_i18n($this->i18n_domain);
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		$this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
 
+	}
+
+	private function setup_blocks()
+	{
+		if (!class_exists('W3W_Autosuggest_Blocks')) {
+			require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-w3w-autosuggest-blocks.php';
+		}
+		new W3W_Autosuggest_Blocks($this->loader);
 	}
 
 	/**
@@ -174,30 +186,31 @@ class W3W_Autosuggest {
 	 * @since    4.0.0
 	 * @access   private
 	 */
-	private function define_admin_hooks() {
+	private function define_admin_hooks()
+	{
 
 		$plugin_admin = new W3W_Autosuggest_Admin(
-      $this->get_plugin_name(),
-      $this->get_version(),
-      $this->settings_name,
-      $this->i18n_domain,
-      $this->settings_url
-    );
-    $plugin_action_name = 'plugin_action_links_' . $this->plugin_basename;
-    $wc_billing_action_name = 'woocommerce_admin_order_data_after_billing_address';
-    $wc_shipping_action_name = 'woocommerce_admin_order_data_after_shipping_address';
-    $order_data_filter = 'woocommerce_admin_order_preview_get_order_details';
-    $wc_email_customer_details = 'woocommerce_email_customer_details_fields';
+			$this->get_plugin_name(),
+			$this->get_version(),
+			$this->settings_name,
+			$this->i18n_domain,
+			$this->settings_url
+		);
+		$plugin_action_name = 'plugin_action_links_' . $this->plugin_basename;
+		$wc_billing_action_name = 'woocommerce_admin_order_data_after_billing_address';
+		$wc_shipping_action_name = 'woocommerce_admin_order_data_after_shipping_address';
+		$order_data_filter = 'woocommerce_admin_order_preview_get_order_details';
+		$wc_email_customer_details = 'woocommerce_email_customer_details_fields';
 
-    $this->loader->add_action( 'admin_menu', $plugin_admin, 'options_page' );
-    $this->loader->add_action( 'admin_notices', $plugin_admin, 'admin_notices' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-    $this->loader->add_action( $wc_shipping_action_name, $plugin_admin, 'add_shipping_address_to_order_page' );
-    $this->loader->add_filter( $plugin_action_name, $plugin_admin, 'plugin_action_links', 10, 4 );
-    $this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'plugin_row_meta', 10, 2 );
-    $this->loader->add_filter( $order_data_filter, $plugin_admin, 'set_order_data', 10, 2 );
-    $this->loader->add_filter( $wc_email_customer_details, $plugin_admin, 'add_w3w_address_to_email', 10, 3 );
+		$this->loader->add_action('admin_menu', $plugin_admin, 'options_page');
+		$this->loader->add_action('admin_notices', $plugin_admin, 'admin_notices');
+		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
+		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+		$this->loader->add_action($wc_shipping_action_name, $plugin_admin, 'add_shipping_address_to_order_page');
+		$this->loader->add_filter($plugin_action_name, $plugin_admin, 'plugin_action_links', 10, 4);
+		$this->loader->add_filter('plugin_row_meta', $plugin_admin, 'plugin_row_meta', 10, 2);
+		$this->loader->add_filter($order_data_filter, $plugin_admin, 'set_order_data', 10, 2);
+		$this->loader->add_filter($wc_email_customer_details, $plugin_admin, 'add_w3w_address_to_email', 10, 3);
 
 	}
 
@@ -208,20 +221,21 @@ class W3W_Autosuggest {
 	 * @since    4.0.0
 	 * @access   private
 	 */
-	private function define_public_hooks() {
+	private function define_public_hooks()
+	{
 
 		$plugin_public = new W3W_Autosuggest_Public(
-      $this->get_plugin_name(),
-      $this->get_version(),
-      $this->settings_name,
-      $this->js_lib_cdn_url
-    );
+			$this->get_plugin_name(),
+			$this->get_version(),
+			$this->settings_name,
+			$this->js_lib_cdn_url
+		);
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-    $this->loader->add_action( 'woocommerce_order_details_after_customer_details', $plugin_public, 'checkout_page' );
-    $this->loader->add_filter( 'script_loader_tag', $plugin_public, 'add_attribute', 10, 3 );
-    $this->loader->add_filter( 'woocommerce_checkout_fields', $plugin_public, 'add_fields_to_checkout_form', 10, 1 );
+		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
+		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+		$this->loader->add_action('woocommerce_order_details_after_customer_details', $plugin_public, 'checkout_page');
+		$this->loader->add_filter('script_loader_tag', $plugin_public, 'add_attribute', 10, 3);
+		$this->loader->add_filter('woocommerce_checkout_fields', $plugin_public, 'add_fields_to_checkout_form', 10, 1);
 
 	}
 
@@ -230,7 +244,8 @@ class W3W_Autosuggest {
 	 *
 	 * @since    4.0.0
 	 */
-	public function run() {
+	public function run()
+	{
 		$this->loader->run();
 	}
 
@@ -241,7 +256,8 @@ class W3W_Autosuggest {
 	 * @since     4.0.0
 	 * @return    string    The name of the plugin.
 	 */
-	public function get_plugin_name() {
+	public function get_plugin_name()
+	{
 		return $this->plugin_name;
 	}
 
@@ -251,7 +267,8 @@ class W3W_Autosuggest {
 	 * @since     4.0.0
 	 * @return    W3W_Autosuggest_Loader    Orchestrates the hooks of the plugin.
 	 */
-	public function get_loader() {
+	public function get_loader()
+	{
 		return $this->loader;
 	}
 
@@ -261,7 +278,8 @@ class W3W_Autosuggest {
 	 * @since     4.0.0
 	 * @return    string    The version number of the plugin.
 	 */
-	public function get_version() {
+	public function get_version()
+	{
 		return $this->version;
 	}
 

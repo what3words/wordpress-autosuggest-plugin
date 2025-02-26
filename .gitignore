@@ -208,6 +208,7 @@ intermediate
 .idea
 cache
 test/database/data/*
+test/wordpress/*
 node_modules
 autosuggest
 videos
@@ -215,3 +216,9 @@ screenshots
 *.zip
 *.env
 3-word-address-validation-field
+
+
+test/wordpress*
+test/database/data*
+
+w3w-autosuggest/public/blocks/*

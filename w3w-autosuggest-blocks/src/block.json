@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "version": "4.0.16",
+  "title": "what3words Autosuggest",
+  "category": "widgets",
+  "attributes": {
+    "lock": {
+      "type": "object",
+      "default": {
+        "remove": true,
+        "move": false
+      }
+    }
+  },
+  "textdomain": "what3words-autosuggest-blocks"
+}

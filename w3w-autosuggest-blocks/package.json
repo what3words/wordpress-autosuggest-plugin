@@ -1,0 +1,23 @@
+{
+  "name": "w3w-autosuggest-blocks",
+  "version": "4.0.16",
+  "description": "what3words plugin for blocks based woocommerce checkout",
+  "author": "what3words",
+  "license": "GPL-2.0-only",
+  "scripts": {
+    "build": "wp-scripts build",
+    "format": "wp-scripts format",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "packages-update": "wp-scripts packages-update",
+    "plugin-zip": "wp-scripts plugin-zip",
+    "start": "wp-scripts start"
+  },
+  "devDependencies": {
+    "@woocommerce/block-library": "^2.3.0",
+    "@woocommerce/dependency-extraction-webpack-plugin": "^3.1.0",
+    "@wordpress/blocks": "^14.7.0",
+    "@wordpress/components": "^29.4.0",
+    "@wordpress/scripts": "^30.11.0"
+  }
+}
