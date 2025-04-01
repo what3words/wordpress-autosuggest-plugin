@@ -56,9 +56,11 @@ In order to contribute to this project you should follow the guide to modifying 
 
 3. Commit your changes to a suitably named branch and open a PR with the relevant details of your changes included. If you are working from a JIRA ticket you should try to include the name of the JIRA ticket in your commit in square braces, e.g. _"[TT-1234] My PR which resolves issues X"_
 
-**TODO**
+4. Once your PR has been reviewed and merged the CI pipeline should automatically deploy your changes to the WordPress plugin version control repository (SVN) once a release with a tag is created.
 
-4. Once your PR has been reviewed and merged the CI pipeline should automatically deploy your changes to the WordPress plugin version control repository (SVN).
+### Notes
+
+WooCommerce has introduced blocks based checkout starting v8.3 omnwards. If you're working on any features related to blocks based checkout, there's a specific directory dedicated to it under `w3w-autosuggest-blocks`. This project needs to be bundled using webpack via `wp-scripts` tooling. During development you can run `npm run start` and `npm run build` to bundle the scripts which will be added to `w3w-autosuggest` directory and will be included once the extension is published.
 
 ### Testing changes
 
@@ -69,3 +71,5 @@ docker compose up -d
 cd test
 npm t
 ```
+
+> :bulb: Ensure that you have a `.env` file (use the `.env.example` as a reference) before running the docker compose command above.
