@@ -28,7 +28,6 @@ wp core install \
 wp option update siteurl "${WORDPRESS_WEBSITE_URL:-http://localhost}"
 wp rewrite structure "${WORDPRESS_WEBSITE_POST_URL_STRUCTURE:-/%year%/%monthnum%/%day%/%postname%/}"
 echo "🎉 Wordpress configured successfully!"
-# fi
 
 if wp plugin is-active woocommerce; then
 	echo "🕺 WooCommerce is already installed and activated."
@@ -62,17 +61,14 @@ else
 	wp option update woocommerce_prices_include_tax "yes"
 	wp option update woocommerce_enable_shipping_calc "yes"
 
-# echo "Creating product and importing image..."
-# PRODUCT_ID=$(wp wc product create \
-# 	    --name="what3words Hoodie" \
-# 			--type="simple" \
-# 			--regular_price="59.99" \
-# 			--sale_price="19.99" \
-# 			--categories='[{"id": 21}]' \
-# 			--status="publish" \
-# 			--user="$WORDPRESS_ADMIN_USER" \
-# 			--path="/var/www/html");
-# echo "✅ Added product with ID: $PRODUCT_ID"
+
+	wp wc payment_gateway update cod --enabled=1 --user="${WORDPRESS_ADMIN_USER:-what3words}"
+
+	ZONE_ID=$(wp wc shipping_zone create --name="Global" --user="${WORDPRESS_ADMIN_USER:-what3words}" --porcelain)
+
+	wp wc shipping_zone_method create $ZONE_ID --method_id="free_shipping" --user="${WORDPRESS_ADMIN_USER:-what3words}"
+	wp wc shipping_zone_method create $ZONE_ID --method_id="flat_rate" --user="${WORDPRESS_ADMIN_USER:-what3words}"
+	wp wc shipping_zone_method create $ZONE_ID --method_id="local_pickup" --user="${WORDPRESS_ADMIN_USER:-what3words}"
 
 	echo "🕺 WooCommerce configuration complete!"
 fi

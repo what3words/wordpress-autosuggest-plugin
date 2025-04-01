@@ -39,9 +39,6 @@ services:
       dockerfile: test/woocommerce/Dockerfile
       context: .
       target: setup-woocommerce
-      args:
-        # PHP_VERSION: 8.3
-        PHP_VERSION: $PHP_VERSION
     container_name: w3w-wp-setup
     depends_on:
       app:
