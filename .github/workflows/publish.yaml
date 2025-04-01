@@ -20,11 +20,11 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
       - name: Update version
         run: |
-          sed -i 's/define(.W3W_PLUGIN_VERSION.,\s*.*)/define('\''W3W_PLUGIN_VERSION'\'', '\''$VERSION'\'');/' w3w-autosuggest/w3w-autosuggest.php
-          sed -i 's/\* Version:\s*.*/* Version:           $VERSION/' w3w-autosuggest/w3w-autosuggest.php
-          sed -i 's/Stable tag: .*/Stable tag: $VERSION/' w3w-autosuggest/README.txt
-          sed -i 's/"version": "[^"]*"/"version": "$VERSION"/' w3w-autosuggest-blocks/package.json
-          sed -i 's/"version": "[^"]*"/"version": "$VERSION"/' w3w-autosuggest-blocks/src/block.json
+          sed -i '' -e 's/define(.W3W_PLUGIN_VERSION.,\s*.*)/define('\''W3W_PLUGIN_VERSION'\'', '\''$VERSION'\'');/' w3w-autosuggest/w3w-autosuggest.php
+          sed -i '' -e 's/\* Version:\s*.*/* Version:           $VERSION/' w3w-autosuggest/w3w-autosuggest.php
+          sed -i '' -e 's/Stable tag: .*/Stable tag: $VERSION/' w3w-autosuggest/README.txt
+          sed -i '' -e 's/"version": "[^"]*"/"version": "$VERSION"/' w3w-autosuggest-blocks/package.json
+          sed -i '' -e 's/"version": "[^"]*"/"version": "$VERSION"/' w3w-autosuggest-blocks/src/block.json
       - name: Build w3w-autosuggest-blocks
         run: |
           pushd w3w-autosuggest-blocks
