@@ -42,22 +42,22 @@ jobs:
           else
             echo "$VERSION is not yet released.";
           fi
-      # - name: Copy to assets
-      #   run: |
-      #     cp -r ./assets/* "$HOME/svn/assets"
-      # - name: Copy to trunk
-      #   run: |
-      #     cp -r ./w3w-autosuggest/* "$HOME/svn/trunk"
-      # - name: Commit trunk
-      #   run: |
-      #     pushd "$HOME/svn"
-      #     svn ci -m "Updating trunk with release $VERSION" --username "${{ vars.WP_SVN_USERNAME }}" --password "${{ secrets.WP_SVN_PASSWORD }}" --trust-server-cert --non-interactive
-      #     popd
-      # - name: Create a release from ${{ github.ref_name }}
-      #   run: |
-      #     svn cp "$HOME/svn/trunk" "$HOME/svn/tags/release-$VERSION" --trust-server-cert --non-interactive
-      # - name: Commit changes to SVN
-      #   run: |
-      #     pushd "$HOME/svn"
-      #     svn ci -m "$VERSION release" --username "${{ vars.WP_SVN_USERNAME }}" --password "${{ secrets.WP_SVN_PASSWORD }}" --trust-server-cert --non-interactive
-      #     popd
+      - name: Copy to assets
+        run: |
+          cp -r ./assets/* "$HOME/svn/assets"
+      - name: Copy to trunk
+        run: |
+          cp -r ./w3w-autosuggest/* "$HOME/svn/trunk"
+      - name: Commit trunk
+        run: |
+          pushd "$HOME/svn"
+          svn ci -m "Updating trunk with release $VERSION" --username "${{ vars.WP_SVN_USERNAME }}" --password "${{ secrets.WP_SVN_PASSWORD }}" --trust-server-cert --non-interactive
+          popd
+      - name: Create a release from ${{ github.ref_name }}
+        run: |
+          svn cp "$HOME/svn/trunk" "$HOME/svn/tags/release-$VERSION" --trust-server-cert --non-interactive
+      - name: Commit changes to SVN
+        run: |
+          pushd "$HOME/svn"
+          svn ci -m "$VERSION release" --username "${{ vars.WP_SVN_USERNAME }}" --password "${{ secrets.WP_SVN_PASSWORD }}" --trust-server-cert --non-interactive
+          popd
