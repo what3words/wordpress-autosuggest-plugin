@@ -3,7 +3,8 @@ name: Tagged release
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+      # update the regex to match -alpha.0 but make it optional
+      - 'v[0-9]+.[0-9]+.[0-9]+(-alpha.[0-9]+)?'
 jobs:
   publish:
     name: Publish to SVN
