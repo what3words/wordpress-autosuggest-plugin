@@ -5,7 +5,7 @@ const scriptUrl = new URL( scriptTag.src );
 const urlParams = new URLSearchParams( scriptUrl.search );
 
 function append3WA( addressType ) {
-	const address = urlParams.get( `what3words_${ addressType }_address` );
+	const address = urlParams.get( `w3w-${ addressType }` );
 	if ( ! address ) {
 		return;
 	}

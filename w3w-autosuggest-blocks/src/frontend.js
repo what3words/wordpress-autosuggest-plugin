@@ -32,7 +32,7 @@ export const useCheckoutAddress = () => {
 };
 
 const BlockComponent = ( { checkoutExtensionData, addressType } ) => {
-	const fieldId = `what3words_${ addressType }_address`;
+	const fieldId = `w3w-${ addressType }`;
 	const [ address, setAddress ] = useState( '' );
 	const [ container, setContainer ] = useState( null );
 	const { useShippingAsBilling } = useCheckoutAddress();
@@ -46,11 +46,15 @@ const BlockComponent = ( { checkoutExtensionData, addressType } ) => {
 	}, [ addressType ] );
 
 	useEffect( () => {
+		document.body.dispatchEvent( new Event( 'updated_checkout' ) );
+	}, [ useShippingAsBilling ] );
+
+	useEffect( () => {
 		setExtensionData( 'what3words-autosuggest-blocks', fieldId, address );
 		if ( useShippingAsBilling ) {
 			setExtensionData(
 				'what3words-autosuggest-blocks',
-				'what3words_billing_address',
+				'w3w-billing',
 				address
 			);
 		}
@@ -63,7 +67,7 @@ const BlockComponent = ( { checkoutExtensionData, addressType } ) => {
 			if ( useShippingAsBilling ) {
 				setExtensionData(
 					'what3words-autosuggest-blocks',
-					'what3words_billing_address',
+					'w3w-billing',
 					value
 				);
 			}
@@ -79,7 +83,7 @@ const BlockComponent = ( { checkoutExtensionData, addressType } ) => {
 			id={ fieldId }
 			type="text"
 			required={ false }
-			className={ `what3words-${ addressType }-address` }
+			className={ `w3w-${ addressType }` }
 			label={ __(
 				'what3words Address',
 				'what3words-autosuggest-blocks'
@@ -122,3 +126,7 @@ const billing = {
 
 registerCheckoutBlock( shipping );
 registerCheckoutBlock( billing );
+
+setTimeout( () => {
+	document.body.dispatchEvent( new Event( 'init_checkout' ) );
+}, 1000 );

@@ -4,11 +4,11 @@ use Automattic\WooCommerce\StoreApi\Schemas\V1\CheckoutSchema;
 
 
 if (!defined('W3W_SHIPPING_ADDRESS_METADATA_KEY')) {
-  DEFINE('W3W_SHIPPING_ADDRESS_METADATA_KEY', 'what3words_shipping_address');
+  DEFINE('W3W_SHIPPING_ADDRESS_METADATA_KEY', 'w3w-shipping');
 }
 
 if (!defined('W3W_BILLING_ADDRESS_METADATA_KEY')) {
-  DEFINE('W3W_BILLING_ADDRESS_METADATA_KEY', 'what3words_billing_address');
+  DEFINE('W3W_BILLING_ADDRESS_METADATA_KEY', 'w3w-billing');
 }
 
 class W3W_Autosuggest_Blocks
@@ -25,20 +25,20 @@ class W3W_Autosuggest_Blocks
   public function cb_data_callback()
   {
     return array(
-      'what3words_shipping_address' => '',
-      'what3words_billing_address' => '',
+      'w3w-shipping' => '',
+      'w3w-billing' => '',
     );
   }
 
   public function cb_schema_callback()
   {
     return array(
-      'what3words_shipping_address' => array(
+      'w3w-shipping' => array(
         'description' => __('What3words Shipping Address', 'what3words-autosuggest-blocks'),
         'type' => array('string', 'null'),
         'readonly' => false,
       ),
-      'what3words_billing_address' => array(
+      'w3w-billing' => array(
         'description' => __('What3words Billing Address', 'what3words-autosuggest-blocks'),
         'type' => array('string', 'null'),
         'readonly' => false,
@@ -94,11 +94,11 @@ class W3W_Autosuggest_Blocks
   {
     $data = isset($request['extensions']['what3words-autosuggest-blocks']) ? $request['extensions']['what3words-autosuggest-blocks'] : array();
 
-    if (isset($data['what3words_shipping_address'])) {
-      $order->update_meta_data(W3W_SHIPPING_ADDRESS_METADATA_KEY, $data['what3words_shipping_address']);
+    if (isset($data['w3w-shipping'])) {
+      $order->update_meta_data(W3W_SHIPPING_ADDRESS_METADATA_KEY, $data['w3w-shipping']);
     }
-    if (isset($data['what3words_billing_address'])) {
-      $order->update_meta_data(W3W_BILLING_ADDRESS_METADATA_KEY, $data['what3words_billing_address']);
+    if (isset($data['w3w-billing'])) {
+      $order->update_meta_data(W3W_BILLING_ADDRESS_METADATA_KEY, $data['w3w-billing']);
     }
   }
 
@@ -109,10 +109,10 @@ class W3W_Autosuggest_Blocks
 
     $query_params = array();
     if (!empty($w3w_shipping_address)) {
-      $query_params['what3words_shipping_address'] = $w3w_shipping_address;
+      $query_params['w3w-shipping'] = $w3w_shipping_address;
     }
     if (!empty($w3w_billing_address)) {
-      $query_params['what3words_billing_address'] = $w3w_billing_address;
+      $query_params['w3w-billing'] = $w3w_billing_address;
     }
 
     $query_string = !empty($query_params) ? '?' . http_build_query($query_params) : '';

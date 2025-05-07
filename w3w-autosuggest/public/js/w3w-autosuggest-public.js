@@ -446,8 +446,12 @@ let components = [];
         target.setAttribute('placeholder', placeholder);
       }
 
-      $(target).wrap(component);
-      components.push(document.getElementById(target.id).closest('what3words-autosuggest'));
+      const originalParent = target.parentElement;
+      component.appendChild(target);
+      originalParent.prepend(component);
+      components.push(
+        document.getElementById(target.id).closest('what3words-autosuggest')
+      );
     }
 
     return components;
