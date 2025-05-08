@@ -24,6 +24,10 @@ RUN apt update && apt install -y less
 RUN groupadd -g 1000 wp_user && \
     useradd -m -u 1000 -g wp_user wp_user
 
+# Set proper permissions for WordPress directories
+RUN chown -R wp_user:wp_user /var/www/html && \
+    chown -R wp_user:wp_user /usr/src/wordpress
+
 RUN sed -i "11i php_value upload_max_filesize 256M" /usr/src/wordpress/.htaccess && \
     sed -i "12i php_value post_max_size 256M" /usr/src/wordpress/.htaccess
 

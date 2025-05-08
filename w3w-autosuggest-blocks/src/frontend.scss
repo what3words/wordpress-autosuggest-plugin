@@ -10,7 +10,7 @@
 
 .w3w-shipping.is-active, .w3w-billing.is-active {
   label[for="w3w-shipping"], label[for="w3w-billing"] {
-    animation: fadeInOut 1s;
+    animation: fadeInOut 200ms;
     display: block !important;
   }
 }

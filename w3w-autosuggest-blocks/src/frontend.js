@@ -33,15 +33,15 @@ export const useCheckoutAddress = () => {
 
 const BlockComponent = ( { checkoutExtensionData, addressType } ) => {
 	const fieldId = `w3w-${ addressType }`;
-	const [ address, setAddress ] = useState( '' );
-	const [ container, setContainer ] = useState( null );
+	const [ what3words, setWhat3words ] = useState( '' );
+	const [ inputFieldContainer, setInputFieldContainer ] = useState( null );
 	const { useShippingAsBilling } = useCheckoutAddress();
 	const { setExtensionData } = checkoutExtensionData;
 
 	useEffect( () => {
 		const targetContainer = document.getElementById( addressType );
 		if ( targetContainer ) {
-			setContainer( targetContainer );
+			setInputFieldContainer( targetContainer );
 		}
 	}, [ addressType ] );
 
@@ -50,19 +50,59 @@ const BlockComponent = ( { checkoutExtensionData, addressType } ) => {
 	}, [ useShippingAsBilling ] );
 
 	useEffect( () => {
-		setExtensionData( 'what3words-autosuggest-blocks', fieldId, address );
+		setExtensionData(
+			'what3words-autosuggest-blocks',
+			fieldId,
+			what3words
+		);
 		if ( useShippingAsBilling ) {
 			setExtensionData(
 				'what3words-autosuggest-blocks',
 				'w3w-billing',
-				address
+				what3words
 			);
 		}
-	}, [ useShippingAsBilling, address, fieldId, setExtensionData ] );
+	}, [ useShippingAsBilling, what3words, fieldId, setExtensionData ] );
+
+	useEffect( () => {
+		const handleSelectedSuggestion = ( event ) => {
+			const suggestion = event.detail.suggestion.words;
+			setWhat3words( `///${ suggestion }` );
+			setExtensionData(
+				'what3words-autosuggest-blocks',
+				fieldId,
+				`///${ suggestion }`
+			);
+			if ( useShippingAsBilling ) {
+				setExtensionData(
+					'what3words-autosuggest-blocks',
+					'w3w-billing',
+					`///${ suggestion }`
+				);
+			}
+		};
+
+		inputFieldContainer?.addEventListener(
+			'selected_suggestion',
+			handleSelectedSuggestion
+		);
+
+		return () => {
+			inputFieldContainer?.removeEventListener(
+				'selected_suggestion',
+				handleSelectedSuggestion
+			);
+		};
+	}, [
+		inputFieldContainer,
+		setExtensionData,
+		useShippingAsBilling,
+		fieldId,
+	] );
 
 	const onInputChange = useCallback(
 		( value ) => {
-			setAddress( value );
+			setWhat3words( value );
 			setExtensionData( 'what3words-autosuggest-blocks', fieldId, value );
 			if ( useShippingAsBilling ) {
 				setExtensionData(
@@ -72,10 +112,10 @@ const BlockComponent = ( { checkoutExtensionData, addressType } ) => {
 				);
 			}
 		},
-		[ setAddress, setExtensionData, useShippingAsBilling, fieldId ]
+		[ setWhat3words, setExtensionData, useShippingAsBilling, fieldId ]
 	);
 
-	if ( ! container ) {
+	if ( ! inputFieldContainer ) {
 		return <></>;
 	}
 	return createPortal(
@@ -88,10 +128,10 @@ const BlockComponent = ( { checkoutExtensionData, addressType } ) => {
 				'what3words Address',
 				'what3words-autosuggest-blocks'
 			) }
-			value={ address }
+			value={ what3words }
 			onChange={ onInputChange }
 		/>,
-		container
+		inputFieldContainer
 	);
 };
 
@@ -106,26 +146,18 @@ const Block =
 		);
 	};
 
-const shipping = {
+const createCheckoutBlock = ( addressType ) => ( {
 	metadata: {
 		...metadata,
-		name: 'what3words/shipping-address-block',
-		parent: [ 'woocommerce/checkout-shipping-address-block' ],
+		name: `what3words/${ addressType }-address-block`,
+		parent: [ `woocommerce/checkout-${ addressType }-address-block` ],
 	},
-	component: Block( 'shipping' ),
-};
+	component: Block( addressType ),
+} );
 
-const billing = {
-	metadata: {
-		...metadata,
-		name: 'what3words/billing-address-block',
-		parent: [ 'woocommerce/checkout-billing-address-block' ],
-	},
-	component: Block( 'billing' ),
-};
-
-registerCheckoutBlock( shipping );
-registerCheckoutBlock( billing );
+[ 'shipping', 'billing' ].forEach( ( addressType ) => {
+	registerCheckoutBlock( createCheckoutBlock( addressType ) );
+} );
 
 setTimeout( () => {
 	document.body.dispatchEvent( new Event( 'init_checkout' ) );
