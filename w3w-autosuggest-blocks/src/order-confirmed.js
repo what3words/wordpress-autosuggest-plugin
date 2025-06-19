@@ -14,7 +14,10 @@ function append3WA( addressType ) {
 	);
 	if ( addressBlock ) {
 		const addressElement = addressBlock.querySelector( 'address' );
-		addressElement.innerHTML += `<br><span class="what3words-prefix">///</span>${ address }`;
+		addressElement.innerHTML += `<br><span class="what3words-prefix">///</span>${ address.replace(
+			'///',
+			''
+		) }`;
 	}
 }
 
