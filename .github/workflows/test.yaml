@@ -20,6 +20,13 @@ jobs:
           PHP_VERSION: 7.4
           WOOCOMMERCE_VERSION: 5.4.1
           WORDPRESS_THEME: twentytwentyone
+      - name: Show Docker logs on failure
+        if: failure()
+        run: |
+          echo "=== Docker Compose ps ==="
+          docker compose -f ./docker-compose.yaml ps
+          echo "=== Docker Compose logs ==="
+          docker compose -f ./docker-compose.yaml logs --no-color
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
