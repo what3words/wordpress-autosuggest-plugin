@@ -5,7 +5,7 @@ on:
 jobs:
   test:
     name: Run cypress tests
-    runs-on: gha-internal-amd64
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: ['14.x']
