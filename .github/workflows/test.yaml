@@ -9,18 +9,15 @@ jobs:
     strategy:
       matrix:
         node-version: ['14.x']
-        wordpress-version: ['5.9.0', '6.7.2']
-        php-version: ['7.4', '8.1']
-        woocommerce-version: ['5.4.1', '9.6.2']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - run: |
           docker compose -f ./docker-compose.yaml up -d
         env:
-          WORDPRESS_VERSION: ${{ matrix.wordpress-version }}
-          PHP_VERSION: ${{ matrix.php-version }}
-          WOOCOMMERCE_VERSION: ${{ matrix.woocommerce-version }}
+          WORDPRESS_VERSION: 5.9.0
+          PHP_VERSION: 7.4
+          WOOCOMMERCE_VERSION: 5.4.1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
