@@ -5,24 +5,21 @@ on:
 jobs:
   test:
     name: Run cypress tests
-    runs-on: ubuntu-latest
+    runs-on: gha-internal-amd64
     strategy:
       matrix:
         node-version: ['14.x']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build images
+      - name: Start WordPress
         run: |
-          docker compose -f ./docker-compose.yaml build --progress=plain
+          docker compose -f ./docker-compose.yaml up -d
         env:
           WORDPRESS_VERSION: 5.9.0
           PHP_VERSION: 7.4
           WOOCOMMERCE_VERSION: 5.4.1
           WORDPRESS_THEME: twentytwentyone
-      - name: Start WordPress
-        run: |
-          docker compose -f ./docker-compose.yaml up -d
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
