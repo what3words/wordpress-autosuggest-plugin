@@ -25,8 +25,8 @@ services:
       WORDPRESS_CONFIG_EXTRA: |
         define('DISABLE_WP_CRON', 'true');
     volumes:
-      - ./test/wordpress:/var/www/html
-      - ./w3w-autosuggest:/var/www/html/wp-content/plugins/w3w-autosuggest
+      - ./test/wordpress:/var/www/html:rw
+      - ./w3w-autosuggest:/var/www/html/wp-content/plugins/w3w-autosuggest:rw
     ports:
       - 8080:80
     depends_on:
@@ -44,7 +44,7 @@ services:
       app:
         condition: service_healthy
     volumes:
-      - ./test/wordpress:/var/www/html
+      - ./test/wordpress:/var/www/html:rw
     environment:
       WORDPRESS_LOCALE: en_GB
       WORDPRESS_DB_HOST: mysql:3306
@@ -78,4 +78,4 @@ services:
       MYSQL_PASSWORD: wordpress
       MYSQL_DATABASE: wordpress
     volumes:
-      - ./test/database/data:/var/lib/mysql
+      - ./test/database/data:/var/lib/mysql:rw
