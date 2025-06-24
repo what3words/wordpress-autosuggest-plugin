@@ -16,10 +16,10 @@ jobs:
         run: |
           docker compose -f ./docker-compose.yaml up -d
         env:
-          WORDPRESS_VERSION: 5.9.0
+          WORDPRESS_VERSION: 5.7.2
           PHP_VERSION: 7.4
-          WOOCOMMERCE_VERSION: 5.4.1
-          WORDPRESS_THEME: twentytwentyone
+          WOOCOMMERCE_VERSION: 5.7.1
+          WORDPRESS_THEME: twentytwenty
       - name: Show Docker logs on failure
         if: failure()
         run: |

@@ -27,11 +27,11 @@ Then('they see autosuggest when they open shipping', () => {
   );
 
   cy.wait(500);
-  cy.get('#shipping_first_name').click().type(fname);
-  cy.get('#shipping_last_name').click().type(lname);
-  cy.get('#shipping_address_1').click().type(add1);
-  cy.get('#shipping_city').click().type(city);
-  cy.get('#shipping_postcode').click().type(postcode);
+  cy.get('#shipping_first_name').click({ force: true }).type(fname);
+  cy.get('#shipping_last_name').click({ force: true }).type(lname);
+  cy.get('#shipping_address_1').click({ force: true }).type(add1);
+  cy.get('#shipping_city').click({ force: true }).type(city);
+  cy.get('#shipping_postcode').click({ force: true }).type(postcode);
 
   // Start cruft - due to setTimeouts and other Fluid Checkout weirdness, this bit of cruft is necessary here
   cy.wait(500);
@@ -39,39 +39,39 @@ Then('they see autosuggest when they open shipping', () => {
     '#fc-expansible-form-section__toggle--shipping_w3w > .collapsible-content__inner > .expansible-section__toggle-plus'
   )
     .focus()
-    .click();
+    .click({ force: true });
   cy.wait('@update');
   cy.get(
     '#fc-expansible-form-section__toggle--shipping_w3w > .collapsible-content__inner > .expansible-section__toggle-plus'
   )
     .focus()
-    .click();
+    .click({ force: true });
   cy.wait(500);
   // end cruft
 
   cy.get('#w3w-shipping').scrollIntoView().type(hint);
-  cy.get('[data-testid="suggestion-0"]').click();
+  cy.get('[data-testid="suggestion-0"]').click({ force: true });
   cy.get('#w3w-shipping')
     .invoke('val')
     .should('match', /^\/\/\/(\w+.){2}\w+$/i);
   cy.get(
     '[data-step-id="shipping"] > .fc-step__actions > .fc-step__next-step'
-  ).click();
+  ).click({ force: true });
 });
 
 And('they see autosuggest when they open billing', () => {
   const hint = 'm.a.s';
 
   cy.wait(200);
-  cy.get('#billing_same_as_shipping').click();
+  cy.get('#billing_same_as_shipping').click({ force: true });
   cy.get(
     '#fc-expansible-form-section__toggle--billing_w3w > .collapsible-content__inner > .expansible-section__toggle-plus'
   )
     .scrollIntoView()
-    .click();
+    .click({ force: true });
   cy.get(`#w3w-billing`).focus().wait(300);
-  cy.get('#w3w-billing').click().type(hint, { delay: 300 });
-  cy.get('[data-testid="suggestion-0"]').click();
+  cy.get('#w3w-billing').click({ force: true }).type(hint, { delay: 300 });
+  cy.get('[data-testid="suggestion-0"]').click({ force: true });
   cy.get('#w3w-billing')
     .invoke('val')
     .should('match', /^\/\/\/(\w+.){2}\w+$/i);
