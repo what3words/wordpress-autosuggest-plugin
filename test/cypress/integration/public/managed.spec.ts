@@ -2,6 +2,13 @@ import { Chance } from 'chance'
 
 const CH = new Chance()
 
+Cypress.on('uncaught:exception', (err) => {
+  if (err.message.includes('ResizeObserver loop')) {
+    // returning false here prevents Cypress from failing the test
+    return false;
+  }
+});
+
 describe('Managed fields', () => {
   beforeEach(() =>
     cy.task('db:setup')
