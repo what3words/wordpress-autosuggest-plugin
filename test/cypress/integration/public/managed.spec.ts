@@ -35,7 +35,7 @@ describe('Managed fields', () => {
         cy.visit('/shop')
           .get('[data-product_sku=woo-beanie]', { timeout: 10000 }).click({ force: true })
           .visit('/cart')
-          .get('a[href*="checkout/"].checkout-button').click({ force: true })
+          .get('a[href*="checkout/"].checkout-button, a[href*="checkout/"].wc-block-cart__submit-button').click({ force: true })
       )
 
       it('Then the autosuggest search field is displayed', () => {
@@ -110,7 +110,7 @@ describe('Managed fields', () => {
           cy.visit('/shop')
             .get('[data-product_sku=woo-beanie]', { timeout: 10000 }).click({ force: true })
             .visit('/cart')
-            .get('a[href*="checkout/"].checkout-button').click({ force: true })
+            .get('a[href*="checkout/"].checkout-button, a[href*="checkout/"].wc-block-cart__submit-button').click({ force: true })
         )
 
         it('Then the component should load with clip to country configured', () => {
@@ -133,7 +133,7 @@ describe('Managed fields', () => {
         cy.visit('/shop')
           .get('[data-product_sku=woo-beanie]', { timeout: 10000 }).click({ force: true })
           .visit('/cart')
-          .get('a[href*="checkout/"].checkout-button').click({ force: true })
+          .get('a[href*="checkout/"].checkout-button, a[href*="checkout/"].wc-block-cart__submit-button').click({ force: true })
       )
 
       it('Then the autosuggest functionality is added to the existing field', () => {
@@ -221,7 +221,7 @@ describe('Managed fields', () => {
         cy.visit('/shop')
           .get('[data-product_sku=woo-beanie]', { timeout: 10000 }).click({ force: true })
           .visit('/cart')
-          .get('a[href*="checkout/"].checkout-button').click({ force: true })
+          .get('a[href*="checkout/"].checkout-button, a[href*="checkout/"].wc-block-cart__submit-button').click({ force: true })
       )
 
       it('Then the autosuggest functionality is added to the existing field', () => {
