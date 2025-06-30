@@ -74,7 +74,13 @@ describe('Managed fields', () => {
           const phone2 = CH.phone()
           const hint2 = 'lock.spout.r'
           cy.completeCheckoutForm({ first, last, address, city, postcode, phone, hint }, true)
-            .get('span').contains('Ship to a different address?').click({ force: true })
+            .isBlocksCheckout().then((blocks) => {
+              if (blocks) {
+                cy.get('span').contains('Use same address for billing').click({ force: true })
+              } else {
+                cy.get('span').contains('Ship to a different address?').click({ force: true })
+              }
+            })
             .completeCheckoutForm({
               first: first2,
               last: last2,
@@ -126,7 +132,7 @@ describe('Managed fields', () => {
         .toggleNearestPlace()
         .isBlocksCheckout()
         .then((blocks) => {
-          const selector = blocks ? '#billing-address-1' : '#billing_address_1';
+          const selector = blocks ? '#billing-address_1' : '#billing_address_1';
           cy.setSelector(selector);
         });
     });
@@ -141,7 +147,7 @@ describe('Managed fields', () => {
       it('Then the autosuggest functionality is added to the existing field', () => {
         cy.isBlocksCheckout().then((blocks) => {
           const fieldSelector = blocks
-            ? '#billing-address-1'
+            ? '#billing-address_1'
             : '#billing_address_1_field';
           cy.get(`${fieldSelector} what3words-autosuggest`).should('exist');
         });
@@ -195,7 +201,13 @@ describe('Managed fields', () => {
           const phone2 = CH.phone()
           const hint2 = 'lock.spout.r'
           cy.completeCheckoutForm({ first, last, city, postcode, phone, hint }, true, false)
-            .get('span').contains('Ship to a different address?').click({ force: true })
+            .isBlocksCheckout().then((blocks) => {
+              if (blocks) {
+                cy.get('span').contains('Use same address for billing').click({ force: true })
+              } else {
+                cy.get('span').contains('Ship to a different address?').click({ force: true })
+              }
+            })
             .completeCheckoutForm({
               first: first2,
               last: last2,
@@ -223,7 +235,7 @@ describe('Managed fields', () => {
         .isBlocksCheckout()
         .then((blocks) => {
           const selector = blocks
-            ? '#shipping-address-1'
+            ? '#shipping-address_1'
             : '#shipping_address_1';
           cy.setSelector(selector);
         });
@@ -239,7 +251,7 @@ describe('Managed fields', () => {
       it('Then the autosuggest functionality is added to the existing field', () => {
         cy.isBlocksCheckout().then((blocks) => {
           const fieldSelector = blocks
-            ? '#shipping-address-1'
+            ? '#shipping-address_1'
             : '#shipping_address_1_field';
           cy.get(`${fieldSelector} what3words-autosuggest`).should('exist');
         });
@@ -275,7 +287,13 @@ describe('Managed fields', () => {
           const phone2 = CH.phone()
           const hint2 = 'filled.count.soap'
 
-          cy.get('span').contains('Ship to a different address?').click({ force: true })
+          cy.isBlocksCheckout().then((blocks) => {
+              if (blocks) {
+                cy.get('span').contains('Use same address for billing').click({ force: true })
+              } else {
+                cy.get('span').contains('Ship to a different address?').click({ force: true })
+              }
+            })
             .completeCheckoutForm({ first, last, address, city, postcode, phone }, true, false)
             .completeCheckoutForm({
               first: first2,
