@@ -79,14 +79,14 @@ describe('Managed fields', () => {
           const city2 = CH.city()
           const phone2 = CH.phone()
           const hint2 = 'lock.spout.r'
-          cy.completeCheckoutForm({ first, last, address, city, postcode, phone, hint }, true)
-            .isBlocksCheckout().then((blocks) => {
+          cy.isBlocksCheckout().then((blocks) => {
               if (blocks) {
                 cy.get('span').contains('Use same address for billing').click({ force: true })
               } else {
                 cy.get('span').contains('Ship to a different address?').click({ force: true })
               }
             })
+            .completeCheckoutForm({ first, last, address, city, postcode, phone, hint }, true)
             .completeCheckoutForm({
               first: first2,
               last: last2,
@@ -206,14 +206,14 @@ describe('Managed fields', () => {
           const city2 = CH.city()
           const phone2 = CH.phone()
           const hint2 = 'lock.spout.r'
-          cy.completeCheckoutForm({ first, last, city, postcode, phone, hint }, true, false)
-            .isBlocksCheckout().then((blocks) => {
+          cy.isBlocksCheckout().then((blocks) => {
               if (blocks) {
                 cy.get('span').contains('Use same address for billing').click({ force: true })
               } else {
                 cy.get('span').contains('Ship to a different address?').click({ force: true })
               }
             })
+            .completeCheckoutForm({ first, last, city, postcode, phone, hint }, true, false)
             .completeCheckoutForm({
               first: first2,
               last: last2,
