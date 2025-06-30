@@ -124,8 +124,12 @@ describe('Managed fields', () => {
     beforeEach(() => {
       cy.toggleReturnCoordinates()
         .toggleNearestPlace()
-        .setSelector('#billing_address_1')
-    })
+        .isBlocksCheckout()
+        .then((blocks) => {
+          const selector = blocks ? '#billing-address-1' : '#billing_address_1';
+          cy.setSelector(selector);
+        });
+    });
 
     describe('When a customer gets to checkout', () => {
       beforeEach(() =>
@@ -135,8 +139,13 @@ describe('Managed fields', () => {
       )
 
       it('Then the autosuggest functionality is added to the existing field', () => {
-        cy.get('#billing_address_1_field what3words-autosuggest').should('exist')
-      })
+        cy.isBlocksCheckout().then((blocks) => {
+          const fieldSelector = blocks
+            ? '#billing-address-1_field'
+            : '#billing_address_1_field';
+          cy.get(`${fieldSelector} what3words-autosuggest`).should('exist');
+        });
+      });
 
       describe(
         'And the customer uses the same address for billing and shipping, and completes billing information only',
@@ -211,8 +220,14 @@ describe('Managed fields', () => {
     beforeEach(() => {
       cy.toggleReturnCoordinates()
         .toggleNearestPlace()
-        .setSelector('#shipping_address_1')
-    })
+        .isBlocksCheckout()
+        .then((blocks) => {
+          const selector = blocks
+            ? '#shipping-address-1'
+            : '#shipping_address_1';
+          cy.setSelector(selector);
+        });
+    });
 
     describe('When a customer gets to checkout', () => {
       beforeEach(() =>
@@ -222,8 +237,13 @@ describe('Managed fields', () => {
       )
 
       it('Then the autosuggest functionality is added to the existing field', () => {
-        cy.get('#shipping_address_1_field what3words-autosuggest').should('exist')
-      })
+        cy.isBlocksCheckout().then((blocks) => {
+          const fieldSelector = blocks
+            ? '#shipping-address-1_field'
+            : '#shipping_address_1_field';
+          cy.get(`${fieldSelector} what3words-autosuggest`).should('exist');
+        });
+      });
 
       describe('And the customer uses the same address for billing and shipping, and completes billing information only', () => {
         beforeEach(() => {

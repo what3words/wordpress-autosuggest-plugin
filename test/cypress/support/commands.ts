@@ -162,6 +162,19 @@ Cypress.Commands.add('completeCheckoutForm', (
   if (isBilling) cy.get(`${fieldPrefix}phone`).focus().clear().type(phone)
 })
 
+Cypress.Commands.add('isBlocksCheckout', () => {
+  return cy.get('body').then(($body) => {
+    // Check if blocks checkout elements exist
+    return (
+      $body.find('[data-block-name="woocommerce/checkout"]').length > 0 ||
+      $body.find('.wc-block-checkout').length > 0 ||
+      $body.find('#shipping-first-name').length > 0 ||
+      $body.find('#billing-first-name').length > 0 ||
+      $body.find('[data-testid="checkout"]').length > 0
+    )
+  })
+})
+
 Cypress.Commands.add('saveSettings', () => {
   cy.getElementByDataTestId('save_settings').should('be.visible').click({ force: true })
 })
