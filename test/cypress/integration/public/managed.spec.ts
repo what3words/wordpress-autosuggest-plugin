@@ -141,7 +141,7 @@ describe('Managed fields', () => {
       it('Then the autosuggest functionality is added to the existing field', () => {
         cy.isBlocksCheckout().then((blocks) => {
           const fieldSelector = blocks
-            ? '#billing-address-1_field'
+            ? '#billing-address-1'
             : '#billing_address_1_field';
           cy.get(`${fieldSelector} what3words-autosuggest`).should('exist');
         });
@@ -239,7 +239,7 @@ describe('Managed fields', () => {
       it('Then the autosuggest functionality is added to the existing field', () => {
         cy.isBlocksCheckout().then((blocks) => {
           const fieldSelector = blocks
-            ? '#shipping-address-1_field'
+            ? '#shipping-address-1'
             : '#shipping_address_1_field';
           cy.get(`${fieldSelector} what3words-autosuggest`).should('exist');
         });

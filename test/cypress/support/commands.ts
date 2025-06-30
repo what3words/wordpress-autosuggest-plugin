@@ -129,37 +129,39 @@ Cypress.Commands.add('completeCheckoutForm', (
   isBilling = true,
   hasSeparate3waField = true,
 ) => {
-  const fieldPrefix = isBilling ? '#billing_' : '#shipping_'
-  const selectPrefix = isBilling ? '#select2-billing_' : '#select2-shipping_'
-  cy.intercept(/api.what3words.com\/v3\/autosuggest/i).as('autosuggest')
-    .get(`${fieldPrefix}first_name`).focus().clear().type(first)
-    .get(`${fieldPrefix}last_name`).focus().clear().type(last)
-    .get(`${fieldPrefix}city`).focus().clear().type(city)
-    .get(`${fieldPrefix}postcode`).focus().clear().type(postcode)
-    .get(`${selectPrefix}country-container`).click({ force: true })
-    .get('li').contains('United Kingdom').click({ force: true })
+  cy.isBlocksCheckout().then((blocks) => {
+    const fieldPrefix = isBilling ? `#billing${blocks ? '-' : '_'}` : `#shipping${blocks ? '-' : '_'}`
+    const selectPrefix = isBilling ? `#select2-billing${blocks ? '-' : '_'}` : `#select2-shipping${blocks ? '-' : '_'}`
+    cy.intercept(/api.what3words.com\/v3\/autosuggest/i).as('autosuggest')
+      .get(`${fieldPrefix}first_name`).focus().clear().type(first)
+      .get(`${fieldPrefix}last_name`).focus().clear().type(last)
+      .get(`${fieldPrefix}city`).focus().clear().type(city)
+      .get(`${fieldPrefix}postcode`).focus().clear().type(postcode)
+      .get(`${selectPrefix}country-container`).click({ force: true })
+      .get('li').contains('United Kingdom').click({ force: true })
 
-  if (hasSeparate3waField) {
-    cy.get(`${fieldPrefix}address_1`).focus().clear().type(address)
+    if (hasSeparate3waField) {
+      cy.get(`${fieldPrefix}address_1`).focus().clear().type(address)
 
-    cy.get(isBilling ? '#w3w-billing' : '#w3w-shipping').scrollIntoView().click({ force: true }).clear().type(hint)
-      .wait('@autosuggest')
-      .get(isBilling ? '#w3w-billing' : '#w3w-shipping')
-      .closest('what3words-autosuggest')
-      .find('[data-testid=suggestion-0]').scrollIntoView().click({ force: true })
-  } else {
-    if (address) {
-      cy.get(`${fieldPrefix}address_1`).scrollIntoView().focus().clear().type(address)
-    } else {
-      cy.get(`${fieldPrefix}address_1`).scrollIntoView().click({ force: true }).clear().type(hint)
+      cy.get(isBilling ? '#w3w-billing' : '#w3w-shipping').scrollIntoView().click({ force: true }).clear().type(hint)
         .wait('@autosuggest')
-        .get(`${fieldPrefix}address_1`)
+        .get(isBilling ? '#w3w-billing' : '#w3w-shipping')
         .closest('what3words-autosuggest')
         .find('[data-testid=suggestion-0]').scrollIntoView().click({ force: true })
+    } else {
+      if (address) {
+        cy.get(`${fieldPrefix}address_1`).scrollIntoView().focus().clear().type(address)
+      } else {
+        cy.get(`${fieldPrefix}address_1`).scrollIntoView().click({ force: true }).clear().type(hint)
+          .wait('@autosuggest')
+          .get(`${fieldPrefix}address_1`)
+          .closest('what3words-autosuggest')
+          .find('[data-testid=suggestion-0]').scrollIntoView().click({ force: true })
+      }
     }
-  }
 
-  if (isBilling) cy.get(`${fieldPrefix}phone`).focus().clear().type(phone)
+    if (isBilling) cy.get(`${fieldPrefix}phone`).focus().clear().type(phone)
+  })
 })
 
 Cypress.Commands.add('isBlocksCheckout', () => {
