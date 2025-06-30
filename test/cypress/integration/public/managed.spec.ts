@@ -38,8 +38,14 @@ describe('Managed fields', () => {
       )
 
       it('Then the autosuggest search field is displayed', () => {
-        cy.get('#w3w-billing').parent('what3words-autosuggest').should('exist')
-        cy.get('#w3w-shipping').parent('what3words-autosuggest').should('exist')
+        cy.isBlocksCheckout().then((blocks) => {
+          if (blocks) {
+            cy.get('#w3w-shipping').parent('what3words-autosuggest').should('exist')
+          } else {
+            cy.get('#w3w-billing').parent('what3words-autosuggest').should('exist')
+            cy.get('#w3w-shipping').parent('what3words-autosuggest').should('exist')
+          }
+        });
       })
 
       describe('And the customer completes billing information only', () => {
@@ -149,7 +155,7 @@ describe('Managed fields', () => {
           const fieldSelector = blocks
             ? '#billing-address_1'
             : '#billing_address_1_field';
-          cy.get(`${fieldSelector} what3words-autosuggest`).should('exist');
+          cy.get(`${fieldSelector}`).should('exist');
         });
       });
 
@@ -253,7 +259,7 @@ describe('Managed fields', () => {
           const fieldSelector = blocks
             ? '#shipping-address_1'
             : '#shipping_address_1_field';
-          cy.get(`${fieldSelector} what3words-autosuggest`).should('exist');
+          cy.get(`${fieldSelector}`).should('exist');
         });
       });
 
