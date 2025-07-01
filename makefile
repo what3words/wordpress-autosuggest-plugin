@@ -1,7 +1,7 @@
 PLUGIN := 3-word-address-validation-field
 
 # Define the version (this is your single source of truth)
-VERSION := 4.0.16
+VERSION := 4.0.17-alpha.0
 
 # Define file paths
 PLUGIN_FILE := w3w-autosuggest/w3w-autosuggest.php
@@ -39,7 +39,7 @@ check_wp_compatibility:
 .PHONY: update-version
 update-version:
 	@echo "Updating version to $(VERSION)..."
-	@sed -i '' -e 's/define(.W3W_PLUGIN_VERSION.,\s*.*)/define('\''W3W_PLUGIN_VERSION'\'', '\''$(VERSION)'\'');/' $(PLUGIN_FILE)
+	@sed -i '' -e 's/define(.W3W_PLUGIN_VERSION.,\s*.*)/define('\''W3W_PLUGIN_VERSION'\'', '\''$(VERSION)'\'')/' $(PLUGIN_FILE)
 	@sed -i '' -e 's/\* Version:\s*.*/* Version:           $(VERSION)/' $(PLUGIN_FILE)
 	@sed -i '' -e 's/Stable tag: .*/Stable tag: $(VERSION)/' $(README_FILE)
 	@sed -i '' -e 's/"version": "[^"]*"/"version": "$(VERSION)"/' w3w-autosuggest-blocks/package.json
