@@ -107,6 +107,14 @@ class W3W_Autosuggest_Blocks
     $w3w_shipping_address = $order->get_meta(W3W_SHIPPING_ADDRESS_METADATA_KEY);
     $w3w_billing_address = $order->get_meta(W3W_BILLING_ADDRESS_METADATA_KEY);
 
+    if (empty($w3w_shipping_address)) {
+      $w3w_shipping_address = $order->get_meta( '_shipping_w3w' );
+    }
+
+    if (empty($w3w_billing_address)) {
+      $w3w_billing_address = $order->get_meta( '_billing_w3w' );
+    }
+
     $query_params = array();
     if (!empty($w3w_shipping_address)) {
       $query_params['w3w-shipping'] = $w3w_shipping_address;
