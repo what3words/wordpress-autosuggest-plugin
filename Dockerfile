@@ -7,9 +7,11 @@ WORKDIR /dependencies
 
 ARG WOOCOMMERCE_VERSION=5.4.1
 
-RUN apk add --no-cache wget unzip \
-    && wget https://downloads.wordpress.org/plugin/woocommerce.${WOOCOMMERCE_VERSION}.zip -O woocommerce.zip \
-    && unzip woocommerce.zip
+RUN apk add --no-cache wget unzip
+
+RUN wget https://downloads.wordpress.org/plugin/woocommerce.${WOOCOMMERCE_VERSION}.zip -O woocommerce.zip \
+    && unzip woocommerce.zip \
+    && rm woocommerce.zip
 
 FROM wordpress:${WORDPRESS_VERSION}-php${PHP_VERSION}-apache AS development
 

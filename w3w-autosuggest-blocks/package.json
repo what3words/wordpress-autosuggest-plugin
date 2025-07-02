@@ -20,6 +20,10 @@
     "@wordpress/blocks": "^14.7.0",
     "@wordpress/components": "^29.4.0",
     "@wordpress/scripts": "^30.11.0",
-    "mini-css-extract-plugin": "^2.9.2"
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.5.1",
+    "mini-css-extract-plugin": "^2.9.2",
+    "prettier": "^3.6.2"
   }
 }
