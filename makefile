@@ -1,7 +1,7 @@
 PLUGIN := 3-word-address-validation-field
 
 # Define the version (this is your single source of truth)
-VERSION := 4.0.17-alpha.1
+VERSION := 4.0.17
 
 # Define file paths
 PLUGIN_FILE := w3w-autosuggest/w3w-autosuggest.php
