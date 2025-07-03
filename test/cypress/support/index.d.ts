@@ -12,6 +12,7 @@ declare namespace Cypress {
     setSelector(selector: string): Chainable
     assertApiKeyNotice(exists: boolean): Chainable
     assertTargetValidity(selector: string, validity: boolean): Chainable
+    isBlocksCheckout(): Chainable<boolean>
     completeCheckoutForm(
       formData: {
         first: string, last: string, address?: string, city: string, postcode: string, phone: string, hint?: string,

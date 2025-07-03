@@ -213,6 +213,22 @@ if (!class_exists('W3W_Autosuggest_Admin')) {
       $lng = get_post_meta($order_id, '_shipping_w3w_lng', true);
       $label = $settings['enable_label'] ? $settings['label'] : 'w3w Address';
 
+      if (empty($words)) {
+        $words = $order->get_meta('_shipping_w3w');
+      }
+
+      if (empty($nearest_place)) {
+        $nearest_place = $order->get_meta('_shipping_nearest_place');
+      }
+
+      if (empty($lat)) {
+        $lat = $order->get_meta('_shipping_w3w_lat');
+      }
+
+      if (empty($lng)) {
+        $lng = $order->get_meta('_shipping_w3w_lng');
+      }
+
       require plugin_dir_path(__FILE__) . 'partials/add-address-to-order-page.php';
 
     }

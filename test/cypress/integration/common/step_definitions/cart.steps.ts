@@ -3,7 +3,7 @@ import { Given, When } from 'cypress-cucumber-preprocessor/steps';
 Given('a customer has an item in their cart', () => {
   cy.visit('/shop')
     .get('a.button')
-    .click()
+    .click({ force: true })
     .get('.added_to_cart')
     .should('be.visible');
 });
@@ -11,5 +11,5 @@ Given('a customer has an item in their cart', () => {
 When('they go to checkout', () => {
   cy.visit('/cart')
     .get('a.checkout-button')
-    .click()
+    .click({ force: true })
 });

@@ -11,13 +11,26 @@ jobs:
     steps:
       - name: Install SVN
         run: |
-          sudo apt-get install subversion -y
+          sudo apt-get install subversion nodejs -y
       - uses: actions/checkout@v4
       - name: Setup version env
         run: |
           VERSION=${GITHUB_REF_NAME#v}
           echo Version: $VERSION
           echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Update version
+        run: |
+          sed -i 's/define(.W3W_PLUGIN_VERSION.,\s*.*)/define('\''W3W_PLUGIN_VERSION'\'', '\'$VERSION\'');/' w3w-autosuggest/w3w-autosuggest.php
+          sed -i 's/\* Version:\s*.*/* Version:           '$VERSION'/' w3w-autosuggest/w3w-autosuggest.php
+          sed -i 's/Stable tag: .*/Stable tag: '$VERSION'/' w3w-autosuggest/README.txt
+          sed -i 's/"version": "[^"]*"/"version": "'$VERSION'"/' w3w-autosuggest-blocks/package.json
+          sed -i 's/"version": "[^"]*"/"version": "'$VERSION'"/' w3w-autosuggest-blocks/src/block.json
+      - name: Build w3w-autosuggest-blocks
+        run: |
+          pushd w3w-autosuggest-blocks
+          npm install
+          npm run build
+          popd
       - name: Checkout from Wordpress SVN
         run: |
           svn co https://plugins.svn.wordpress.org:443/3-word-address-validation-field "$HOME/svn" --trust-server-cert --non-interactive

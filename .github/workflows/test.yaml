@@ -8,12 +8,30 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['14.x']
+        include:
+          - node-version: '14.x'
+            WORDPRESS_VERSION: 5.7.2
+            PHP_VERSION: 7.4
+            WOOCOMMERCE_VERSION: 5.7.1
+            WORDPRESS_THEME: twentytwenty
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - run: |
+      - name: Start WordPress
+        run: |
           docker compose -f ./docker-compose.yaml up -d
+        env:
+          WORDPRESS_VERSION: ${{ matrix.WORDPRESS_VERSION }}
+          PHP_VERSION: ${{ matrix.PHP_VERSION }}
+          WOOCOMMERCE_VERSION: ${{ matrix.WOOCOMMERCE_VERSION }}
+          WORDPRESS_THEME: ${{ matrix.WORDPRESS_THEME }}
+      - name: Show Docker logs on failure
+        if: failure()
+        run: |
+          echo "=== Docker Compose ps ==="
+          docker compose -f ./docker-compose.yaml ps
+          echo "=== Docker Compose logs ==="
+          docker compose -f ./docker-compose.yaml logs --no-color
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:

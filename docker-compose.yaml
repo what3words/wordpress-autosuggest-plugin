@@ -1,11 +1,14 @@
-version: '3.8'
-
 services:
-  wordpress:
+  app:
     platform: linux/amd64
     build:
       dockerfile: Dockerfile
       context: .
+      target: development
+      args:
+        WOOCOMMERCE_VERSION: $WOOCOMMERCE_VERSION
+        WORDPRESS_VERSION: $WORDPRESS_VERSION
+        PHP_VERSION: $PHP_VERSION
     container_name: w3w-wp
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://localhost:80']
@@ -22,12 +25,40 @@ services:
       WORDPRESS_CONFIG_EXTRA: |
         define('DISABLE_WP_CRON', 'true');
     volumes:
-      - ./w3w-autosuggest:/var/www/html/wp-content/plugins/w3w-autosuggest
+      - wordpress_data:/var/www/html
+      - ./w3w-autosuggest:/var/www/html/wp-content/plugins/w3w-autosuggest:rw
     ports:
       - 8080:80
     depends_on:
       mysql:
         condition: service_healthy
+
+  woocommerce:
+    platform: linux/amd64
+    build:
+      dockerfile: test/woocommerce/Dockerfile
+      context: .
+      target: setup-woocommerce
+    container_name: w3w-wp-setup
+    depends_on:
+      app:
+        condition: service_healthy
+    volumes:
+      - wordpress_data:/var/www/html
+    environment:
+      WORDPRESS_LOCALE: en_GB
+      WORDPRESS_DB_HOST: mysql:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_WEBSITE_TITLE: 'what3words'
+      WORDPRESS_WEBSITE_URL: 'http://localhost:8080'
+      WORDPRESS_WEBSITE_URL_WITHOUT_HTTP: 'localhost:8080'
+      WORDPRESS_WEBSITE_POST_URL_STRUCTURE: '/%year%/%monthnum%/%day%/%postname%/'
+      WORDPRESS_ADMIN_USER: 'what3words'
+      WORDPRESS_ADMIN_PASSWORD: 'what3words'
+      WORDPRESS_ADMIN_EMAIL: 'developer@what3words.com'
+      WORDPRESS_THEME: $WORDPRESS_THEME
 
   mysql:
     platform: linux/amd64
@@ -47,5 +78,8 @@ services:
       MYSQL_PASSWORD: wordpress
       MYSQL_DATABASE: wordpress
     volumes:
-      - ./test/database/data:/var/lib/mysql
-      - ./test/database/sql/wordpress-5.7.2.sql:/docker-entrypoint-initdb.d/wordpress-5.7.2.sql
+      - db_data:/var/lib/mysql
+
+volumes:
+  wordpress_data:
+  db_data:

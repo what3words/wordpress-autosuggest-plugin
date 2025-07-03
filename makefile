@@ -1,5 +1,12 @@
 PLUGIN := 3-word-address-validation-field
 
+# Define the version (this is your single source of truth)
+VERSION := 4.0.17
+
+# Define file paths
+PLUGIN_FILE := w3w-autosuggest/w3w-autosuggest.php
+README_FILE := w3w-autosuggest/README.txt
+
 .PHONY: check_wp_compatibility
 check_wp_compatibility:
 	@echo "Checking plugin: $(PLUGIN)"
@@ -9,20 +16,34 @@ check_wp_compatibility:
 	TESTED_VERSION=$$(echo $$PLUGIN_INFO_CLEAN | grep -o '"tested":"[^"]*"' | cut -d '"' -f 4); \
 	LATEST_VERSION=$$(echo $$PLUGIN_INFO_CLEAN | grep -o '"version":"[^"]*"' | cut -d '"' -f 4); \
 	if [ -z "$$TESTED_VERSION" ] || [ "$$TESTED_VERSION" = "null" ]; then \
-		echo "Could not retrieve plugin information for $(PLUGIN) or the plugin has not been tested."; \
+		echo "::error::Could not retrieve plugin information for $(PLUGIN) or the plugin has not been tested."; \
+		exit 1; \
 	elif [ -z "$$LATEST_VERSION" ] || [ "$$LATEST_VERSION" = "null" ]; then \
-		echo "Could not retrieve the latest version for $(PLUGIN)."; \
+		echo "::error::Could not retrieve the latest version for $(PLUGIN)."; \
+		exit 1; \
 	else \
 		echo "Plugin version: $$LATEST_VERSION"; \
 		echo "Tested up to: $$TESTED_VERSION"; \
-		echo "Current WordPress version: $$CURRENT_WP_VERSION"; \
 		if [ "$$(echo $$CURRENT_WP_VERSION | cut -d '.' -f 1)" -gt "$$(echo $$TESTED_VERSION | cut -d '.' -f 1)" ]; then \
-			echo "Warning: The plugin hasn't been tested with the latest WordPress major release."; \
+			echo "::error::The plugin hasn't been tested with the latest WordPress major release."; \
 			exit 1; \
 		elif [ "$$(echo $$CURRENT_WP_VERSION | cut -d '.' -f 2)" -gt "$$(echo $$TESTED_VERSION | cut -d '.' -f 2)" ]; then \
-			echo "Warning: The plugin hasn't been tested with the latest minor release of WordPress."; \
+			echo "::error::The plugin hasn't been tested with the latest minor release of WordPress - $$CURRENT_WP_VERSION"; \
 			exit 1; \
 		else \
-			echo "The plugin is tested with your current version of WordPress."; \
+			echo "::notice::The plugin is tested with your current version of WordPress"; \
 		fi; \
 	fi
+
+
+.PHONY: update-version
+update-version:
+	@echo "Updating version to $(VERSION)..."
+	@sed -i '' -e 's/define(.W3W_PLUGIN_VERSION.,\s*.*)/define('\''W3W_PLUGIN_VERSION'\'', '\''$(VERSION)'\'')/' $(PLUGIN_FILE)
+	@sed -i '' -e 's/\* Version:\s*.*/* Version:           $(VERSION)/' $(PLUGIN_FILE)
+	@sed -i '' -e 's/Stable tag: .*/Stable tag: $(VERSION)/' $(README_FILE)
+	@sed -i '' -e 's/"version": "[^"]*"/"version": "$(VERSION)"/' w3w-autosuggest-blocks/package.json
+	@sed -i '' -e 's/"version": "[^"]*"/"version": "$(VERSION)"/' w3w-autosuggest-blocks/src/block.json
+	@echo "Version updated to $(VERSION)"
+
+

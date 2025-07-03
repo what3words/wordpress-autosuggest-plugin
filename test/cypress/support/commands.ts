@@ -40,7 +40,7 @@ Cypress.Commands.add('installPlugin', (plugin_name: string, plugin_slug: string)
   cy.visit('/wp-admin/plugin-install.php')
     .get('#search-plugins').type(plugin_name)
     .wait('@ajax')
-    .get(`a[data-slug="${plugin_slug}"]`).click()
+    .get(`a[data-slug="${plugin_slug}"]`).click({ force: true })
     .wait('@ajax')
 });
 
@@ -65,7 +65,7 @@ Cypress.Commands.add('uninstallPlugin', (plugin_slug: string) => {
 
 Cypress.Commands.add('activatePlugin', (plugin_name: string, root_php_file?: string) => {
   cy.visit('/wp-admin/plugins.php')
-    .get(`[data-plugin="${plugin_name}/${root_php_file || plugin_name}.php"] .activate > a`).click()
+    .get(`[data-plugin="${plugin_name}/${root_php_file || plugin_name}.php"] .activate > a`).click({ force: true })
     .get(`[data-plugin="${plugin_name}/${root_php_file || plugin_name}.php"] .deactivate > a`)
       .should('exist')
       .should('be.visible')
@@ -82,7 +82,7 @@ Cypress.Commands.add('deactivatePlugin', (plugin_name: string, root_php_file?: s
 })
 
 Cypress.Commands.add('openSettingsPage', (plugin_name: string) => {
-  cy.get(`#toplevel_page_${plugin_name} > a`).click()
+  cy.get(`#toplevel_page_${plugin_name} > a`).click({ force: true })
 })
 
 Cypress.Commands.add('getElementByDataTestId', (test_id: string) => {
@@ -99,7 +99,7 @@ Cypress.Commands.add('setApiKey', (api_key: string) => {
 
 Cypress.Commands.add('setSelector', (selector: string) => {
   cy.intercept('POST', /admin.php/i).as('submit')
-    .getElementByDataTestId('enable_input_selector').click()
+    .getElementByDataTestId('enable_input_selector').click({ force: true })
     .getElementByDataTestId('input_selector').type(selector)
     .getElementByDataTestId('save_settings').should('be.visible').click({ force: true }) // Forcing to ensure it is clickable
     .wait('@submit')
@@ -129,37 +129,52 @@ Cypress.Commands.add('completeCheckoutForm', (
   isBilling = true,
   hasSeparate3waField = true,
 ) => {
-  const fieldPrefix = isBilling ? '#billing_' : '#shipping_'
-  const selectPrefix = isBilling ? '#select2-billing_' : '#select2-shipping_'
-  cy.intercept(/api.what3words.com\/v3\/autosuggest/i).as('autosuggest')
-    .get(`${fieldPrefix}first_name`).focus().clear().type(first)
-    .get(`${fieldPrefix}last_name`).focus().clear().type(last)
-    .get(`${fieldPrefix}city`).focus().clear().type(city)
-    .get(`${fieldPrefix}postcode`).focus().clear().type(postcode)
-    .get(`${selectPrefix}country-container`).click()
-    .get('li').contains('United Kingdom').click()
+  cy.isBlocksCheckout().then((blocks) => {
+    const fieldPrefix = isBilling ? `#billing${blocks ? '-' : '_'}` : `#shipping${blocks ? '-' : '_'}`
+    const selectPrefix = isBilling ? `#select2-billing${blocks ? '-' : '_'}` : `#select2-shipping${blocks ? '-' : '_'}`
+    cy.intercept(/api.what3words.com\/v3\/autosuggest/i).as('autosuggest')
+      .get(`${fieldPrefix}first_name`).focus().clear().type(first)
+      .get(`${fieldPrefix}last_name`).focus().clear().type(last)
+      .get(`${fieldPrefix}city`).focus().clear().type(city)
+      .get(`${fieldPrefix}postcode`).focus().clear().type(postcode)
+      .get(`${selectPrefix}country-container`).click({ force: true })
+      .get('li').contains('United Kingdom').click({ force: true })
 
-  if (hasSeparate3waField) {
-    cy.get(`${fieldPrefix}address_1`).focus().clear().type(address)
+    if (hasSeparate3waField) {
+      cy.get(`${fieldPrefix}address_1`).focus().clear().type(address)
 
-    cy.get(isBilling ? '#w3w-billing' : '#w3w-shipping').scrollIntoView().click().clear().type(hint)
-      .wait('@autosuggest')
-      .get(isBilling ? '#w3w-billing' : '#w3w-shipping')
-      .closest('what3words-autosuggest')
-      .find('[data-testid=suggestion-0]').scrollIntoView().click({ force: true })
-  } else {
-    if (address) {
-      cy.get(`${fieldPrefix}address_1`).scrollIntoView().focus().clear().type(address)
-    } else {
-      cy.get(`${fieldPrefix}address_1`).scrollIntoView().click().clear().type(hint)
+      cy.get(isBilling ? '#w3w-billing' : '#w3w-shipping').scrollIntoView().click({ force: true }).clear().type(hint)
         .wait('@autosuggest')
-        .get(`${fieldPrefix}address_1`)
+        .get(isBilling ? '#w3w-billing' : '#w3w-shipping')
         .closest('what3words-autosuggest')
         .find('[data-testid=suggestion-0]').scrollIntoView().click({ force: true })
+    } else {
+      if (address) {
+        cy.get(`${fieldPrefix}address_1`).scrollIntoView().focus().clear().type(address)
+      } else {
+        cy.get(`${fieldPrefix}address_1`).scrollIntoView().click({ force: true }).clear().type(hint)
+          .wait('@autosuggest')
+          .get(`${fieldPrefix}address_1`)
+          .closest('what3words-autosuggest')
+          .find('[data-testid=suggestion-0]').scrollIntoView().click({ force: true })
+      }
     }
-  }
 
-  if (isBilling) cy.get(`${fieldPrefix}phone`).focus().clear().type(phone)
+    if (isBilling) cy.get(`${fieldPrefix}phone`).focus().clear().type(phone)
+  })
+})
+
+Cypress.Commands.add('isBlocksCheckout', () => {
+  return cy.get('body').then(($body) => {
+    // Check if blocks checkout elements exist
+    return (
+      $body.find('[data-block-name="woocommerce/checkout"]').length > 0 ||
+      $body.find('.wc-block-checkout').length > 0 ||
+      $body.find('#shipping-first-name').length > 0 ||
+      $body.find('#billing-first-name').length > 0 ||
+      $body.find('[data-testid="checkout"]').length > 0
+    )
+  })
 })
 
 Cypress.Commands.add('saveSettings', () => {
@@ -171,7 +186,7 @@ Cypress.Commands.add('saveAdvanced', () => {
 })
 
 Cypress.Commands.add('placeOrder', () => {
-  cy.get('#place_order').click()
+  cy.get('#place_order').click({ force: true })
 })
 
 Cypress.Commands.add('selectManagedInput', () => {

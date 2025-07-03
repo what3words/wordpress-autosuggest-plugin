@@ -1,0 +1,27 @@
+.w3w-shipping,
+.w3w-billing {
+  flex: 0 0 100% !important;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.w3w-shipping.is-active,
+.w3w-billing.is-active {
+  label[for='w3w-shipping'],
+  label[for='w3w-billing'] {
+    animation: fadeInOut 200ms;
+    display: block !important;
+  }
+}
+
+label[for='w3w-billing'],
+label[for='w3w-shipping'] {
+  display: none !important;
+}
