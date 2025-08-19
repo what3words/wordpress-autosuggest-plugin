@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "version": "4.0.17",
+  "version": "4.0.18",
   "title": "what3words Autosuggest",
   "category": "widgets",
   "attributes": {
