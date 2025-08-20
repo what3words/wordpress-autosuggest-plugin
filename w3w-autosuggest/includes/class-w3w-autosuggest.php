@@ -173,10 +173,12 @@ class W3W_Autosuggest
 
 	private function setup_blocks()
 	{
-		if (!class_exists('W3W_Autosuggest_Blocks')) {
-			require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-w3w-autosuggest-blocks.php';
+		if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+			if (!class_exists('W3W_Autosuggest_Blocks')) {
+				require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-w3w-autosuggest-blocks.php';
+			}
+			new W3W_Autosuggest_Blocks($this->loader);
 		}
-		new W3W_Autosuggest_Blocks($this->loader);
 	}
 
 	/**
