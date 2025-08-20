@@ -36,7 +36,7 @@ jobs:
           svn co https://plugins.svn.wordpress.org:443/3-word-address-validation-field "$HOME/svn" --trust-server-cert --non-interactive
       - name: Validate release
         run: |
-          if [ -d "$HOME/svn/tags/release-$VERSION" ]; then
+          if [ -d "$HOME/svn/tags/$VERSION" ]; then
             echo "$VERSION is already released.";
             exit 1;
           else
@@ -55,7 +55,7 @@ jobs:
           popd
       - name: Create a release from ${{ github.ref_name }}
         run: |
-          svn cp "$HOME/svn/trunk" "$HOME/svn/tags/release-$VERSION" --trust-server-cert --non-interactive
+          svn cp "$HOME/svn/trunk" "$HOME/svn/tags/$VERSION" --trust-server-cert --non-interactive
       - name: Commit changes to SVN
         run: |
           pushd "$HOME/svn"
