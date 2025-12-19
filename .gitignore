@@ -220,5 +220,6 @@ screenshots
 
 test/wordpress*
 test/database/data*
+test/database/mysql*
 
 w3w-autosuggest/public/blocks/*
