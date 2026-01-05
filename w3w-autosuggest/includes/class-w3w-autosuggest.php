@@ -133,6 +133,11 @@ class W3W_Autosuggest
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-w3w-autosuggest-loader.php';
 
 		/**
+		 * The class responsible for extracting and normalizing plugin settings.
+		 */
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-w3w-autosuggest-settings.php';
+
+		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */

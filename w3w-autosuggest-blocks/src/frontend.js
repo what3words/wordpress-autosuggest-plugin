@@ -25,25 +25,48 @@ const isComponentLoaded = () => {
   );
 };
 
-const waitForComponent = () => {
+// Generic polling function that waits for a condition to be met
+const waitFor = (checkFn, options = {}) => {
+  const {
+    maxAttempts = 50,
+    interval = 100,
+    rejectOnTimeout = false,
+    errorMessage = 'Condition not met within timeout',
+  } = options;
+
   return new Promise((resolve, reject) => {
-    if (isComponentLoaded()) {
-      resolve();
+    // Check immediately first
+    const initialResult = checkFn();
+    if (initialResult) {
+      resolve(initialResult);
       return;
     }
-    // Wait for library to load (check every 100ms, timeout after 5s)
+
+    // Poll until condition is met or max attempts reached
     let attempts = 0;
-    const maxAttempts = 50;
     const checkInterval = setInterval(() => {
       attempts++;
-      if (isComponentLoaded()) {
+      const pollResult = checkFn();
+      if (pollResult) {
         clearInterval(checkInterval);
-        resolve();
+        resolve(pollResult);
       } else if (attempts >= maxAttempts) {
         clearInterval(checkInterval);
-        reject(new Error('what3words component failed to load'));
+        if (rejectOnTimeout) {
+          reject(new Error(errorMessage));
+        } else {
+          resolve(null);
+        }
       }
-    }, 100);
+    }, interval);
+  });
+};
+
+const waitForComponentLoad = () => {
+  return waitFor(isComponentLoaded, {
+    maxAttempts: 50,
+    rejectOnTimeout: true,
+    errorMessage: 'what3words component failed to load',
   });
 };
 
@@ -51,10 +74,9 @@ const BlockComponent = ({ checkoutExtensionData, addressType }) => {
   const fieldId = `w3w-${addressType}`;
   const [what3words, setWhat3words] = useState('');
   const inputRef = useRef(null);
-  const componentRef = useRef(null);
+  const [component, setComponent] = useState(null);
   const { setExtensionData } = checkoutExtensionData;
 
-  // Get useShippingAsBilling state from store
   const useShippingAsBilling = useSelect(select => {
     const store = select(CHECKOUT_STORE_KEY);
     return store.getUseShippingAsBilling
@@ -66,28 +88,78 @@ const BlockComponent = ({ checkoutExtensionData, addressType }) => {
   const [billingCountry, setBillingCountry] = useState('');
   const [shippingCountry, setShippingCountry] = useState('');
 
-  // Get country from DOM elements
-  useEffect(() => {
-    const getCountryFromField = fieldSelector => {
-      const field = document.querySelector(`#${fieldSelector}`);
-      if (!field) return '';
+  const getW3WComponent = useCallback(() => {
+    const input = inputRef.current;
+    if (!input?.inputRef?.current) return null;
+    const inputElement = input.inputRef.current;
+    const w3wComponent = inputElement.closest('what3words-autosuggest');
+    if (w3wComponent) {
+      return w3wComponent;
+    }
+    const fieldElement = document.getElementById(fieldId);
+    if (fieldElement) {
+      const fallbackComponent = fieldElement.closest('what3words-autosuggest');
+      if (fallbackComponent) {
+        return fallbackComponent;
+      }
+    }
+    return null;
+  }, [fieldId]);
 
-      // Handle select dropdown
+  // Helper to wait for component creation
+  const waitForComponentCreation = useCallback(() => {
+    return waitFor(getW3WComponent, {
+      maxAttempts: 30,
+      rejectOnTimeout: false,
+    });
+  }, [getW3WComponent]);
+
+  useEffect(() => {
+    const findCountryField = type => {
+      const escapedType = type.replaceAll(
+        /[.*+?^${}()|[\]\\]/g,
+        String.raw`\$&`
+      );
+      const pattern = new RegExp(
+        String.raw`(${escapedType}[\-_]?country|country[\-_]?${escapedType})`,
+        'i'
+      );
+
+      const allFields = document.querySelectorAll('[id]');
+      for (const field of allFields) {
+        if (pattern.test(field.id)) {
+          return field;
+        }
+      }
+
+      const allNamedFields = document.querySelectorAll('[name]');
+      for (const field of allNamedFields) {
+        if (pattern.test(field.name)) {
+          return field;
+        }
+      }
+
+      return null;
+    };
+
+    const getCountryFromField = field => {
+      if (!field) return '';
       if (field.tagName === 'SELECT') {
         return field.value || '';
       }
-
-      // Handle hidden input (used by Blocks)
       if (field.type === 'hidden') {
         return field.value || '';
       }
-
       return '';
     };
 
     const updateCountries = () => {
-      const billing = getCountryFromField('billing_country');
-      const shipping = getCountryFromField('shipping_country');
+      const billingField = findCountryField('billing');
+      const shippingField = findCountryField('shipping');
+
+      const billing = getCountryFromField(billingField);
+      const shipping = getCountryFromField(shippingField);
+
       setBillingCountry(billing);
       setShippingCountry(shipping);
     };
@@ -96,8 +168,8 @@ const BlockComponent = ({ checkoutExtensionData, addressType }) => {
     updateCountries();
 
     // Listen for country changes
-    const billingField = document.querySelector('#billing_country');
-    const shippingField = document.querySelector('#shipping_country');
+    const billingField = findCountryField('billing');
+    const shippingField = findCountryField('shipping');
 
     if (billingField) {
       billingField.addEventListener('change', updateCountries);
@@ -126,144 +198,81 @@ const BlockComponent = ({ checkoutExtensionData, addressType }) => {
     };
   }, []);
 
-  // Initialize what3words component (similar to original attachComponentToTargets)
   useEffect(() => {
-    if (!inputRef.current || componentRef.current) return;
+    const input = inputRef.current;
+    if (!input) return;
 
-    if (!settings.apiKey) {
+    const initComponent = async () => {
+      await waitForComponentLoad();
+      setComponent(await waitForComponentCreation());
+
+      const handleSelectedSuggestion = event => {
+        const suggestion = event.detail.suggestion.words;
+        setWhat3words(`///${suggestion}`);
+        setExtensionData(
+          'what3words-autosuggest-blocks',
+          fieldId,
+          `///${suggestion}`
+        );
+        if (useShippingAsBilling) {
+          setExtensionData(
+            'what3words-autosuggest-blocks',
+            'w3w-billing',
+            `///${suggestion}`
+          );
+        }
+      };
+
+      input.inputRef.current.addEventListener(
+        'selected_suggestion',
+        handleSelectedSuggestion
+      );
+
+      return () => {
+        input.inputRef.current.removeEventListener(
+          'selected_suggestion',
+          handleSelectedSuggestion
+        );
+      };
+    };
+
+    if (!settings.api_key) {
       // eslint-disable-next-line no-console
       console.error('what3words API key not configured');
       return;
     }
-
-    const initComponent = async () => {
-      try {
-        // Wait for library to be available (loaded by public.js)
-        await waitForComponent();
-
-        // Find the actual input element by ID (ValidatedTextInput wraps it)
-        const input = document.getElementById(fieldId);
-        if (!input) {
-          // eslint-disable-next-line no-console
-          console.warn(`Input element #${fieldId} not found`);
-          return;
-        }
-
-        // Check if already wrapped (avoid double-wrapping)
-        if (
-          input.parentNode?.getAttribute('class') ===
-            'what3words-autosuggest-input-wrapper' ||
-          input.parentNode?.localName === 'what3words-autosuggest'
-        ) {
-          return;
-        }
-
-        // Create what3words component (same as original generateAutosuggestComponent)
-        const w3wComponent = document.createElement('what3words-autosuggest');
-        w3wComponent.setAttribute('api_key', settings.apiKey);
-        w3wComponent.setAttribute('variant', 'inherit');
-
-        // Set header for tracking
-        const headerValue = `what3words-WordPress/${settings.version || '1.0.0'} (WooCommerce-Blocks)`;
-        w3wComponent.setAttribute(
-          'headers',
-          JSON.stringify({
-            'X-W3W-Plugin': headerValue,
-          })
-        );
-
-        // Apply settings
-        if (settings.returnCoordinates) {
-          w3wComponent.setAttribute('return_coordinates', 'true');
-        }
-
-        if (settings.enableClipToCountry && settings.clipToCountry) {
-          w3wComponent.setAttribute('clip_to_country', settings.clipToCountry);
-        }
-
-        if (settings.enableClipToBoundingBox) {
-          const bbox = [
-            settings.clipToBoundingBoxNeLat,
-            settings.clipToBoundingBoxNeLng,
-            settings.clipToBoundingBoxSwLat,
-            settings.clipToBoundingBoxSwLng,
-          ]
-            .filter(Boolean)
-            .join(',');
-          if (bbox.split(',').length === 4) {
-            w3wComponent.setAttribute('clip_to_bounding_box', bbox);
-          }
-        }
-
-        if (settings.enableClipToCircle) {
-          const circle = [
-            settings.clipToCircleLat,
-            settings.clipToCircleLng,
-            settings.clipToCircleRadius,
-          ]
-            .filter(Boolean)
-            .join(',');
-          if (circle.split(',').length === 3) {
-            w3wComponent.setAttribute('clip_to_circle', circle);
-          }
-        }
-
-        // Wrap the input element (same pattern as original attachComponentToTargets)
-        const originalParent = input.parentNode;
-        w3wComponent.appendChild(input);
-        originalParent.prepend(w3wComponent);
-
-        componentRef.current = w3wComponent;
-
-        // Listen for selection events
-        const handleSelected = event => {
-          const words = event.detail.suggestion.words;
-          const value = `///${words}`;
-          setWhat3words(value);
-
-          // Update extension data
-          setExtensionData('what3words-autosuggest-blocks', fieldId, value);
-
-          // If using shipping as billing and this is shipping, also update billing
-          if (useShippingAsBilling && addressType === 'shipping') {
-            setExtensionData(
-              'what3words-autosuggest-blocks',
-              'w3w-billing',
-              value
-            );
-          }
-        };
-
-        w3wComponent.addEventListener('selected_suggestion', handleSelected);
-
-        // Cleanup
-        return () => {
-          if (w3wComponent && handleSelected) {
-            w3wComponent.removeEventListener(
-              'selected_suggestion',
-              handleSelected
-            );
-          }
-        };
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error('Failed to initialize what3words component:', error);
-      }
-    };
-
-    // Small delay to ensure input is fully rendered
+    initComponent();
     const timeoutId = setTimeout(() => {
-      initComponent();
-    }, 100);
+      document.body.dispatchEvent(new Event('init_checkout'));
+    }, 0);
+    return () => clearTimeout(timeoutId);
+  }, [
+    addressType,
+    fieldId,
+    inputRef,
+    setExtensionData,
+    useShippingAsBilling,
+    getW3WComponent,
+    waitForComponentCreation,
+  ]);
 
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [inputRef, fieldId, setExtensionData, useShippingAsBilling, addressType]);
-
-  // Update clip to country based on address
   useEffect(() => {
-    if (!componentRef.current) return;
+    document.body.dispatchEvent(new Event('updated_checkout'));
+  }, [useShippingAsBilling]);
+
+  useEffect(() => {
+    setExtensionData('what3words-autosuggest-blocks', fieldId, what3words);
+    if (useShippingAsBilling) {
+      setExtensionData(
+        'what3words-autosuggest-blocks',
+        'w3w-billing',
+        what3words
+      );
+    }
+  }, [useShippingAsBilling, what3words, fieldId, setExtensionData]);
+
+  useEffect(() => {
+    if (!component) return;
 
     const country =
       addressType === 'billing' ? billingCountry : shippingCountry;
@@ -274,43 +283,36 @@ const BlockComponent = ({ checkoutExtensionData, addressType }) => {
         ? shippingCountry
         : country;
 
-    if (effectiveCountry) {
-      componentRef.current.setAttribute('clip_to_country', effectiveCountry);
-    }
-  }, [billingCountry, shippingCountry, useShippingAsBilling, addressType]);
+    if (!effectiveCountry) return;
 
-  // Update extension data when value changes
-  useEffect(() => {
-    setExtensionData('what3words-autosuggest-blocks', fieldId, what3words);
+    if (settings.enable_clip_to_country) return;
 
-    // If using shipping as billing and this is shipping, also update billing
-    if (useShippingAsBilling && addressType === 'shipping') {
-      setExtensionData(
-        'what3words-autosuggest-blocks',
-        'w3w-billing',
-        what3words
-      );
-    }
+    // Set the attribute if component is found
+    component.setAttribute('clip_to_country', effectiveCountry);
   }, [
-    what3words,
-    fieldId,
-    setExtensionData,
+    billingCountry,
+    shippingCountry,
     useShippingAsBilling,
     addressType,
+    component,
   ]);
 
   const onInputChange = useCallback(
     value => {
       setWhat3words(value);
+      setExtensionData('what3words-autosuggest-blocks', fieldId, value);
+      if (useShippingAsBilling) {
+        setExtensionData('what3words-autosuggest-blocks', 'w3w-billing', value);
+      }
     },
-    [setWhat3words]
+    [setWhat3words, setExtensionData, useShippingAsBilling, fieldId]
   );
 
-  const label = settings.enableLabel
+  const label = settings.enable_label
     ? settings.label
     : __('what3words Address', 'what3words-autosuggest-blocks');
 
-  const placeholder = settings.enablePlaceholder ? settings.placeholder : '';
+  const placeholder = settings.enable_placeholder ? settings.placeholder : '';
 
   return (
     <div className={`what3words-checkout-block ${addressType}`}>
