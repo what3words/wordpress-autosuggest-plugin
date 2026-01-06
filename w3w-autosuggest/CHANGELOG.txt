@@ -1,3 +1,15 @@
+= 4.0.19 =
+* Release 2026.01.05
+* Updated loading of autosuggest component on blocks based checkout
+
+= 4.0.18 =
+* Release 2025.08.20
+* Fixed crashing when woocommerce is not installed
+
+= 4.0.17 =
+* Release 2025.07.03
+* Added support for blocks based checkout
+
 = 4.0.16 =
 * Release 2025.02.10
 * Added input text sanitation in plugin settings

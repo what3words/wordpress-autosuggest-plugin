@@ -28,18 +28,12 @@ class W3W_Autosuggest_Blocks_Integration implements IntegrationInterface
 
   /**
    * Useful when you need to pass PHP data to your JavaScript code that will be used in the WooCommerce blocks
-   * you can get the value from js through wc.wcSettings.getSetting('key');
+   * you can get the value from js through window.wcSettings['what3words-autosuggest_data'];
    */
   public function get_script_data()
   {
-    // return [
-    //   'apiKey' => get_option('w3w_api_key'),
-    //   'language' => get_locale(),
-    //   'ajaxUrl' => admin_url('admin-ajax.php'),
-    //   'nonce' => wp_create_nonce('w3w_autosuggest_nonce'),
-    //   'defaultCountry' => get_option('w3w_default_country', 'GB')
-    // ];
-    return [];
+
+    return W3W_Autosuggest_Settings_Helper::get_exposed_settings(false);
   }
 
   public function register_block_editor_scripts()

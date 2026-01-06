@@ -31,6 +31,17 @@ jobs:
           npm install
           npm run build
           popd
+      - name: Verify build output
+        run: |
+          if [ ! -d "w3w-autosuggest/public/blocks" ]; then
+            echo "Error: Build output directory not found at w3w-autosuggest/public/blocks"
+            exit 1
+          fi
+          if [ -z "$(ls -A w3w-autosuggest/public/blocks/*.js 2>/dev/null)" ]; then
+            echo "Error: No compiled JS files found in w3w-autosuggest/public/blocks"
+            exit 1
+          fi
+          echo "Build output verified in w3w-autosuggest/public/blocks"
       - name: Checkout from Wordpress SVN
         run: |
           svn co https://plugins.svn.wordpress.org:443/3-word-address-validation-field "$HOME/svn" --trust-server-cert --non-interactive
@@ -48,6 +59,11 @@ jobs:
       - name: Copy to trunk
         run: |
           cp -r ./w3w-autosuggest/* "$HOME/svn/trunk"
+      - name: Add new files to SVN
+        run: |
+          pushd "$HOME/svn"
+          svn add --force trunk assets
+          popd
       - name: Commit trunk
         run: |
           pushd "$HOME/svn"
